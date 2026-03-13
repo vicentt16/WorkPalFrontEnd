@@ -1,0 +1,20 @@
+.upper-bar{
+    flex: content;
+    flex-direction: column;
+
+    position: fixed;
+    background-color: rgb(255, 224, 70);
+
+    width: 100%;
+}
+
+button{
+    flex: content;
+    flex-direction: row;
+
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+}
+
