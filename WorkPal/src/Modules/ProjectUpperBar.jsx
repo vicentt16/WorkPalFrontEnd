@@ -4,7 +4,7 @@ import "./ProjectUpperBar.css";
 export function ProjectUpperBar() {
   return (
     <header className="upper-bar">
-      <img src="" alt="WorkPal Logo" />
+      <img src="\src\Images\logoWorkPal.png" alt="WorkPal Logo" className="logoWorkPal"/>
 
       <div className="upper-bar-buttons">
         <button>

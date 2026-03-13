@@ -1,11 +1,22 @@
 header{
     display : flex;
     flex-direction: row;
+    background-color: white;
 }
 
 div{
     display: flex;
 }
+
+.logoWorkPal{
+    margin: 10px;
+    max-width: 80px;
+    max-height: 80px;
+
+    background-color: rgb(255, 224, 70);
+    border-radius: 30px;
+}
+
 
 .upper-bar{
     
@@ -14,9 +25,11 @@ div{
     flex-direction: row;
 
     position: fixed;
-    background-color: rgb(255, 224, 70);
+    /* background-color: rgb(255, 224, 70); */
 
     width: 100%;
+
+    box-shadow: 0px 5px 10px rgba(139, 139, 139, 0.75);
 }
 
 .upper-bar-buttons{ 
