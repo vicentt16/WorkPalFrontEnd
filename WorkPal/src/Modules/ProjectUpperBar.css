@@ -18,6 +18,13 @@ button{
     border: none;
     border-radius: 25px;
     margin: 10px;
+    padding-right: 15px;
+}
+
+button:hover{
+    background-color: rgb(255, 224, 70);
+    position: 10px;
+    transition: all 0.3s;
 }
 
 img{
@@ -60,6 +67,13 @@ h2{
 
 .register-button{
     background-color: rgb(255, 224, 70);
+    
+}
+
+.register-button:hover{
+    transform : translateY(-5px);
+    background-color: rgb(255, 183, 29);
+    transition: all 0.5s;
 }
 
 
