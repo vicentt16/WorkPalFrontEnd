@@ -6,7 +6,7 @@ export function ProjectUpperBar() {
     <header className="upper-bar">
       <img src="" alt="WorkPal Logo" />
 
-      <>
+      <div className="upper-bar-buttons">
         <button>
           <img src="" alt="Search Icon" />
           <h2>Buscar</h2>
@@ -21,7 +21,7 @@ export function ProjectUpperBar() {
           <img src="" alt="Register Icon" />
           <h2>Registrarse</h2>
         </button>
-      </>
+      </div>
     </header>
   );
 }
