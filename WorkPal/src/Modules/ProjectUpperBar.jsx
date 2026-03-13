@@ -8,17 +8,17 @@ export function ProjectUpperBar() {
 
       <div className="upper-bar-buttons">
         <button>
-          <img src="" alt="Search Icon" />
+          <img src="\src\Images\searchIcon.png" alt="Search Icon" />
           <h2>Buscar</h2>
         </button>
 
         <button>
-          <img src="" alt="Create Icon" />
+          <img src="\src\Images\createIcon.png" alt="Create Icon" />
           <h2>Crear Proyecto</h2>
         </button>
 
-        <button>
-          <img src="" alt="Register Icon" />
+        <button className="register-button">
+          <img src="\src\Images\registerIcon.png" alt="Register Icon" />
           <h2>Registrarse</h2>
         </button>
       </div>
