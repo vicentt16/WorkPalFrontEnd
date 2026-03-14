@@ -1,0 +1,34 @@
+input{
+    width: 100%;
+    background-color: rgb(238, 235, 231);
+    border-radius: 5px;
+}
+
+.register-module{
+    display: flex;
+    flex-direction: column;
+    margin-top: 300px;
+    background-color: white;
+    
+    border-radius: 20px;
+
+    width: 100%;
+    margin-left: 15%;
+    margin-right: 15%;
+
+    padding: 15px;
+
+    box-shadow: 0px 5px 5px rgba(139, 139, 139, 0.218);
+}
+
+.register-section{
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+}
+
+.info-section{
+    margin-top: 10px;
+}
+

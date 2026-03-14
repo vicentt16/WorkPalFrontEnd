@@ -36,6 +36,8 @@ img{
 
 h2{
     font-size: 15px;
+    margin-block-end: 0px;
+    margin-block-start: 0px;
 }
 
 .logoWorkPal{
@@ -67,7 +69,8 @@ h2{
 
 .register-button{
     background-color: rgb(255, 224, 70);
-    
+    border-color: rgb(26, 21, 0) ;
+    border: 50px;
 }
 
 .register-button:hover{
