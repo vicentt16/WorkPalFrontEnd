@@ -1,12 +1,15 @@
-import { useState } from "react";
 
-export function AddImage() {
+
+export function AddImage({projectImage}) {
     const ImageList = [];
-    const [projectImage, setProjectImage] = useState(ImageList);
     
+    ImageList.push(projectImage);
 
     return (
         <div>
+            {ImageList.map((img, index) => (
+                <img key={index} src={img} alt="ImagenProyecto" className="project-image" />
+            ))}
         </div>
     )
 }

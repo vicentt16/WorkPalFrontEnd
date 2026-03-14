@@ -3,6 +3,8 @@ import { AddImage } from "./addImage";
 import {useState} from "react";
 
 export function RegisterModule() {
+    
+    const [projectImage, setProjectImage] = useState();
     const [projectTitle, setProjectTitle] = useState();
     const [projectDescription, setProjectDescription] = useState();
 
@@ -35,14 +37,11 @@ export function RegisterModule() {
         <section className="info-section">
             <h2>Imagenes del Proyecto*</h2>
             
-            <AddImage />
+            <AddImage projectImage={projectImage} />
 
             <button>
                 <img src="\src\Images\addIcon.png" alt="" />
-            </button>
-
-            <button className="image-button">
-                {/* <input type="file" onChange={(e) => setProjectImage(URL.createObjectURL(e.target.files[0]))} /> */}
+                <input type="file" onChange={(e) => setProjectImage(URL.createObjectURL(e.target.files[0]))} />
             </button>
 
         </section>
