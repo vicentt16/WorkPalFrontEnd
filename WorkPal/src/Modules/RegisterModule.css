@@ -1,10 +1,15 @@
 input{
     width: 100%;
-    height: 20px;
+    height: 40px;
 
     background-color: rgb(238, 235, 231);
     border-radius: 5px;
+   
+    border: none;
+}
 
+.file-input {
+    display: none;
 }
 
 .register-module{
@@ -74,3 +79,4 @@ input{
     transform : translateY(-5px);
     transition: all 0.3s;
 }
+

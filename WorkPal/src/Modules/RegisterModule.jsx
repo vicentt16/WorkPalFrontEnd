@@ -4,7 +4,7 @@ import {useState} from "react";
 
 export function RegisterModule() {
     
-    const [projectImage, setProjectImage] = useState();
+    const [projectImage, setProjectImage] = useState([]);
     const [projectTitle, setProjectTitle] = useState();
     const [projectDescription, setProjectDescription] = useState();
 
@@ -39,10 +39,16 @@ export function RegisterModule() {
             
             <AddImage projectImage={projectImage} />
 
-            <button>
+            <button onClick={() => document.getElementById('file-input').click()}>
                 <img src="\src\Images\addIcon.png" alt="" />
-                <input type="file" onChange={(e) => setProjectImage(URL.createObjectURL(e.target.files[0]))} />
+                <h2>Agregar Imagen</h2>
             </button>
+            <input id="file-input" type="file" className="file-input" onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    setProjectImage(prev => [...prev, URL.createObjectURL(file)]);
+                }
+            }} />
 
         </section>
 
