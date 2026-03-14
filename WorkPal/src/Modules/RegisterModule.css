@@ -60,3 +60,17 @@ input{
     min-height: 100px;
 
 }
+
+.ok-button{
+    background-color:  rgb(255, 224, 70);
+    border-radius: 15px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.ok-button:hover{
+    background-color: rgba(255, 224, 70, 0.552);
+    transform : translateY(-5px);
+    transition: all 0.3s;
+}

@@ -75,7 +75,7 @@ h2{
 
 .register-button:hover{
     transform : translateY(-5px);
-    background-color: rgb(255, 183, 29);
+    background-color: rgba(255, 224, 70, 0.552);
     transition: all 0.5s;
 }
 

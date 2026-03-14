@@ -1,10 +1,10 @@
 import "./RegisterModule.css";
+import { AddImage } from "./addImage";
 import {useState} from "react";
 
 export function RegisterModule() {
     const [projectTitle, setProjectTitle] = useState();
     const [projectDescription, setProjectDescription] = useState();
-    const [projectImage, setProjectImage] = useState();
 
    return(
     <div className="register-module">
@@ -23,7 +23,7 @@ export function RegisterModule() {
         
         <section className="info-section">
             <h2>Descripción del Proyecto*</h2>
-            
+
             <input type="text" 
             value={projectDescription} 
             onChange={(e) => setProjectDescription(e.target.value)}
@@ -34,12 +34,23 @@ export function RegisterModule() {
         
         <section className="info-section">
             <h2>Imagenes del Proyecto*</h2>
-            <img src={projectImage} alt="ImagenProyecto" className="project-image"/>
+            
+            <AddImage />
+
+            <button>
+                <img src="\src\Images\addIcon.png" alt="" />
+            </button>
 
             <button className="image-button">
-                <input type="file" onChange={(e) => setProjectImage(URL.createObjectURL(e.target.files[0]))} />
+                {/* <input type="file" onChange={(e) => setProjectImage(URL.createObjectURL(e.target.files[0]))} /> */}
             </button>
+
         </section>
+
+        <button className="ok-button">
+            <img src="\src\Images\okIcon.png" alt="Ok Icon"/>
+            <h2>Registrar Proyecto</h2>
+        </button>
 
     </div>
    ); 
