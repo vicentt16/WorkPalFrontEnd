@@ -15,12 +15,12 @@ input{
 .register-module{
     display: flex;
     flex-direction: column;
-    margin-top: 300px;
+    margin-top: 50px;
     background-color: white;
     
     border-radius: 20px;
 
-    width: 100%;
+    width: 65%;
     margin-left: 15%;
     margin-right: 15%;
 
@@ -80,3 +80,25 @@ input{
     transition: all 0.3s;
 }
 
+.add-image-scroll{
+    display: flex; 
+    overflow-x: scroll;  /* Enables horizontal scrolling */
+    white-space: nowrap;
+}
+
+.upper-panel{
+    padding-top: 150px;
+    display:flex;
+
+    background-color: white;
+    box-shadow: 0px 5px 5px rgba(139, 139, 139, 0.218);
+
+    width: 100%;
+}
+
+.total{
+    display:flex;
+    flex-direction: column;
+    
+    width: 100%;
+}

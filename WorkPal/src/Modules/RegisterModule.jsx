@@ -9,7 +9,19 @@ export function RegisterModule() {
     const [projectDescription, setProjectDescription] = useState();
 
    return(
+    <div className="total">
+    <div className="upper-panel">
+        <button>
+            <img src="" alt="returnIcon" />
+            <h2>Volver</h2>
+        </button>
+
+        <h1>Crear Proyecto</h1>
+        <h2>Publica tu proyecto y encuentr colaboradores</h2>
+    </div>
+
     <div className="register-module">
+
         <section className="register-section">
             <img src="\src\Images\createIcon.png" alt="Create Image" className="create-icon-info"/>
             <h2>Detalles del Proyecto</h2>
@@ -37,8 +49,10 @@ export function RegisterModule() {
         <section className="info-section">
             <h2>Imagenes del Proyecto*</h2>
             
-            <AddImage projectImage={projectImage} />
-
+            <div className="add-image-scroll">
+                <AddImage projectImage={projectImage} />
+            </div>
+            
             <button onClick={() => document.getElementById('file-input').click()}>
                 <img src="\src\Images\addIcon.png" alt="" />
                 <h2>Agregar Imagen</h2>
@@ -57,6 +71,7 @@ export function RegisterModule() {
             <h2>Registrar Proyecto</h2>
         </button>
 
+    </div>
     </div>
    ); 
 }
