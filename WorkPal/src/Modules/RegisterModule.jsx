@@ -11,13 +11,15 @@ export function RegisterModule() {
    return(
     <div className="total">
     <div className="upper-panel">
-        <button>
-            <img src="" alt="returnIcon" />
+        <button className="upper-panel-button">
+            <img src="\src\Images\returnIcon.png" alt="returnIcon" />
             <h2>Volver</h2>
         </button>
 
-        <h1>Crear Proyecto</h1>
-        <h2>Publica tu proyecto y encuentr colaboradores</h2>
+        <div className="upper-panel-text">
+            <h1>Crear Proyecto</h1>
+            <h2>Publica tu proyecto y encuentr colaboradores</h2>
+        </div>
     </div>
 
     <div className="register-module">
