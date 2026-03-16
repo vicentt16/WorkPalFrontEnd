@@ -18,7 +18,7 @@ export function RegisterModule() {
 
         <div className="upper-panel-text">
             <h1>Crear Proyecto</h1>
-            <h2>Publica tu proyecto y encuentr colaboradores</h2>
+            <h2>Publica tu proyecto y encuentra colaboradores</h2>
         </div>
     </div>
 
