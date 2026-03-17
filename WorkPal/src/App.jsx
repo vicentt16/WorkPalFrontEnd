@@ -13,7 +13,7 @@ function App() {
 
 export default App
 */
-import RegisterUser from "./Pages/RegisterUser";
+import RegisterUser from "./Pages/RegisterUser.jsx";
 
 function App() {
   return (
