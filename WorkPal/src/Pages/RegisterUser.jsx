@@ -55,9 +55,10 @@ export default function RegisterUser() {
         <form className="register-form" onSubmit={handleSubmit}>
           <h1>Crear Cuenta</h1>
           <p>Completa tu perfil para comenzar</p>
+
           <h2>Información Personal</h2>
 
-          <label>Nombre Completo *</label>
+          <label>Nombre completo *</label>
           <input
             type="text"
             name="nombre"
@@ -68,7 +69,7 @@ export default function RegisterUser() {
 
           <div className="row">
             <div className="input-group">
-              <label>Correo Electrónico *</label>
+              <label>Correo electrónico *</label>
               <input
                 type="email"
                 name="email"
@@ -101,7 +102,7 @@ export default function RegisterUser() {
             required
           />
 
-          <label>Confirmar Contraseña *</label>
+          <label>Confirmar contraseña *</label>
           <input
             type="password"
             name="confirmPassword"
@@ -110,7 +111,7 @@ export default function RegisterUser() {
             required
           />
 
-          <h2>Información Académica</h2>
+          <h2>Información académica</h2>
 
           <label>Universidad</label>
           <input
@@ -138,7 +139,7 @@ export default function RegisterUser() {
             rows="3"
           />
 
-          <h2>Foto de Perfil</h2>
+          <h2>Foto de perfil</h2>
 
           <div className="photo-section">
             <input
