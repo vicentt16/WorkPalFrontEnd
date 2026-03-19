@@ -1,24 +1,29 @@
 import React from "react";
 import "./ProjectUpperBar.css";
 
+import logoWorkPal from "/src/Images/logoWorkPal.png";
+import searchIcon from "/src/Images/searchIcon.png";
+import createIcon from "/src/Images/createIcon.png";
+import registerIcon from "/src/Images/registerIcon.png";
+
 export function ProjectUpperBar() {
   return (
     <header className="upper-bar">
-      <img src="\src\Images\logoWorkPal.png" alt="WorkPal Logo" className="logoWorkPal"/>
+      <img src={logoWorkPal} alt="WorkPal Logo" className="logoWorkPal"/>
 
       <div className="upper-bar-buttons">
         <button>
-          <img src="\src\Images\searchIcon.png" alt="Search Icon" />
+          <img src={searchIcon} alt="Search Icon" />
           <h2>Buscar</h2>
         </button>
 
         <button>
-          <img src="\src\Images\createIcon.png" alt="Create Icon" />
+          <img src={createIcon} alt="Create Icon" />
           <h2>Crear Proyecto</h2>
         </button>
 
         <button className="register-button">
-          <img src="\src\Images\registerIcon.png" alt="Register Icon" />
+          <img src={registerIcon} alt="Register Icon" />
           <h2>Registrarse</h2>
         </button>
       </div>

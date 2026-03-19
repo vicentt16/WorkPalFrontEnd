@@ -1,9 +1,16 @@
 import "./RegisterModule.css";
 import { AddImage } from "./addImage";
 import {useState} from "react";
+import { HabilitiesModule } from "./HabilitiesModule";
+
+import returnIcon from "/src/Images/returnIcon.png";
+import createIcon from "/src/Images/createIcon.png";
+import addIcon from "/src/Images/addIcon.png";
+import okIcon from "/src/Images/okIcon.png";
 
 export function RegisterModule() {
     
+    const [projectHabilities, setProjectHabilities] = useState([]);
     const [projectImage, setProjectImage] = useState([]);
     const [projectTitle, setProjectTitle] = useState();
     const [projectDescription, setProjectDescription] = useState();
@@ -12,7 +19,7 @@ export function RegisterModule() {
     <div className="total">
     <div className="upper-panel">
         <button className="upper-panel-button">
-            <img src="\src\Images\returnIcon.png" alt="returnIcon" />
+            <img src={returnIcon} alt="returnIcon" />
             <h2>Volver</h2>
         </button>
 
@@ -25,7 +32,7 @@ export function RegisterModule() {
     <div className="register-module">
 
         <section className="register-section">
-            <img src="\src\Images\createIcon.png" alt="Create Image" className="create-icon-info"/>
+            <img src={createIcon} alt="Create Image" className="create-icon-info"/>
             <h2>Detalles del Proyecto</h2>
         </section>
         
@@ -56,9 +63,10 @@ export function RegisterModule() {
             </div>
             
             <button onClick={() => document.getElementById('file-input').click()}>
-                <img src="\src\Images\addIcon.png" alt="" />
+                <img src={addIcon} alt="" />
                 <h2>Agregar Imagen</h2>
             </button>
+
             <input id="file-input" type="file" className="file-input" onChange={(e) => {
                 const file = e.target.files[0];
                 if (file) {
@@ -68,8 +76,40 @@ export function RegisterModule() {
 
         </section>
 
+        <section className="date-input">
+            <div className="date-section">
+                <h2>Fecha de Inicio*</h2>
+                <input  type="date" />   
+            </div>
+
+            <div className="date-section">
+                <h2>Fecha de Entrega*</h2>
+                <input type="date" />   
+            </div>
+        </section>
+
+        <section>
+            <h2>Habilidades Necesarias*</h2>
+
+            <section className="habilities">
+                {projectHabilities.map((habilidad, index) => (
+                <HabilitiesModule key={index} habilidad={habilidad} />
+            ))}
+            </section>
+
+            <button onClick={() => {
+                const newHabilidad = prompt("Ingres la habilidad necesaria:");
+                if (newHabilidad) {
+                    setProjectHabilities(prev => [...prev, newHabilidad]);
+                }
+            }}>
+                <img src={addIcon} alt="" />
+                <h2>Agregar Habilidad</h2>
+            </button>
+        </section>
+
         <button className="ok-button">
-            <img src="\src\Images\okIcon.png" alt="Ok Icon"/>
+            <img src={okIcon} alt="Ok Icon"/>
             <h2>Registrar Proyecto</h2>
         </button>
 
@@ -77,3 +117,4 @@ export function RegisterModule() {
     </div>
    ); 
 }
+
