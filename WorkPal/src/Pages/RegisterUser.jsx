@@ -52,10 +52,16 @@ export default function RegisterUser() {
     <div>
       <ProjectUpperBar />
       <div className="register-page">
+        <div className="upper-panel">
+          <div className="upper-panel-button">
+            <p>Volver</p>
+          </div>
+          <div className="upper-panel-text">
+            <h1>Crear Cuenta</h1>
+            <p>Completa tu perfil para comenzar</p>
+          </div>
+        </div>
         <form className="register-form" onSubmit={handleSubmit}>
-          <h1>Crear Cuenta</h1>
-          <p>Completa tu perfil para comenzar</p>
-
           <h2>Información Personal</h2>
 
           <label>Nombre completo *</label>

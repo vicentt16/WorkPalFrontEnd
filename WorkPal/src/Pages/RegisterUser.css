@@ -5,9 +5,9 @@ body {
 }
 
 .register-page {
-  max-width: 700px;
-  margin: 100px auto 40px auto;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .register-page h1 {
@@ -98,117 +98,23 @@ input, textarea {
   background: #d99c00;
 }
 
-/*
-.info-section{
-    margin-top: 10px;
-}
-
-.create-icon-info{
-    background-color:  rgb(255, 224, 70);
-    border-radius: 15px;
-
-    min-width: 50px;
-    min-height: 50px;
-}
-
-.project-image{
-    min-width: 300px;
-    min-height: 300px;
-}
-
-.image-button{
-    background-color:  rgb(255, 224, 70);
-    border-radius: 10px;    
-    appearance: none;
-}
-
-.description-input{
-    min-height: 100px;
-
-}
-
-.ok-button{
-    background-color:  rgb(255, 224, 70);
-    border-radius: 15px;
-
-    align-items: center;
-    justify-content: center;
-}
-
-.ok-button:hover{
-    background-color: rgba(255, 224, 70, 0.552);
-    transform : translateY(-5px);
-    transition: all 0.3s;
-}
-
-.add-image-scroll{
-    display: flex; 
-    overflow-x: scroll; 
-    white-space: nowrap;
-}
-
 .upper-panel{
-    padding-top: 120px;
-    padding-bottom: 30px;
-    display:flex;
-    flex-direction: column;
-
-    background-color: white;
-    box-shadow: 0px 5px 5px rgba(139, 139, 139, 0.218);
-
-    width: 100%;
+  padding-top: 120px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 0px 5px 5px rgba(139, 139, 139, 0.218);
+  width: 100%;
 }
 
 .upper-panel-text{
-    display: flex;
-    flex-direction: column;
-    padding-left:30px;
+  display: flex;
+  flex-direction: column;
+  padding-left:30px;
 }
 
-.upper-panel-button{
-   
-    width: 120px;
-
-    margin-left:30px;
+.upper-panel-button{ 
+  width: 120px;
+  margin-left:30px;
 }
-
-.total{
-    display:flex;
-    flex-direction: column;
-    
-    width: 100%;
-}
-
-.date-input{
-    display: flex;
-    flex-direction: row;
-
-    justify-content: center;
-}
-
-.date-section{
-    width: 40%;
-
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 5%;
-    margin-right: 5%;
-    flex-direction: column;
-}
-.habilities-module{
-    background-color: rgb(255, 224, 70);
-
-    border-radius: 20px;
-    max-width: 15%;
-
-    justify-content: center;
-}   
-
-.habilities{
-    display: flex;
-    flex-direction: row;
-
-
-    padding: 10px;
-}
-*/
