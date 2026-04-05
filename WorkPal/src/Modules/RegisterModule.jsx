@@ -8,7 +8,6 @@ import createIcon from "/src/Images/createIcon.png";
 import addIcon from "/src/Images/addIcon.png";
 import okIcon from "/src/Images/okIcon.png";
 
-
 export function RegisterModule() {
     
     const [projectHabilities, setProjectHabilities] = useState([]);
@@ -94,12 +93,15 @@ export function RegisterModule() {
 
             <section className="habilities">
                 {projectHabilities.map((habilidad, index) => (
-                <HabilitiesModule key={index} habilidad={habilidad} setHabilidad={setProjectHabilities} />
+                <HabilitiesModule key={index} habilidad={habilidad} />
             ))}
             </section>
 
             <button onClick={() => {
-                setProjectHabilities(prev => [...prev, ]);
+                const newHabilidad = prompt("Ingres la habilidad necesaria:");
+                if (newHabilidad) {
+                    setProjectHabilities(prev => [...prev, newHabilidad]);
+                }
             }}>
                 <img src={addIcon} alt="" />
                 <h2>Agregar Habilidad</h2>
