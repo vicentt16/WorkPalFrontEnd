@@ -2,12 +2,12 @@ import "./RegisterModule.css";
 import { AddImage } from "./addImage";
 import {useState} from "react";
 import { HabilitiesModule } from "./HabilitiesModule";
-import { HabilitiesPopUp } from "./HabilitiesPopUp";
 
 import returnIcon from "/src/Images/returnIcon.png";
 import createIcon from "/src/Images/createIcon.png";
 import addIcon from "/src/Images/addIcon.png";
 import okIcon from "/src/Images/okIcon.png";
+
 
 export function RegisterModule() {
     
@@ -94,16 +94,12 @@ export function RegisterModule() {
 
             <section className="habilities">
                 {projectHabilities.map((habilidad, index) => (
-                <HabilitiesModule key={index} habilidad={habilidad} />
+                <HabilitiesModule key={index} habilidad={habilidad} setHabilidad={setProjectHabilities} />
             ))}
             </section>
 
             <button onClick={() => {
-                const newHabilidad = prompt("Ingrese la habilidad necesaria:");
-                setProjectHabilities(prev => [...prev, newHabilidad]);
-
-                
-                <HabilitiesPopUp/>
+                setProjectHabilities(prev => [...prev, ]);
             }}>
                 <img src={addIcon} alt="" />
                 <h2>Agregar Habilidad</h2>
