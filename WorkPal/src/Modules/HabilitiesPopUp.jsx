@@ -6,7 +6,9 @@ export function HabilitiesPopUp() {
                 <h2>Habilidades Necesarias*</h2>
             </section>
 
-            <section></section>
+            <section>
+                <input type="text" />
+            </section>
         </div>
     )
 }

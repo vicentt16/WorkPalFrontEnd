@@ -2,6 +2,7 @@ import "./RegisterModule.css";
 import { AddImage } from "./addImage";
 import {useState} from "react";
 import { HabilitiesModule } from "./HabilitiesModule";
+import { HabilitiesPopUp } from "./HabilitiesPopUp";
 
 import returnIcon from "/src/Images/returnIcon.png";
 import createIcon from "/src/Images/createIcon.png";
@@ -98,10 +99,11 @@ export function RegisterModule() {
             </section>
 
             <button onClick={() => {
-                const newHabilidad = prompt("Ingres la habilidad necesaria:");
-                if (newHabilidad) {
-                    setProjectHabilities(prev => [...prev, newHabilidad]);
-                }
+                const newHabilidad = prompt("Ingrese la habilidad necesaria:");
+                setProjectHabilities(prev => [...prev, newHabilidad]);
+
+                
+                <HabilitiesPopUp/>
             }}>
                 <img src={addIcon} alt="" />
                 <h2>Agregar Habilidad</h2>
