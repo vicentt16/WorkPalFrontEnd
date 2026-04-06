@@ -142,9 +142,12 @@ h1{
     background-color: rgb(255, 224, 70);
 
     border-radius: 20px;
-    max-width: 15%;
+    max-width: 100px;
 
     justify-content: center;
+
+    margin-left: 15px;
+    padding: 10px;
 }   
 
 .habilities{

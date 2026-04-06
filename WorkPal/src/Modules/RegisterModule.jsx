@@ -3,6 +3,7 @@ import { AddImage } from "./addImage";
 import {useState} from "react";
 import { HabilitiesModule } from "./HabilitiesModule";
 import { ProjectUpperBar } from "./ProjectUpperBar";
+import { HabilitiesPopUp } from "./HabilitiesPopUp";
 
 import returnIcon from "/src/Images/returnIcon.png";
 import createIcon from "/src/Images/createIcon.png";
@@ -15,6 +16,7 @@ export function RegisterModule() {
     const [projectImage, setProjectImage] = useState([]);
     const [projectTitle, setProjectTitle] = useState();
     const [projectDescription, setProjectDescription] = useState();
+    const [showHabilitiesPopup, setShowHabilitiesPopup] = useState(false);
 
    return(
     <div className="total">
@@ -98,13 +100,7 @@ export function RegisterModule() {
             ))}
             </section>
 
-            <button onClick={() => {
-                const newHabilidad = prompt("Ingresa la habilidad necesaria:");
-
-                if (newHabilidad) {
-                    setProjectHabilities(prev => [...prev, newHabilidad]);
-                }
-            }}>
+            <button onClick={() => setShowHabilitiesPopup(true)}>
                 <img src={addIcon} alt="" />
                 <h2>Agregar Habilidad</h2>
             </button>
@@ -114,6 +110,16 @@ export function RegisterModule() {
             <img src={okIcon} alt="Ok Icon"/>
             <h2>Registrar Proyecto</h2>
         </button>
+
+        {showHabilitiesPopup && (
+            <HabilitiesPopUp
+                onSubmit={(newHabilidad) => {
+                    setProjectHabilities(prev => [...prev, newHabilidad]);
+                    setShowHabilitiesPopup(false);
+                }}
+                onClose={() => setShowHabilitiesPopup(false)}
+            />
+        )}
 
     </div>
     </div>
