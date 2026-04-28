@@ -15,21 +15,20 @@ export function RegisterModule() {
     
     const [projectHabilities, setProjectHabilities] = useState([]);
     const [projectImage, setProjectImage] = useState([]);
-    const [projectTitle, setProjectTitle] = useState();
-    const [projectDescription, setProjectDescription] = useState();
+    const [projectTitle, setProjectTitle] = useState("");
+    const [projectDescription, setProjectDescription] = useState("");
     const [showHabilitiesPopup, setShowHabilitiesPopup] = useState(false);
-
-    function Formulario() {
 
     const guardarDatos = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/usuarios', { projectTitle });
+      await axios.post('http://localhost:5000/api', { projectTitle, projectDescription, projectImage, projectHabilities });
       alert('Datos guardados');
     } catch (error) {
       console.error(error);
     }
-  };
+    };
+    
 
    return(
     <div className="total">
@@ -52,15 +51,15 @@ export function RegisterModule() {
             <h2>Detalles del Proyecto</h2>
         </section>
         
-        <section className="info-section" onSubmit={guardarDatos}>
+        <form className="info-section">
             <h2>Titulo del Proyecto*</h2>
             <input type="text" 
             value={projectTitle} 
             onChange={(e) => setProjectTitle(e.target.value)}
             placeholder="Titulo del Proyecto"/>
-        </section>
+        </form>
         
-        <section className="info-section" onSubmit={guardarDatos}>
+        <section className="info-section" >
             <h2>Descripción del Proyecto*</h2>
 
             <input type="text" 
@@ -71,7 +70,7 @@ export function RegisterModule() {
         </section>
 
         
-        <section className="info-section" onSubmit={guardarDatos}>
+        <section className="info-section" >
             <h2>Imagenes del Proyecto*</h2>
             
             <div className="add-image-scroll">
@@ -104,14 +103,14 @@ export function RegisterModule() {
             </div>
         </section>
 
-        <section onSubmit={guardarDatos}>
+        <section >
             <h2>Habilidades Necesarias*</h2>
 
-            <section className="habilities">
+            <form className="habilities" >
                 {projectHabilities.map((habilidad, index) => (
                 <HabilitiesModule key={index} habilidad={habilidad} />
             ))}
-            </section>
+            </form>
 
             <button onClick={() => setShowHabilitiesPopup(true)}>
                 <img src={addIcon} alt="" />
@@ -119,7 +118,7 @@ export function RegisterModule() {
             </button>
         </section>
 
-        <button className="ok-button">
+        <button className="ok-button" type="submit" onSubmit={guardarDatos}>
             <img src={okIcon} alt="Ok Icon"/>
             <h2>Registrar Proyecto</h2>
         </button>
@@ -137,6 +136,6 @@ export function RegisterModule() {
     </div>
     </div>
    ); 
-    }
+
 }
 
