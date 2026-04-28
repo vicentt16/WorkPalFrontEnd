@@ -31,7 +31,7 @@ export function RegisterModule() {
     
 
    return(
-    <div className="total">
+    <form className="total" onSubmit={guardarDatos}>
     <div className="upper-panel">
         <button className="upper-panel-button">
             <img src={returnIcon} alt="returnIcon" />
@@ -51,13 +51,13 @@ export function RegisterModule() {
             <h2>Detalles del Proyecto</h2>
         </section>
         
-        <form className="info-section">
+        <section className="info-section">
             <h2>Titulo del Proyecto*</h2>
             <input type="text" 
             value={projectTitle} 
             onChange={(e) => setProjectTitle(e.target.value)}
             placeholder="Titulo del Proyecto"/>
-        </form>
+        </section>
         
         <section className="info-section" >
             <h2>Descripción del Proyecto*</h2>
@@ -106,11 +106,11 @@ export function RegisterModule() {
         <section >
             <h2>Habilidades Necesarias*</h2>
 
-            <form className="habilities" >
+            <section className="habilities" >
                 {projectHabilities.map((habilidad, index) => (
                 <HabilitiesModule key={index} habilidad={habilidad} />
             ))}
-            </form>
+            </section>
 
             <button onClick={() => setShowHabilitiesPopup(true)}>
                 <img src={addIcon} alt="" />
@@ -118,7 +118,7 @@ export function RegisterModule() {
             </button>
         </section>
 
-        <button className="ok-button" type="submit" onSubmit={guardarDatos}>
+        <button className="ok-button" type="submit" >
             <img src={okIcon} alt="Ok Icon"/>
             <h2>Registrar Proyecto</h2>
         </button>
@@ -134,7 +134,7 @@ export function RegisterModule() {
         )}
 
     </div>
-    </div>
+    </form>
    ); 
 
 }
