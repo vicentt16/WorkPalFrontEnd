@@ -4,6 +4,7 @@ import {useState} from "react";
 import { HabilitiesModule } from "./HabilitiesModule";
 import { ProjectUpperBar } from "./ProjectUpperBar";
 import { HabilitiesPopUp } from "./HabilitiesPopUp";
+import axios from "axios";
 
 import returnIcon from "/src/Images/returnIcon.png";
 import createIcon from "/src/Images/createIcon.png";
@@ -17,6 +18,18 @@ export function RegisterModule() {
     const [projectTitle, setProjectTitle] = useState();
     const [projectDescription, setProjectDescription] = useState();
     const [showHabilitiesPopup, setShowHabilitiesPopup] = useState(false);
+
+    function Formulario() {
+
+    const guardarDatos = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:5000/api/usuarios', { projectTitle });
+      alert('Datos guardados');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
    return(
     <div className="total">
@@ -39,7 +52,7 @@ export function RegisterModule() {
             <h2>Detalles del Proyecto</h2>
         </section>
         
-        <section className="info-section">
+        <section className="info-section" onSubmit={guardarDatos}>
             <h2>Titulo del Proyecto*</h2>
             <input type="text" 
             value={projectTitle} 
@@ -47,7 +60,7 @@ export function RegisterModule() {
             placeholder="Titulo del Proyecto"/>
         </section>
         
-        <section className="info-section">
+        <section className="info-section" onSubmit={guardarDatos}>
             <h2>Descripción del Proyecto*</h2>
 
             <input type="text" 
@@ -58,7 +71,7 @@ export function RegisterModule() {
         </section>
 
         
-        <section className="info-section">
+        <section className="info-section" onSubmit={guardarDatos}>
             <h2>Imagenes del Proyecto*</h2>
             
             <div className="add-image-scroll">
@@ -91,7 +104,7 @@ export function RegisterModule() {
             </div>
         </section>
 
-        <section>
+        <section onSubmit={guardarDatos}>
             <h2>Habilidades Necesarias*</h2>
 
             <section className="habilities">
@@ -124,5 +137,6 @@ export function RegisterModule() {
     </div>
     </div>
    ); 
+    }
 }
 
