@@ -17,26 +17,36 @@ export function RegisterModule() {
   const [projectTitle, setProjectTitle] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [showHabilitiesPopup, setShowHabilitiesPopup] = useState(false);
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaEntrega, setFechaEntrega] = useState("");
 
   const guardarDatos = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post("http://localhost:5000/api", {
-        projectTitle,
-        projectDescription,
-        projectImage,
-        projectHabilities,
-      });
+      const proyecto= {
+        name: projectTitle,
+        skill: projectHabilities[0], // o join(", ")
+        description: projectDescription,
+        image: projectImage[0],
+
+        start: new Date(fechaInicio).toISOString(),
+        end: new Date(fechaEntrega).toISOString(),
+      };
+      console.log(proyecto);
+
+      await axios.post("http://127.0.0.1:8000/api/v1/proyectos", proyecto);
+
       alert("Datos guardados");
     } catch (error) {
-      console.error(error);
+      console.log(error.response?.data);
     }
   };
 
   return (
     <form className="total" onSubmit={guardarDatos}>
-      <ProjectUpperBar/>
-      <textarea/>
+      <ProjectUpperBar />
+      <textarea />
 
       <div className="upper-panel">
         <button className="upper-panel-button">
@@ -110,12 +120,22 @@ export function RegisterModule() {
         <section className="date-input">
           <div className="date-section">
             <h2>Fecha de Inicio*</h2>
-            <input type="date" />
+
+            <input
+              type="date"
+              value={fechaInicio}
+              onChange={(e) => setFechaInicio(e.target.value)}
+            />
           </div>
 
           <div className="date-section">
             <h2>Fecha de Entrega*</h2>
-            <input type="date" />
+
+            <input
+              type="date"
+              value={fechaEntrega}
+              onChange={(e) => setFechaEntrega(e.target.value)}
+            />
           </div>
         </section>
 
