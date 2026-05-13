@@ -1,34 +1,45 @@
 import { useNavigate } from "react-router-dom";
 
-import { ProjectUpperBar } from "../../Modules/ProjectUpperBar";
+import Navbar from "../../Components/Navbar/Navbar";
 
 import "./Home.css";
 
 export default function Home() {
   const navigate = useNavigate();
 
+  const currentUser = JSON.parse(
+    localStorage.getItem("workpal_user")
+  );
+
   return (
     <div className="home-page">
-      <ProjectUpperBar />
+      <Navbar />
 
-      {/* HERO SECTION */}
+      {/* HERO */}
       <section className="hero-section">
         <div className="hero-content">
+          <span className="hero-badge">
+            🚀 Plataforma colaborativa
+          </span>
+
           <h1>
-            Construye proyectos increíbles junto a
-            personas con tus mismos intereses
+            Bienvenido a{" "}
+            <span>WorkPal</span>
           </h1>
 
           <p>
-            WorkPal conecta estudiantes, desarrolladores
-            y creadores para colaborar en proyectos reales
-            y ganar experiencia.
+            Conecta con personas, crea
+            proyectos increíbles y colabora
+            en equipo para transformar ideas
+            en realidad.
           </p>
 
           <div className="hero-buttons">
             <button
               className="primary-button"
-              onClick={() => navigate("/search")}
+              onClick={() =>
+                navigate("/search")
+              }
             >
               Buscar Proyectos
             </button>
@@ -43,81 +54,99 @@ export default function Home() {
             </button>
           </div>
         </div>
+
+        <div className="hero-image-container">
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
+            alt="WorkPal Team"
+            className="hero-image"
+          />
+        </div>
+      </section>
+
+      {/* USER SECTION */}
+      <section className="user-section">
+        <div className="user-card">
+          <div className="user-avatar">
+            {currentUser?.name
+              ?.charAt(0)
+              .toUpperCase()}
+          </div>
+
+          <div className="user-info">
+            <h2>
+              {currentUser?.name}{" "}
+              {currentUser?.lastName}
+            </h2>
+
+            <p>
+              {currentUser?.career}
+            </p>
+
+            <div className="skills-container">
+              {currentUser?.skills?.map(
+                (skill) => (
+                  <span
+                    className="skill-badge"
+                    key={skill}
+                  >
+                    {skill}
+                  </span>
+                )
+              )}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* FEATURES */}
       <section className="features-section">
-        <h2>¿Qué puedes hacer en WorkPal?</h2>
+        <h2>
+          ¿Qué puedes hacer en WorkPal?
+        </h2>
 
         <div className="features-grid">
+          {/* FEATURE 1 */}
           <div className="feature-card">
-            <h3>Explorar Proyectos</h3>
+            <div className="feature-icon">
+              🔍
+            </div>
+
+            <h3>Buscar Proyectos</h3>
 
             <p>
-              Encuentra proyectos según tus habilidades,
-              intereses y tecnologías favoritas.
+              Encuentra proyectos alineados
+              con tus intereses y habilidades.
             </p>
           </div>
 
+          {/* FEATURE 2 */}
           <div className="feature-card">
-            <h3>Crear Equipos</h3>
+            <div className="feature-icon">
+              🤝
+            </div>
+
+            <h3>Colaborar</h3>
 
             <p>
-              Publica tus ideas y recluta colaboradores
-              para trabajar juntos.
+              Trabaja en equipo con personas
+              apasionadas por crear.
             </p>
           </div>
 
+          {/* FEATURE 3 */}
           <div className="feature-card">
-            <h3>Ganar Experiencia</h3>
+            <div className="feature-icon">
+              💡
+            </div>
+
+            <h3>Crear Ideas</h3>
 
             <p>
-              Participa en proyectos reales y fortalece
-              tu portafolio profesional.
+              Publica tus propios proyectos y
+              encuentra colaboradores.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* POPULAR CATEGORIES */}
-      <section className="categories-section">
-        <h2>Categorías Populares</h2>
-
-        <div className="categories-grid">
-          <div className="category-card">
-            <h3>Desarrollo Web</h3>
-          </div>
-
-          <div className="category-card">
-            <h3>Aplicaciones Móviles</h3>
-          </div>
-
-          <div className="category-card">
-            <h3>Inteligencia Artificial</h3>
-          </div>
-
-          <div className="category-card">
-            <h3>Diseño UI/UX</h3>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="cta-section">
-        <div className="cta-card">
-          <h2>¿Listo para colaborar?</h2>
-
-          <p>
-            Únete a proyectos innovadores y conecta con
-            otros desarrolladores.
-          </p>
-
-          <button
-            className="primary-button"
-            onClick={() => navigate("/search")}
-          >
-            Comenzar Ahora
-          </button>
         </div>
       </section>
     </div>
