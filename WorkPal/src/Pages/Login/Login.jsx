@@ -47,7 +47,6 @@ export default function Login() {
       return;
     }
 
-    // ACTUALIZAR CONTEXT + LOCALSTORAGE
     login(foundUser);
 
     navigate("/home");

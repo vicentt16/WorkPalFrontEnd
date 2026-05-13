@@ -9,10 +9,6 @@
   margin-bottom: 40px;
 }
 
-/* ========================= */
-/* INPUT */
-/* ========================= */
-
 .searchbar-input {
   flex: 1;
 
@@ -38,10 +34,6 @@
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
-/* ========================= */
-/* SELECT */
-/* ========================= */
-
 .searchbar-select {
   min-width: 240px;
 
@@ -66,10 +58,6 @@
 
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
-
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
 
 @media (max-width: 768px) {
   .searchbar-container {

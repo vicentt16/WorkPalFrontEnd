@@ -1,8 +1,3 @@
-// =========================================
-// PROJECT SERVICE
-// =========================================
-
-// Obtener proyectos
 const getProjects = () => {
   return (
     JSON.parse(localStorage.getItem("workpal_projects")) ||
@@ -10,17 +5,12 @@ const getProjects = () => {
   );
 };
 
-// Guardar proyectos
 const saveProjects = (projects) => {
   localStorage.setItem(
     "workpal_projects",
     JSON.stringify(projects)
   );
 };
-
-// =========================================
-// CREATE PROJECT
-// =========================================
 
 export const createProject = (projectData) => {
   const currentUser = JSON.parse(
@@ -90,17 +80,9 @@ export const createProject = (projectData) => {
   };
 };
 
-// =========================================
-// GET ALL PROJECTS
-// =========================================
-
 export const getAllProjects = () => {
   return getProjects();
 };
-
-// =========================================
-// GET PROJECT BY ID
-// =========================================
 
 export const getProjectById = (projectId) => {
   const projects = getProjects();
@@ -109,10 +91,6 @@ export const getProjectById = (projectId) => {
     (project) => project.id === Number(projectId)
   );
 };
-
-// =========================================
-// SEARCH PROJECTS
-// =========================================
 
 export const searchProjects = (
   searchText,
@@ -138,10 +116,6 @@ export const searchProjects = (
     return matchesSearch && matchesCategory;
   });
 };
-
-// =========================================
-// APPLY TO PROJECT
-// =========================================
 
 export const applyToProject = (projectId) => {
   const currentUser = JSON.parse(
@@ -170,7 +144,6 @@ export const applyToProject = (projectId) => {
 
   const project = projects[projectIndex];
 
-  // Verificar vacantes
   if (project.vacancies <= 0) {
     return {
       success: false,
@@ -178,7 +151,6 @@ export const applyToProject = (projectId) => {
     };
   }
 
-  // Verificar si ya aplicó
   const alreadyApplied =
     project.applicants.includes(currentUser.id);
 
@@ -190,7 +162,6 @@ export const applyToProject = (projectId) => {
     };
   }
 
-  // Agregar solicitud
   project.applicants.push(currentUser.id);
 
   saveProjects(projects);
@@ -200,10 +171,6 @@ export const applyToProject = (projectId) => {
     message: "Solicitud enviada correctamente",
   };
 };
-
-// =========================================
-// GET USER PROJECTS
-// =========================================
 
 export const getUserProjects = () => {
   const currentUser = JSON.parse(
@@ -219,10 +186,6 @@ export const getUserProjects = () => {
       project.ownerId === currentUser.id
   );
 };
-
-// =========================================
-// DELETE PROJECT
-// =========================================
 
 export const deleteProject = (projectId) => {
   const projects = getProjects();

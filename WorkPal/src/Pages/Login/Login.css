@@ -3,10 +3,6 @@
   background-color: #fff4ca;
 }
 
-/* ========================= */
-/* Main Container */
-/* ========================= */
-
 .login-container {
   min-height: calc(100vh - 90px);
 
@@ -16,10 +12,6 @@
 
   padding: 40px 20px;
 }
-
-/* ========================= */
-/* Card */
-/* ========================= */
 
 .login-card {
   width: 100%;
@@ -33,10 +25,6 @@
 
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
-
-/* ========================= */
-/* Header */
-/* ========================= */
 
 .login-header {
   text-align: center;
@@ -59,10 +47,6 @@
 
   font-size: 16px;
 }
-
-/* ========================= */
-/* Form */
-/* ========================= */
 
 .login-form {
   display: flex;
@@ -101,10 +85,6 @@
   border-color: #d4ae15;
 }
 
-/* ========================= */
-/* Error Message */
-/* ========================= */
-
 .error-message {
   background-color: #fee2e2;
 
@@ -119,10 +99,6 @@
 
   text-align: center;
 }
-
-/* ========================= */
-/* Button */
-/* ========================= */
 
 .login-button {
   width: 100%;
@@ -147,10 +123,6 @@
   background-color: #d4ae15;
 }
 
-/* ========================= */
-/* Register Link */
-/* ========================= */
-
 .register-link {
   text-align: center;
 }
@@ -170,10 +142,6 @@
 .register-link a:hover {
   text-decoration: underline;
 }
-
-/* ========================= */
-/* Responsive */
-/* ========================= */
 
 @media (max-width: 600px) {
   .login-card {

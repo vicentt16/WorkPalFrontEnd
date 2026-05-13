@@ -7,10 +7,6 @@
   padding-bottom: 60px;
 }
 
-/* ========================= */
-/* Banner */
-/* ========================= */
-
 .project-banner {
   position: relative;
 
@@ -77,10 +73,6 @@
 
   line-height: 1.6;
 }
-
-/* ========================= */
-/* Main Content */
-/* ========================= */
 
 .project-main-info {
   display: flex;
@@ -152,10 +144,6 @@
   font-weight: bold;
 }
 
-/* ========================= */
-/* Skills */
-/* ========================= */
-
 .skills-section {
   padding: 0 80px 40px;
 }
@@ -186,10 +174,6 @@
   font-size: 15px;
   font-weight: 600;
 }
-
-/* ========================= */
-/* Members */
-/* ========================= */
 
 .members-section {
   padding: 0 80px 40px;
@@ -246,10 +230,6 @@
   font-weight: 500;
 }
 
-/* ========================= */
-/* Apply Section */
-/* ========================= */
-
 .apply-section {
   padding: 20px 80px;
 }
@@ -277,10 +257,6 @@
   background-color: #d4ae15;
 }
 
-/* ========================= */
-/* Not Found */
-/* ========================= */
-
 .project-not-found {
   min-height: 100vh;
 
@@ -303,10 +279,6 @@
 
   cursor: pointer;
 }
-
-/* ========================= */
-/* Responsive */
-/* ========================= */
 
 @media (max-width: 1000px) {
   .project-main-info {

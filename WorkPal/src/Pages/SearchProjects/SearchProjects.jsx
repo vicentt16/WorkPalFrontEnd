@@ -16,7 +16,6 @@ export default function SearchProjects() {
   const [projects, setProjects] =
     useState([]);
 
-  // Inicializar fake projects
   useEffect(() => {
     const existingProjects =
       localStorage.getItem(
@@ -36,7 +35,6 @@ export default function SearchProjects() {
     setProjects(loadedProjects);
   }, []);
 
-  // Filtrar proyectos
   const filteredProjects =
     projects.filter((project) => {
       const matchesSearch =

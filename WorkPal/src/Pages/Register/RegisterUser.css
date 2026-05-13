@@ -10,18 +10,10 @@
   padding: 40px 20px;
 }
 
-/* ========================= */
-/* CONTAINER */
-/* ========================= */
-
 .register-container {
   width: 100%;
   max-width: 900px;
 }
-
-/* ========================= */
-/* CARD */
-/* ========================= */
 
 .register-card {
   background-color: white;
@@ -32,10 +24,6 @@
 
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
 }
-
-/* ========================= */
-/* HEADER */
-/* ========================= */
 
 .register-header {
   text-align: center;
@@ -59,20 +47,12 @@
   font-size: 17px;
 }
 
-/* ========================= */
-/* FORM */
-/* ========================= */
-
 .register-form {
   display: flex;
   flex-direction: column;
 
   gap: 22px;
 }
-
-/* ========================= */
-/* INPUTS */
-/* ========================= */
 
 .input-group {
   display: flex;
@@ -112,10 +92,6 @@
   font-size: 13px;
 }
 
-/* ========================= */
-/* ROW */
-/* ========================= */
-
 .form-row {
   display: flex;
 
@@ -125,10 +101,6 @@
 .form-row .input-group {
   flex: 1;
 }
-
-/* ========================= */
-/* BUTTON */
-/* ========================= */
 
 .register-button {
   width: 100%;
@@ -153,10 +125,6 @@
   background-color: #d4ae15;
 }
 
-/* ========================= */
-/* LINKS */
-/* ========================= */
-
 .login-link {
   text-align: center;
 }
@@ -174,10 +142,6 @@
 .login-link a:hover {
   text-decoration: underline;
 }
-
-/* ========================= */
-/* MESSAGES */
-/* ========================= */
 
 .error-message {
   background-color: #fee2e2;
@@ -206,10 +170,6 @@
 
   font-weight: 500;
 }
-
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
 
 @media (max-width: 768px) {
   .register-card {

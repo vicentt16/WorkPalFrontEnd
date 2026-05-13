@@ -36,7 +36,6 @@ export default function CreateProject() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validación
     if (
       !formData.title ||
       !formData.category ||
@@ -51,7 +50,6 @@ export default function CreateProject() {
       return;
     }
 
-    // Convertir skills string a array
     const formattedSkills =
       formData.skills
         .split(",")
@@ -75,7 +73,6 @@ export default function CreateProject() {
       "Proyecto creado correctamente"
     );
 
-    // Limpiar formulario
     setFormData({
       title: "",
       category: "",
@@ -86,7 +83,6 @@ export default function CreateProject() {
       image: "",
     });
 
-    // Redirección
     setTimeout(() => {
       navigate("/search");
     }, 1500);

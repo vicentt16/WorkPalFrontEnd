@@ -19,10 +19,6 @@
   z-index: 1000;
 }
 
-/* ========================= */
-/* LOGO */
-/* ========================= */
-
 .navbar-logo-container {
   display: flex;
   align-items: center;
@@ -46,10 +42,6 @@
 
   font-weight: bold;
 }
-
-/* ========================= */
-/* NAV LINKS */
-/* ========================= */
 
 .navbar-links {
   display: flex;
@@ -88,10 +80,6 @@
 
   color: white;
 }
-
-/* ========================= */
-/* USER SECTION */
-/* ========================= */
 
 .navbar-user-section {
   display: flex;
@@ -136,10 +124,6 @@
   font-weight: 600;
 }
 
-/* ========================= */
-/* BUTTONS */
-/* ========================= */
-
 .logout-button,
 .login-button-navbar {
   border: none;
@@ -164,10 +148,6 @@
 .login-button-navbar:hover {
   background-color: #d4ae15;
 }
-
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
 
 @media (max-width: 1000px) {
   .navbar {

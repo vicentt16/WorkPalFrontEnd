@@ -1,15 +1,9 @@
-// =========================================
-// AUTH SERVICE
-// =========================================
-
-// Obtener usuarios registrados
 const getUsers = () => {
   return (
     JSON.parse(localStorage.getItem("workpal_users")) || []
   );
 };
 
-// Guardar usuarios
 const saveUsers = (users) => {
   localStorage.setItem(
     "workpal_users",
@@ -17,14 +11,9 @@ const saveUsers = (users) => {
   );
 };
 
-// =========================================
-// REGISTER
-// =========================================
-
 export const registerUser = (userData) => {
   const users = getUsers();
 
-  // Verificar si el correo ya existe
   const existingUser = users.find(
     (user) => user.email === userData.email
   );
@@ -36,7 +25,6 @@ export const registerUser = (userData) => {
     };
   }
 
-  // Crear nuevo usuario
   const newUser = {
     id: Date.now(),
     name: userData.name,
@@ -59,10 +47,6 @@ export const registerUser = (userData) => {
   };
 };
 
-// =========================================
-// LOGIN
-// =========================================
-
 export const loginUser = (email, password) => {
   const users = getUsers();
 
@@ -79,7 +63,6 @@ export const loginUser = (email, password) => {
     };
   }
 
-  // Guardar sesión
   localStorage.setItem(
     "workpal_user",
     JSON.stringify(foundUser)
@@ -92,27 +75,15 @@ export const loginUser = (email, password) => {
   };
 };
 
-// =========================================
-// LOGOUT
-// =========================================
-
 export const logoutUser = () => {
   localStorage.removeItem("workpal_user");
 };
-
-// =========================================
-// GET CURRENT USER
-// =========================================
 
 export const getCurrentUser = () => {
   return JSON.parse(
     localStorage.getItem("workpal_user")
   );
 };
-
-// =========================================
-// CHECK AUTH
-// =========================================
 
 export const isAuthenticated = () => {
   return !!localStorage.getItem("workpal_user");

@@ -37,7 +37,6 @@ export default function RegisterUser() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // VALIDACIONES
     if (
       !formData.name ||
       !formData.lastName ||
@@ -72,7 +71,6 @@ export default function RegisterUser() {
       return;
     }
 
-    // FORMATEAR SKILLS
     const formattedSkills =
       formData.skills
         .split(",")
@@ -94,7 +92,6 @@ export default function RegisterUser() {
       return;
     }
 
-    // LOGIN AUTOMÁTICO
     login(response.user);
 
     setSuccessMessage(

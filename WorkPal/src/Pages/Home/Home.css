@@ -4,10 +4,6 @@
   background-color: #fff4ca;
 }
 
-/* ========================= */
-/* HERO */
-/* ========================= */
-
 .hero-section {
   width: 100%;
 
@@ -69,10 +65,6 @@
   margin-bottom: 35px;
 }
 
-/* ========================= */
-/* BUTTONS */
-/* ========================= */
-
 .hero-buttons {
   display: flex;
 
@@ -119,10 +111,6 @@
   background-color: #ffffff;
 }
 
-/* ========================= */
-/* HERO IMAGE */
-/* ========================= */
-
 .hero-image-container {
   flex: 1;
 
@@ -140,10 +128,6 @@
 
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
 }
-
-/* ========================= */
-/* USER SECTION */
-/* ========================= */
 
 .user-section {
   padding: 20px 80px 70px;
@@ -196,10 +180,6 @@
   margin-bottom: 18px;
 }
 
-/* ========================= */
-/* SKILLS */
-/* ========================= */
-
 .skills-container {
   display: flex;
   flex-wrap: wrap;
@@ -219,10 +199,6 @@
   font-size: 14px;
   font-weight: 600;
 }
-
-/* ========================= */
-/* FEATURES */
-/* ========================= */
 
 .features-section {
   padding: 0 80px 90px;
@@ -286,10 +262,6 @@
 
   line-height: 1.7;
 }
-
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
 
 @media (max-width: 1000px) {
   .hero-section {
