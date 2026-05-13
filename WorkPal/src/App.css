@@ -1,0 +1,80 @@
+/* ========================= */
+/* GLOBAL APP */
+/* ========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  background-color: #f5f7fb;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ========================= */
+/* GLOBAL BUTTONS */
+/* ========================= */
+
+button {
+  font-family: inherit;
+}
+
+/* ========================= */
+/* GLOBAL INPUTS */
+/* ========================= */
+
+input,
+select,
+textarea,
+button {
+  outline: none;
+}
+
+/* ========================= */
+/* SCROLLBAR */
+/* ========================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2563eb;
+
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1d4ed8;
+}
+
+/* ========================= */
+/* LINKS */
+/* ========================= */
+
+a {
+  text-decoration: none;
+
+  color: inherit;
+}
