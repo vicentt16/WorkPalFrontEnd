@@ -73,11 +73,6 @@ export default function AppRoutes() {
           path="*"
           element={<NotFound />}
         />
-
-        <Route
-          path="*"
-          element={<Navigate to="/" />}
-        />
       </Routes>
     </BrowserRouter>
   );

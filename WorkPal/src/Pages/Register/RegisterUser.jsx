@@ -1,188 +1,274 @@
-import React, { useState } from "react";
-import { ProjectUpperBar } from "../../Modules/ProjectUpperBar";
+import { useState } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+
+import { useAuth } from "../../Context/AuthContext";
+
+import { registerUser } from "../../Services/authService";
+
 import "./RegisterUser.css";
 
 export default function RegisterUser() {
+  const navigate = useNavigate();
+
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
-    nombre: "",
+    name: "",
+    lastName: "",
     email: "",
-    telefono: "",
     password: "",
     confirmPassword: "",
-    universidad: "",
-    carrera: "",
-    habilidades: "",
-    foto: null
+    career: "",
+    skills: "",
   });
 
-  const [preview, setPreview] = useState(null);
+  const [errorMessage, setErrorMessage] =
+    useState("");
+
+  const [successMessage, setSuccessMessage] =
+    useState("");
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
 
-    if (name === "foto") {
-      const file = files[0];
-      setFormData({ ...formData, foto: file });
-
-      if (file) {
-        setPreview(URL.createObjectURL(file));
-      }
-
-    }
-    else {
-      setFormData({
-        ...formData,
-        [name]: value
-      });
-    }
+    setErrorMessage("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Las contraseñas no coinciden");
+    // VALIDACIONES
+    if (
+      !formData.name ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword ||
+      !formData.career
+    ) {
+      setErrorMessage(
+        "Todos los campos son obligatorios"
+      );
+
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem("workpal_users")) || [];
+    if (
+      formData.password !==
+      formData.confirmPassword
+    ) {
+      setErrorMessage(
+        "Las contraseñas no coinciden"
+      );
 
-    const emailExists = users.some(
-      (user) => user.email === formData.email
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setErrorMessage(
+        "La contraseña debe tener mínimo 6 caracteres"
+      );
+
+      return;
+    }
+
+    // FORMATEAR SKILLS
+    const formattedSkills =
+      formData.skills
+        .split(",")
+        .map((skill) => skill.trim())
+        .filter((skill) => skill !== "");
+
+    const response = registerUser({
+      name: formData.name,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      career: formData.career,
+      skills: formattedSkills,
+    });
+
+    if (!response.success) {
+      setErrorMessage(response.message);
+
+      return;
+    }
+
+    // LOGIN AUTOMÁTICO
+    login(response.user);
+
+    setSuccessMessage(
+      "Cuenta creada correctamente"
     );
 
-    if (emailExists) {
-      alert("Ese correo ya está registrado");
-      return;
-    }
-    
-    users.push(formData);
-
-    localStorage.setItem("workpal_users", JSON.stringify(users));
-
-    alert("Cuenta creada correctamente");
-
-    navigate("/");
+    setTimeout(() => {
+      navigate("/home");
+    }, 1500);
   };
 
   return (
-    <div>
-      <ProjectUpperBar />
-      <div className="register-page">
-        <div className="upper-panel">
-          <div className="upper-panel-button">
-            <p>Volver</p>
-          </div>
-          <div className="upper-panel-text">
+    <div className="register-page">
+      <div className="register-container">
+        <div className="register-card">
+          {/* HEADER */}
+          <div className="register-header">
             <h1>Crear Cuenta</h1>
-            <p>Completa tu perfil para comenzar</p>
+
+            <p>
+              Únete a WorkPal y comienza a
+              colaborar en proyectos increíbles.
+            </p>
           </div>
-        </div>
-        <form className="register-form" onSubmit={handleSubmit}>
-          <h2>Información Personal</h2>
 
-          <label>Nombre completo *</label>
-          <input
-            type="text"
-            name="nombre"
-            value={formData.nombre}
-            onChange={handleChange}
-            required
-          />
+          {/* FORM */}
+          <form
+            className="register-form"
+            onSubmit={handleSubmit}
+          >
+            {/* ROW */}
+            <div className="form-row">
+              <div className="input-group">
+                <label>Nombre</label>
 
-          <div className="row">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Juan"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="input-group">
+                <label>Apellido</label>
+
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Pérez"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            {/* EMAIL */}
             <div className="input-group">
-              <label>Correo electrónico *</label>
+              <label>
+                Correo Electrónico
+              </label>
+
               <input
                 type="email"
                 name="email"
+                placeholder="ejemplo@gmail.com"
                 value={formData.email}
                 onChange={handleChange}
-                required
               />
             </div>
 
+            {/* CAREER */}
             <div className="input-group">
-              <label>Teléfono *</label>
+              <label>Carrera</label>
+
               <input
                 type="text"
-                name="telefono"
-                value={formData.telefono}
+                name="career"
+                placeholder="Ingeniería en Software"
+                value={formData.career}
                 onChange={handleChange}
-                required
               />
             </div>
-          </div>
 
-          <h2>Seguridad</h2>
+            {/* SKILLS */}
+            <div className="input-group">
+              <label>
+                Habilidades (Opcional)
+              </label>
 
-          <label>Contraseña *</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+              <input
+                type="text"
+                name="skills"
+                placeholder="React, UI/UX, Python..."
+                value={formData.skills}
+                onChange={handleChange}
+              />
 
-          <label>Confirmar contraseña *</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
+              <small>
+                Separa las habilidades por
+                comas
+              </small>
+            </div>
 
-          <h2>Información académica</h2>
+            {/* PASSWORDS */}
+            <div className="form-row">
+              <div className="input-group">
+                <label>Contraseña</label>
 
-          <label>Universidad</label>
-          <input
-            type="text"
-            name="universidad"
-            value={formData.universidad}
-            onChange={handleChange}
-          />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="******"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </div>
 
-          <label>Carrera</label>
-          <input
-            type="text"
-            name="carrera"
-            value={formData.carrera}
-            onChange={handleChange}
-          />
+              <div className="input-group">
+                <label>
+                  Confirmar Contraseña
+                </label>
 
-          <h2>Habilidades</h2>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="******"
+                  value={
+                    formData.confirmPassword
+                  }
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
 
-          <label>Describe tus habilidades</label>
-          <textarea
-            name="habilidades"
-            value={formData.habilidades}
-            onChange={handleChange}
-            rows="3"
-          />
-
-          <h2>Foto de perfil</h2>
-
-          <div className="photo-section">
-            <input
-              type="file"
-              name="foto"
-              accept="image/*"
-              onChange={handleChange}
-            />
-
-            {preview && (
-              <img src={preview} alt="preview" className="preview-img" />
+            {/* ERROR */}
+            {errorMessage && (
+              <div className="error-message">
+                {errorMessage}
+              </div>
             )}
-          </div>
 
-          <button className="submit-button" type="submit">
-            Registrarse
-          </button>
+            {/* SUCCESS */}
+            {successMessage && (
+              <div className="success-message">
+                {successMessage}
+              </div>
+            )}
 
-        </form>
+            {/* BUTTON */}
+            <button
+              type="submit"
+              className="register-button"
+            >
+              Crear Cuenta
+            </button>
+
+            {/* LOGIN */}
+            <div className="login-link">
+              <p>
+                ¿Ya tienes cuenta?
+                <Link to="/">
+                  {" "}
+                  Iniciar Sesión
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
