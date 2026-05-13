@@ -1,0 +1,317 @@
+.project-details-container {
+  min-height: 100vh;
+  background-color: #fff4ca;
+}
+
+.project-details-content {
+  padding-bottom: 60px;
+}
+
+.project-banner {
+  position: relative;
+
+  width: 100%;
+  height: 420px;
+
+  overflow: hidden;
+}
+
+.project-banner-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.project-banner-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0.2)
+  );
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  padding: 50px 80px;
+
+  color: white;
+}
+
+.project-category {
+  width: fit-content;
+
+  background-color: rgba(255, 255, 255, 0.15);
+
+  padding: 8px 18px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  margin-bottom: 18px;
+
+  backdrop-filter: blur(6px);
+}
+
+.project-banner-overlay h1 {
+  font-size: 52px;
+
+  margin-bottom: 15px;
+}
+
+.project-banner-overlay p {
+  max-width: 700px;
+
+  font-size: 18px;
+
+  line-height: 1.6;
+}
+
+.project-main-info {
+  display: flex;
+  gap: 30px;
+
+  padding: 50px 80px;
+
+  align-items: flex-start;
+}
+
+.project-description-card {
+  flex: 1;
+
+  background-color: white;
+
+  border-radius: 20px;
+
+  padding: 35px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.project-description-card h2 {
+  font-size: 30px;
+
+  color: #111827;
+
+  margin-bottom: 20px;
+}
+
+.project-description-card p {
+  color: #4b5563;
+
+  line-height: 1.9;
+
+  font-size: 17px;
+}
+
+.project-side-panel {
+  width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.side-card {
+  background-color: white;
+
+  border-radius: 20px;
+
+  padding: 28px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.side-card h3 {
+  color: #374151;
+
+  margin-bottom: 12px;
+
+  font-size: 18px;
+}
+
+.side-card p {
+  color: #d4ae15;
+
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.skills-section {
+  padding: 0 80px 40px;
+}
+
+.skills-section h2 {
+  font-size: 30px;
+
+  margin-bottom: 25px;
+
+  color: #111827;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.skill-tag {
+  background-color: #ffffff;
+
+  color: #d4ae15;
+
+  padding: 12px 18px;
+
+  border-radius: 16px;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.members-section {
+  padding: 0 80px 40px;
+}
+
+.members-section h2 {
+  font-size: 30px;
+
+  margin-bottom: 25px;
+
+  color: #111827;
+}
+
+.members-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.member-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  background-color: white;
+
+  padding: 18px 22px;
+
+  border-radius: 18px;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.member-avatar {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+
+  background-color: #d4ae15;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.member-card p {
+  color: #374151;
+
+  font-weight: 500;
+}
+
+.apply-section {
+  padding: 20px 80px;
+}
+
+.apply-button {
+  width: 100%;
+
+  padding: 18px;
+
+  border: none;
+  border-radius: 18px;
+
+  background-color: #d4ae15;
+  color: white;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.apply-button:hover {
+  background-color: #d4ae15;
+}
+
+.project-not-found {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.project-not-found button {
+  padding: 14px 24px;
+
+  border: none;
+  border-radius: 12px;
+
+  background-color: #d4ae15;
+  color: white;
+
+  cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .project-main-info {
+    flex-direction: column;
+  }
+
+  .project-side-panel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-banner {
+    height: 320px;
+  }
+
+  .project-banner-overlay {
+    padding: 30px 20px;
+  }
+
+  .project-banner-overlay h1 {
+    font-size: 36px;
+  }
+
+  .project-main-info,
+  .skills-section,
+  .members-section,
+  .apply-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .project-description-card {
+    padding: 25px;
+  }
+}

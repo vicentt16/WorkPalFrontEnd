@@ -1,0 +1,186 @@
+.navbar {
+  width: 100%;
+
+  height: 90px;
+
+  background-color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 50px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  position: sticky;
+  top: 0;
+
+  z-index: 1000;
+}
+
+.navbar-logo-container {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  cursor: pointer;
+}
+
+.navbar-logo {
+  width: 48px;
+  height: 48px;
+
+  object-fit: contain;
+}
+
+.navbar-title {
+  font-size: 30px;
+
+  color: #d4ae15;
+
+  font-weight: bold;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+}
+
+.navbar-link {
+  border: none;
+
+  background: transparent;
+
+  padding: 12px 18px;
+
+  border-radius: 12px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  color: #374151;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.navbar-link:hover {
+  background-color: #fffdf5;
+
+  color: #d4ae15;
+}
+
+.navbar-link.active {
+  background-color: #d4ae15;
+
+  color: white;
+}
+
+.navbar-user-section {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+}
+
+.navbar-user-info {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  background-color: #fffdf5;
+
+  padding: 10px 16px;
+
+  border-radius: 14px;
+}
+
+.navbar-user-avatar {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  background-color: #d4ae15;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+}
+
+.navbar-user-info span {
+  color: #111827;
+
+  font-weight: 600;
+}
+
+.logout-button,
+.login-button-navbar {
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 12px;
+
+  background-color: #d4ae15;
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.logout-button:hover,
+.login-button-navbar:hover {
+  background-color: #d4ae15;
+}
+
+@media (max-width: 1000px) {
+  .navbar {
+    padding: 0 25px;
+  }
+
+  .navbar-links {
+    gap: 10px;
+  }
+
+  .navbar-link {
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    height: auto;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+    padding: 20px;
+  }
+
+  .navbar-links {
+    flex-wrap: wrap;
+
+    justify-content: center;
+  }
+
+  .navbar-user-section {
+    flex-direction: column;
+  }
+}

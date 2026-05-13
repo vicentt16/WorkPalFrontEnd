@@ -1,0 +1,38 @@
+.notfound-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff4ca;
+}
+
+.notfound-card {
+  background: white;
+  padding: 50px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.notfound-card h1 {
+  font-size: 90px;
+  color: #d4ae15;
+}
+
+.notfound-card h2 {
+  margin: 10px 0;
+}
+
+.notfound-card p {
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.notfound-card button {
+  padding: 14px 22px;
+  border: none;
+  border-radius: 12px;
+  background: #d4ae15;
+  color: white;
+  cursor: pointer;
+}
