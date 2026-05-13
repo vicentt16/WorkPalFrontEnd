@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProjectUpperBar } from "../Modules/ProjectUpperBar";
+import { ProjectUpperBar } from "../../Modules/ProjectUpperBar";
 import "./RegisterUser.css";
 
 export default function RegisterUser() {
