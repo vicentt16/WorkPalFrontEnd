@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
 import Navbar from "../../Components/Navbar/Navbar";
-
 import "./Home.css";
 
 export default function Home() {
@@ -19,7 +17,7 @@ export default function Home() {
       <section className="hero-section">
         <div className="hero-content">
           <span className="hero-badge">
-            🚀 Plataforma colaborativa
+            Plataforma colaborativa
           </span>
 
           <h1>

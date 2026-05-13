@@ -1,19 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate, } from "react-router-dom";
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "../Pages/Login/Login";
-
 import RegisterUser from "../Pages/Register/RegisterUser";
-
 import Home from "../Pages/Home/Home";
-
 import SearchProjects from "../Pages/SearchProjects/SearchProjects";
-
 import ProjectDetails from "../Pages/ProjectDetails/ProjectDetails";
-
 import CreateProject from "../Pages/CreateProject/CreateProject";
-
 import NotFound from "../Pages/NotFound/NotFound";
-
 import ProtectedRoute from "../Components/ProtectedRoute";
 
 export default function AppRoutes() {

@@ -53,9 +53,9 @@
   top: 16px;
   left: 16px;
 
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #fff4ca;
 
-  color: #2563eb;
+  color: #d4ae15;
 
   padding: 8px 14px;
 
@@ -112,9 +112,9 @@
 }
 
 .project-skill-tag {
-  background-color: #dbeafe;
+  background-color: #fff4ca;
 
-  color: #2563eb;
+  color: #d4ae15;
 
   padding: 8px 12px;
 
@@ -157,7 +157,7 @@
   border: none;
   border-radius: 14px;
 
-  background-color: #2563eb;
+  background-color: #d4ae15;
   color: white;
 
   font-size: 16px;
@@ -169,7 +169,7 @@
 }
 
 .project-view-button:hover {
-  background-color: #1d4ed8;
+  background-color: #d4ae15;
 }
 
 /* ========================= */

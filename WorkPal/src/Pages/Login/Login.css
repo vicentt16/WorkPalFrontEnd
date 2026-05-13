@@ -1,6 +1,6 @@
 .login-page {
   min-height: 100vh;
-  background-color: #f5f7fb;
+  background-color: #fff4ca;
 }
 
 /* ========================= */
@@ -87,7 +87,7 @@
 .input-group input {
   padding: 15px 18px;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid #fff4ca;
   border-radius: 14px;
 
   font-size: 16px;
@@ -98,7 +98,7 @@
 }
 
 .input-group input:focus {
-  border-color: #2563eb;
+  border-color: #d4ae15;
 }
 
 /* ========================= */
@@ -132,7 +132,7 @@
   border: none;
   border-radius: 14px;
 
-  background-color: #2563eb;
+  background-color: #d4ae15;
   color: white;
 
   font-size: 17px;
@@ -144,7 +144,7 @@
 }
 
 .login-button:hover {
-  background-color: #1d4ed8;
+  background-color: #d4ae15;
 }
 
 /* ========================= */
@@ -160,7 +160,7 @@
 }
 
 .register-link a {
-  color: #2563eb;
+  color: #d4ae15;
 
   text-decoration: none;
 

@@ -1,6 +1,6 @@
 .search-container {
   min-height: 100vh;
-  background-color: #f5f7fb;
+  background-color: #fff4ca;
 }
 
 .search-content {
@@ -35,7 +35,7 @@
 
   padding: 14px 18px;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid #fff4ca;
   border-radius: 12px;
 
   font-size: 16px;
@@ -46,13 +46,13 @@
 }
 
 .search-input:focus {
-  border-color: #2563eb;
+  border-color: #d4ae15;
 }
 
 .category-select {
   padding: 14px 18px;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid #fff4ca;
   border-radius: 12px;
 
   font-size: 16px;
@@ -103,8 +103,8 @@
 .project-category {
   display: inline-block;
 
-  background-color: #dbeafe;
-  color: #2563eb;
+  background-color: #fff4ca;
+  color: #d4ae15;
 
   padding: 6px 12px;
 
@@ -140,9 +140,9 @@
 }
 
 .skill-tag {
-  background-color: #eef2ff;
+  background-color: #fff4ca;
 
-  color: #4338ca;
+  color: #d4ae15;
 
   padding: 8px 12px;
 
@@ -160,7 +160,7 @@
   border: none;
   border-radius: 12px;
 
-  background-color: #2563eb;
+  background-color: #d4ae15;
   color: white;
 
   font-size: 16px;
@@ -172,7 +172,7 @@
 }
 
 .view-project-button:hover {
-  background-color: #1d4ed8;
+  background-color: #d4ae15;
 }
 
 .no-results {

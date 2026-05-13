@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
-
 import Navbar from "../../Components/Navbar/Navbar";
-
 import SearchBar from "../../Components/SearchBar/SearchBar";
-
 import ProjectCard from "../../Components/ProjectCard/ProjectCard";
-
 import fakeProjects from "../../Data/fakeProjects";
-
-import { getAllProjects, } from "../../Services/projectService";
-
+import { getAllProjects } from "../../Services/projectService";
 import "./SearchProjects.css";
 
 export default function SearchProjects() {

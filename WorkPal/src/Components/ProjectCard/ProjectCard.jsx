@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-
 import "./ProjectCard.css";
 
 export default function ProjectCard({ project }) {

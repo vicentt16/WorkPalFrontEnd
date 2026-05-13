@@ -1,9 +1,6 @@
-import { useParams, useNavigate, } from "react-router-dom";
-
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
-
-import { getProjectById, applyToProject, } from "../../Services/projectService";
-
+import { getProjectById, applyToProject } from "../../Services/projectService";
 import "./ProjectDetails.css";
 
 export default function ProjectDetails() {

@@ -20,7 +20,7 @@
 
   padding: 15px 18px;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid #fff4ca;
   border-radius: 14px;
 
   background-color: white;
@@ -33,7 +33,7 @@
 }
 
 .searchbar-input:focus {
-  border-color: #2563eb;
+  border-color: #d4ae15;
 
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
@@ -47,7 +47,7 @@
 
   padding: 15px 18px;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid #fff4ca;
   border-radius: 14px;
 
   background-color: white;
@@ -62,7 +62,7 @@
 }
 
 .searchbar-select:focus {
-  border-color: #2563eb;
+  border-color: #d4ae15;
 
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }

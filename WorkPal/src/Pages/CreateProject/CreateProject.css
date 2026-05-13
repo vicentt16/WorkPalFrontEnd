@@ -1,7 +1,7 @@
 .create-project-page {
   min-height: 100vh;
 
-  background-color: #f5f7fb;
+  background-color: #fff4ca;
 }
 
 /* ========================= */
@@ -95,7 +95,7 @@
 
   padding: 15px 18px;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid #fff4ca;
   border-radius: 16px;
 
   background-color: white;
@@ -110,7 +110,7 @@
 .input-group input:focus,
 .input-group select:focus,
 .input-group textarea:focus {
-  border-color: #2563eb;
+  border-color: #d4ae15;
 
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
@@ -147,7 +147,7 @@
   border: none;
   border-radius: 18px;
 
-  background-color: #2563eb;
+  background-color: #d4ae15;
   color: white;
 
   font-size: 17px;
@@ -159,7 +159,7 @@
 }
 
 .create-project-button:hover {
-  background-color: #1d4ed8;
+  background-color: #d4ae15;
 }
 
 /* ========================= */

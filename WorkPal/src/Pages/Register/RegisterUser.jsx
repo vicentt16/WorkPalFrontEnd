@@ -1,11 +1,7 @@
 import { useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import { useAuth } from "../../Context/AuthContext";
-
 import { registerUser } from "../../Services/authService";
-
 import "./RegisterUser.css";
 
 export default function RegisterUser() {
