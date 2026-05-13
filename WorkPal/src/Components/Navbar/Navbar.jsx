@@ -1,21 +1,18 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, } from "react-router-dom";
+
+import { useAuth } from "../../Context/AuthContext";
 
 import "./Navbar.css";
-
-// IMPORTA AQUÍ TU LOGO
-// import logoWorkPal from "../../Images/logoWorkPal.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
 
   const location = useLocation();
 
-  const currentUser = JSON.parse(
-    localStorage.getItem("workpal_user")
-  );
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("workpal_user");
+    logout();
 
     navigate("/");
   };
@@ -31,18 +28,12 @@ export default function Navbar() {
         className="navbar-logo-container"
         onClick={() => navigate("/home")}
       >
-        {/* 
-        <img
-          src={logoWorkPal}
-          alt="WorkPal"
-          className="navbar-logo"
-        /> 
-        */}
-
-        <h1 className="navbar-title">WorkPal</h1>
+        <h1 className="navbar-title">
+          WorkPal
+        </h1>
       </div>
 
-      {/* NAVIGATION */}
+      {/* NAV LINKS */}
       <nav className="navbar-links">
         <button
           className={`navbar-link ${
@@ -76,20 +67,18 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* USER SECTION */}
+      {/* USER */}
       <div className="navbar-user-section">
-        {currentUser ? (
+        {user ? (
           <>
             <div className="navbar-user-info">
               <div className="navbar-user-avatar">
-                {currentUser.name
+                {user.name
                   ?.charAt(0)
                   .toUpperCase()}
               </div>
 
-              <span>
-                {currentUser.name}
-              </span>
+              <span>{user.name}</span>
             </div>
 
             <button

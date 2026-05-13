@@ -1,149 +1,119 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-import { ProjectUpperBar } from "../../Modules/ProjectUpperBar";
+import Navbar from "../../Components/Navbar/Navbar";
+
+import SearchBar from "../../Components/SearchBar/SearchBar";
+
+import ProjectCard from "../../Components/ProjectCard/ProjectCard";
+
+import fakeProjects from "../../Data/fakeProjects";
+
+import { getAllProjects, } from "../../Services/projectService";
 
 import "./SearchProjects.css";
 
-// Datos temporales mientras backend no está listo
-const projects = [
-  {
-    id: 1,
-    title: "Sistema de Gestión Escolar",
-    category: "Web",
-    description:
-      "Plataforma web para administrar alumnos, maestros y materias.",
-    fullDescription:
-      "Proyecto enfocado en desarrollar un sistema completo para instituciones educativas utilizando React y FastAPI.",
-    skills: ["React", "FastAPI", "PostgreSQL"],
-    members: ["Carlos", "Andrea"],
-    image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
-  },
-  {
-    id: 2,
-    title: "Aplicación Fitness",
-    category: "Mobile",
-    description:
-      "Aplicación móvil para rutinas y seguimiento de ejercicios.",
-    fullDescription:
-      "Aplicación multiplataforma para seguimiento de actividad física y nutrición.",
-    skills: ["Flutter", "Firebase"],
-    members: ["Luis", "Fernanda"],
-    image:
-      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438",
-  },
-  {
-    id: 3,
-    title: "Asistente IA",
-    category: "IA",
-    description:
-      "Sistema inteligente para automatización de tareas.",
-    fullDescription:
-      "Proyecto basado en inteligencia artificial utilizando modelos NLP.",
-    skills: ["Python", "Machine Learning", "TensorFlow"],
-    members: ["Miguel"],
-    image:
-      "https://images.unsplash.com/photo-1677442136019-21780ecad995",
-  },
-];
-
 export default function SearchProjects() {
-  const navigate = useNavigate();
+  const [search, setSearch] =
+    useState("");
 
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("Todas");
+  const [category, setCategory] =
+    useState("Todas");
 
-  const filteredProjects = projects.filter((project) => {
-    const matchesSearch =
-      project.title.toLowerCase().includes(search.toLowerCase()) ||
-      project.skills.some((skill) =>
-        skill.toLowerCase().includes(search.toLowerCase())
+  const [projects, setProjects] =
+    useState([]);
+
+  // Inicializar fake projects
+  useEffect(() => {
+    const existingProjects =
+      localStorage.getItem(
+        "workpal_projects"
       );
 
-    const matchesCategory =
-      category === "Todas" || project.category === category;
+    if (!existingProjects) {
+      localStorage.setItem(
+        "workpal_projects",
+        JSON.stringify(fakeProjects)
+      );
+    }
 
-    return matchesSearch && matchesCategory;
-  });
+    const loadedProjects =
+      getAllProjects();
+
+    setProjects(loadedProjects);
+  }, []);
+
+  // Filtrar proyectos
+  const filteredProjects =
+    projects.filter((project) => {
+      const matchesSearch =
+        project.title
+          .toLowerCase()
+          .includes(
+            search.toLowerCase()
+          ) ||
+        project.skills.some((skill) =>
+          skill
+            .toLowerCase()
+            .includes(
+              search.toLowerCase()
+            )
+        );
+
+      const matchesCategory =
+        category === "Todas" ||
+        project.category === category;
+
+      return (
+        matchesSearch &&
+        matchesCategory
+      );
+    });
 
   return (
-    <div className="search-container">
-      <ProjectUpperBar />
+    <div className="search-projects-page">
+      <Navbar />
 
-      <div className="search-content">
-        <div className="search-header">
+      <div className="search-projects-container">
+        {/* HEADER */}
+        <div className="search-projects-header">
           <h1>Buscar Proyectos</h1>
 
           <p>
-            Encuentra proyectos que coincidan con tus habilidades e intereses.
+            Explora proyectos y encuentra
+            uno en el que quieras colaborar.
           </p>
         </div>
 
-        <div className="search-filters">
-          <input
-            type="text"
-            placeholder="Buscar proyecto o habilidad..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="search-input"
-          />
+        {/* SEARCHBAR */}
+        <SearchBar
+          search={search}
+          setSearch={setSearch}
+          category={category}
+          setCategory={setCategory}
+        />
 
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="category-select"
-          >
-            <option value="Todas">Todas las categorías</option>
-            <option value="Web">Web</option>
-            <option value="Mobile">Mobile</option>
-            <option value="IA">IA</option>
-          </select>
-        </div>
-
+        {/* PROJECTS */}
         <div className="projects-grid">
-          {filteredProjects.length > 0 ? (
-            filteredProjects.map((project) => (
-              <div
-                className="project-card"
-                key={project.id}
-                onClick={() => navigate(`/project/${project.id}`)}
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="project-image"
+          {filteredProjects.length >
+          0 ? (
+            filteredProjects.map(
+              (project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
                 />
-
-                <div className="project-card-content">
-                  <div className="project-category">
-                    {project.category}
-                  </div>
-
-                  <h2>{project.title}</h2>
-
-                  <p>{project.description}</p>
-
-                  <div className="skills-container">
-                    {project.skills.map((skill) => (
-                      <span key={skill} className="skill-tag">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-
-                  <button className="view-project-button">
-                    Ver Proyecto
-                  </button>
-                </div>
-              </div>
-            ))
+              )
+            )
           ) : (
-            <div className="no-results">
-              <h2>Sin resultados</h2>
+            <div className="no-projects">
+              <h2>
+                No se encontraron
+                proyectos
+              </h2>
 
               <p>
-                No encontramos proyectos que coincidan con tu búsqueda.
+                Intenta cambiar los
+                filtros de búsqueda.
               </p>
             </div>
           )}
