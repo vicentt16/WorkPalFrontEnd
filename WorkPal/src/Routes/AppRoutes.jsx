@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, } from "react-router-dom";
 
 import Login from "../Pages/Login/Login";
 
-import Register from "../Pages/Register/Register";
+import Register from "../Pages/Register/RegisterUser";
 
 import Home from "../Pages/Home/Home";
 
@@ -14,7 +14,7 @@ import CreateProject from "../Pages/CreateProject/CreateProject";
 
 import NotFound from "../Pages/NotFound/NotFound";
 
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "../Components/ProtectedRoute";
 
 export default function AppRoutes() {
   return (
