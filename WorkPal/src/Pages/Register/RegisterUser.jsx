@@ -45,7 +45,25 @@ export default function RegisterUser() {
       alert("Las contraseñas no coinciden");
       return;
     }
-    console.log("Registro completo:", formData);
+
+    const users = JSON.parse(localStorage.getItem("workpal_users")) || [];
+
+    const emailExists = users.some(
+      (user) => user.email === formData.email
+    );
+
+    if (emailExists) {
+      alert("Ese correo ya está registrado");
+      return;
+    }
+    
+    users.push(formData);
+
+    localStorage.setItem("workpal_users", JSON.stringify(users));
+
+    alert("Cuenta creada correctamente");
+
+    navigate("/");
   };
 
   return (

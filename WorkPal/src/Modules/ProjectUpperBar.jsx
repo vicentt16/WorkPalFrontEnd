@@ -1,30 +1,31 @@
-import React from "react";
-import "./ProjectUpperBar.css";
-
-import logoWorkPal from "/src/Images/logoWorkPal.png";
-import searchIcon from "/src/Images/searchIcon.png";
-import createIcon from "/src/Images/createIcon.png";
-import registerIcon from "/src/Images/registerIcon.png";
+import { useNavigate } from "react-router-dom";
 
 export function ProjectUpperBar() {
+  const navigate = useNavigate();
+
   return (
     <header className="upper-bar">
-      <img src={logoWorkPal} alt="WorkPal Logo" className="logoWorkPal"/>
+      <img
+        src={logoWorkPal}
+        alt="logo"
+        className="logoWorkPal"
+        onClick={() => navigate("/home")}
+      />
 
       <div className="upper-bar-buttons">
-        <button>
-          <img src={searchIcon} alt="Search Icon" />
+        <button onClick={() => navigate("/search")}>
+          <img src={searchIcon} alt="search" />
           <h2>Buscar</h2>
         </button>
 
-        <button>
-          <img src={createIcon} alt="Create Icon" />
+        <button onClick={() => navigate("/create-project")}>
+          <img src={createIcon} alt="create" />
           <h2>Crear Proyecto</h2>
         </button>
 
-        <button className="register-button">
-          <img src={registerIcon} alt="Register Icon" />
-          <h2>Registrarse</h2>
+        <button onClick={() => navigate("/")}>
+          <img src={registerIcon} alt="login" />
+          <h2>Login</h2>
         </button>
       </div>
     </header>
