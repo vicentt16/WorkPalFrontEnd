@@ -51,6 +51,7 @@ export default function RegisterUser() {
   return (
     <div>
       <ProjectUpperBar />
+      <textarea/>
       <div className="register-page">
         <div className="upper-panel">
           <div className="upper-panel-button">

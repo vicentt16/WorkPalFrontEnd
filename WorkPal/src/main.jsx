@@ -17,9 +17,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import RegisterUser from "./Pages/RegisterUser";
 import "./index.css";
+import { RegisterModule } from "./Modules/RegisterModule";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RegisterUser />
+    <RegisterModule/>
   </React.StrictMode>
 );

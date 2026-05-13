@@ -35,6 +35,7 @@ export function RegisterModule() {
 
   return (
     <form className="total" onSubmit={guardarDatos}>
+      <ProjectUpperBar/>
       <textarea/>
 
       <div className="upper-panel">
