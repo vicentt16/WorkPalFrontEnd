@@ -13,7 +13,7 @@ export default function ProjectDetails() {
   if (!project) {
     return (
       <div className="project-not-found">
-        <h1>Proyecto no encontrado</h1>
+        <h1>Proyecto no encontrado.</h1>
 
         <button
           onClick={() => navigate("/search")}

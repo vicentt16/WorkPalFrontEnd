@@ -9,11 +9,10 @@ export default function NotFound() {
       <div className="notfound-card">
         <h1>404</h1>
 
-        <h2>Página no encontrada</h2>
+        <h2>Página no encontrada :v</h2>
 
         <p>
-          La página que intentas visitar no existe o fue
-          movida.
+          La página que intentas visitar no existe.
         </p>
 
         <button onClick={() => navigate("/home")}>

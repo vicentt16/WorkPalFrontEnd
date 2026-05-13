@@ -116,7 +116,7 @@ export default function CreateProject() {
               <input
                 type="text"
                 name="title"
-                placeholder="Ej. Sistema de Gestión"
+                placeholder="WorkPal"
                 value={formData.title}
                 onChange={handleChange}
               />
@@ -179,13 +179,13 @@ export default function CreateProject() {
               <input
                 type="text"
                 name="skills"
-                placeholder="React, Node.js, UI/UX..."
+                placeholder="React, JavaScript, UI/UX..."
                 value={formData.skills}
                 onChange={handleChange}
               />
 
               <small>
-                Separa cada habilidad con coma
+                Separa cada habilidad con coma.
               </small>
             </div>
 

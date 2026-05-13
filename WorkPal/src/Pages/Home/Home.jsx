@@ -16,9 +16,6 @@ export default function Home() {
       {/* HERO */}
       <section className="hero-section">
         <div className="hero-content">
-          <span className="hero-badge">
-            Plataforma colaborativa
-          </span>
 
           <h1>
             Bienvenido a{" "}

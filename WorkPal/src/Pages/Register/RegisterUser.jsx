@@ -125,24 +125,24 @@ export default function RegisterUser() {
             {/* ROW */}
             <div className="form-row">
               <div className="input-group">
-                <label>Nombre</label>
+                <label>Nombre(s)</label>
 
                 <input
                   type="text"
                   name="name"
-                  placeholder="Juan"
+                  placeholder="Ángel Efrén"
                   value={formData.name}
                   onChange={handleChange}
                 />
               </div>
 
               <div className="input-group">
-                <label>Apellido</label>
+                <label>Apellidos</label>
 
                 <input
                   type="text"
                   name="lastName"
-                  placeholder="Pérez"
+                  placeholder="Rosado Santiago"
                   value={formData.lastName}
                   onChange={handleChange}
                 />
@@ -171,7 +171,7 @@ export default function RegisterUser() {
               <input
                 type="text"
                 name="career"
-                placeholder="Ingeniería en Software"
+                placeholder="DTS"
                 value={formData.career}
                 onChange={handleChange}
               />
@@ -180,7 +180,7 @@ export default function RegisterUser() {
             {/* SKILLS */}
             <div className="input-group">
               <label>
-                Habilidades (Opcional)
+                Habilidades
               </label>
 
               <input
@@ -193,7 +193,7 @@ export default function RegisterUser() {
 
               <small>
                 Separa las habilidades por
-                comas
+                comas.
               </small>
             </div>
 

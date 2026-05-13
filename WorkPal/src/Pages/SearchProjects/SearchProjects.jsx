@@ -74,6 +74,7 @@ export default function SearchProjects() {
             Explora proyectos y encuentra
             uno en el que quieras colaborar.
           </p>
+
         </div>
 
         {/* SEARCHBAR */}
@@ -100,7 +101,7 @@ export default function SearchProjects() {
             <div className="no-projects">
               <h2>
                 No se encontraron
-                proyectos
+                proyectos.
               </h2>
 
               <p>
