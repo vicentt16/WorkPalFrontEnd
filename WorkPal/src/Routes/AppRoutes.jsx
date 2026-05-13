@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, } from "react-router-dom";
 
 import Login from "../Pages/Login/Login";
 
-import Register from "../Pages/Register/RegisterUser";
+import RegisterUser from "../Pages/Register/RegisterUser";
 
 import Home from "../Pages/Home/Home";
 
@@ -28,7 +28,7 @@ export default function AppRoutes() {
 
         <Route
           path="/register"
-          element={<Register />}
+          element={<RegisterUser />}
         />
 
         {/* PRIVATE */}
