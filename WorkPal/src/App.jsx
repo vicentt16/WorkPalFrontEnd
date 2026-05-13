@@ -1,4 +1,3 @@
-/*
 import './App.css'
 
 function App() {
@@ -12,15 +11,3 @@ function App() {
 }
 
 export default App
-*/
-import RegisterUser from "./Pages/RegisterUser.jsx";
-
-function App() {
-  return (
-    <>
-      <RegisterUser />
-    </>
-  );
-}
-
-export default App;
