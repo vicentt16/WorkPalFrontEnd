@@ -4,7 +4,7 @@ import RegisterUser from "../Pages/Register/RegisterUser";
 import Home from "../Pages/Home/Home";
 import SearchProjects from "../Pages/SearchProjects/SearchProjects";
 import ProjectDetails from "../Pages/ProjectDetails/ProjectDetails";
-import CreateProject from "../Pages/CreateProject/CreateProject";
+import RegisterModule from "../Modules/RegisterModule";
 import NotFound from "../Pages/NotFound/NotFound";
 import ProtectedRoute from "../Components/ProtectedRoute";
 
@@ -55,7 +55,7 @@ export default function AppRoutes() {
           path="/create-project"
           element={
             <ProtectedRoute>
-              <CreateProject />
+              <RegisterModule />
             </ProtectedRoute>
           }
         />

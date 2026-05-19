@@ -1,90 +1,70 @@
-const getUsers = () => {
-  return (
-    JSON.parse(localStorage.getItem("workpal_users")) || []
-  );
-};
+import api from "./api";
 
-const saveUsers = (users) => {
-  localStorage.setItem(
-    "workpal_users",
-    JSON.stringify(users)
-  );
-};
+export const registerUser = async (
+  userData
+) => {
+  try {
+    const response = await api.post(
+      "/auth/register",
+      {
+        username: userData.email,
+        password: userData.password,
+      }
+    );
 
-export const registerUser = (userData) => {
-  const users = getUsers();
-
-  const existingUser = users.find(
-    (user) => user.email === userData.email
-  );
-
-  if (existingUser) {
+    return {
+      success: true,
+      user: response.data,
+    };
+  } catch (error) {
     return {
       success: false,
-      message: "El correo ya está registrado",
+      message:
+        error.response?.data?.detail ||
+        "Error al registrar usuario",
     };
   }
-
-  const newUser = {
-    id: Date.now(),
-    name: userData.name,
-    lastName: userData.lastName,
-    email: userData.email,
-    password: userData.password,
-    career: userData.career,
-    skills: userData.skills || [],
-    createdAt: new Date(),
-  };
-
-  users.push(newUser);
-
-  saveUsers(users);
-
-  return {
-    success: true,
-    message: "Usuario registrado correctamente",
-    user: newUser,
-  };
 };
 
-export const loginUser = (email, password) => {
-  const users = getUsers();
+export const loginUser = async (
+  email,
+  password
+) => {
+  try {
+    const formData = new FormData();
 
-  const foundUser = users.find(
-    (user) =>
-      user.email === email &&
-      user.password === password
-  );
+    formData.append("username", email);
 
-  if (!foundUser) {
+    formData.append("password", password);
+
+    const response = await api.post(
+      "/auth/token",
+      formData
+    );
+
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (error) {
     return {
       success: false,
-      message: "Correo o contraseña incorrectos",
+      message:
+        error.response?.data?.detail ||
+        "Credenciales inválidas",
     };
   }
+};
 
-  localStorage.setItem(
-    "workpal_user",
-    JSON.stringify(foundUser)
-  );
+export const getCurrentUser =
+  async () => {
+    try {
+      const response = await api.get(
+        "/auth/me"
+      );
 
-  return {
-    success: true,
-    message: "Inicio de sesión exitoso",
-    user: foundUser,
+      return response.data;
+    } catch {
+      return null;
+    }
   };
-};
-
-export const logoutUser = () => {
-  localStorage.removeItem("workpal_user");
-};
-
-export const getCurrentUser = () => {
-  return JSON.parse(
-    localStorage.getItem("workpal_user")
-  );
-};
-
-export const isAuthenticated = () => {
-  return !!localStorage.getItem("workpal_user");
-};

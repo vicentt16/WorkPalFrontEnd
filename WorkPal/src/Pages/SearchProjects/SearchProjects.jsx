@@ -17,22 +17,14 @@ export default function SearchProjects() {
     useState([]);
 
   useEffect(() => {
-    const existingProjects =
-      localStorage.getItem(
-        "workpal_projects"
-      );
+    const fetchProjects = async () => {
+      const data =
+        await getAllProjects();
 
-    if (!existingProjects) {
-      localStorage.setItem(
-        "workpal_projects",
-        JSON.stringify(fakeProjects)
-      );
-    }
+      setProjects(data);
+    };
 
-    const loadedProjects =
-      getAllProjects();
-
-    setProjects(loadedProjects);
+    fetchProjects();
   }, []);
 
   const filteredProjects =

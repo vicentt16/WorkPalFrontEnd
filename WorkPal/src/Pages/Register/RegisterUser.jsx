@@ -34,57 +34,11 @@ export default function RegisterUser() {
     setErrorMessage("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !formData.name ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.password ||
-      !formData.confirmPassword ||
-      !formData.career
-    ) {
-      setErrorMessage(
-        "Todos los campos son obligatorios"
-      );
-
-      return;
-    }
-
-    if (
-      formData.password !==
-      formData.confirmPassword
-    ) {
-      setErrorMessage(
-        "Las contraseñas no coinciden"
-      );
-
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      setErrorMessage(
-        "La contraseña debe tener mínimo 6 caracteres"
-      );
-
-      return;
-    }
-
-    const formattedSkills =
-      formData.skills
-        .split(",")
-        .map((skill) => skill.trim())
-        .filter((skill) => skill !== "");
-
-    const response = registerUser({
-      name: formData.name,
-      lastName: formData.lastName,
-      email: formData.email,
-      password: formData.password,
-      career: formData.career,
-      skills: formattedSkills,
-    });
+    const response =
+      await registerUser(formData);
 
     if (!response.success) {
       setErrorMessage(response.message);
@@ -94,13 +48,7 @@ export default function RegisterUser() {
 
     login(response.user);
 
-    setSuccessMessage(
-      "Cuenta creada correctamente"
-    );
-
-    setTimeout(() => {
-      navigate("/home");
-    }, 1500);
+    navigate("/home");
   };
 
   return (

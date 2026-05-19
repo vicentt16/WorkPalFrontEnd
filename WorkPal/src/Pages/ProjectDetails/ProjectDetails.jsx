@@ -8,7 +8,19 @@ export default function ProjectDetails() {
 
   const navigate = useNavigate();
 
-  const project = getProjectById(id);
+  const [project, setProject] =
+    useState(null);
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      const data =
+        await getProjectById(id);
+
+      setProject(data);
+    };
+
+    fetchProject();
+  }, [id]);
 
   if (!project) {
     return (

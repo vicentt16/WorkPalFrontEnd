@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import { loginUser, getCurrentUser } from "../../Services/authService";
 import "./Login.css";
 
 export default function Login() {
@@ -25,29 +26,25 @@ export default function Login() {
     setErrorMessage("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const users =
-      JSON.parse(
-        localStorage.getItem("workpal_users")
-      ) || [];
-
-    const foundUser = users.find(
-      (user) =>
-        user.email === formData.email &&
-        user.password === formData.password
-    );
-
-    if (!foundUser) {
-      setErrorMessage(
-        "Correo o contraseña incorrectos"
+    const response =
+      await loginUser(
+        formData.email,
+        formData.password
       );
+
+    if (!response.success) {
+      setErrorMessage(response.message);
 
       return;
     }
 
-    login(foundUser);
+    const currentUser =
+      await getCurrentUser();
+
+    login(currentUser);
 
     navigate("/home");
   };
