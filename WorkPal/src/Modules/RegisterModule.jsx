@@ -1,19 +1,11 @@
 import "./RegisterModule.css";
-
 import { AddImage } from "./addImage";
-
 import { useState } from "react";
-
 import { useNavigate } from "react-router-dom";
-
 import { HabilitiesModule } from "./HabilitiesModule";
-
 import { ProjectUpperBar } from "./ProjectUpperBar";
-
 import { HabilitiesPopUp } from "./HabilitiesPopUp";
-
 import { createProject } from "../Services/projectService";
-
 import returnIcon from "/src/Images/returnIcon.png";
 import createIcon from "/src/Images/createIcon.png";
 import addIcon from "/src/Images/addIcon.png";
@@ -50,7 +42,6 @@ export function RegisterModule() {
   const guardarDatos = async (e) => {
     e.preventDefault();
 
-    // VALIDACIONES
     if (
       !projectTitle ||
       !projectDescription
