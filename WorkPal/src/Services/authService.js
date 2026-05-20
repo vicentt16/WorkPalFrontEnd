@@ -7,7 +7,7 @@ export const registerUser = async (
     const response = await api.post(
       "/auth/register",
       {
-        username: userData.email,
+        email: userData.email,
         password: userData.password,
       }
     );
@@ -17,6 +17,11 @@ export const registerUser = async (
       user: response.data,
     };
   } catch (error) {
+    console.error(
+      "REGISTER ERROR:",
+      error.response?.data
+    );
+
     return {
       success: false,
       message:
@@ -47,6 +52,11 @@ export const loginUser = async (
       data: response.data,
     };
   } catch (error) {
+    console.error(
+      "LOGIN ERROR:",
+      error.response?.data
+    );
+
     return {
       success: false,
       message:
@@ -64,7 +74,12 @@ export const getCurrentUser =
       );
 
       return response.data;
-    } catch {
+    } catch (error) {
+      console.error(
+        "ME ERROR:",
+        error.response?.data
+      );
+
       return null;
     }
   };
