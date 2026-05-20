@@ -31,9 +31,19 @@ export const getProjectById =
 export const createProject =
   async (projectData) => {
     try {
+      const token =
+        localStorage.getItem(
+          "workpal_token"
+        );
+
       const response = await api.post(
         "/proyectos",
-        projectData
+        projectData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       return {
@@ -41,10 +51,15 @@ export const createProject =
         data: response.data,
       };
     } catch (error) {
+      console.log(
+        error.response?.data
+      );
+
       return {
         success: false,
         message:
-          error.response?.data?.detail ||
+          error.response?.data
+            ?.detail ||
           "Error al crear proyecto",
       };
     }
