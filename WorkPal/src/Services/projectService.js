@@ -1,203 +1,144 @@
-const getProjects = () => {
-  return (
-    JSON.parse(localStorage.getItem("workpal_projects")) ||
-    []
-  );
-};
+import api from "./api";
 
-const saveProjects = (projects) => {
-  localStorage.setItem(
-    "workpal_projects",
-    JSON.stringify(projects)
-  );
-};
-
-export const createProject = (projectData) => {
-  const currentUser = JSON.parse(
-    localStorage.getItem("workpal_user")
-  );
-
-  if (!currentUser) {
+export const createProject = async (projectData) => {
+  try {
+    const response = await api.post("/proyectos/", {
+      name: projectData.title,
+      skill: projectData.skills.join(", "),
+      description: projectData.description,
+      start: new Date().toISOString(),
+      end: projectData.finishDate ? new Date(projectData.finishDate).toISOString() : new Date().toISOString(),
+      image: projectData.image || "",
+    });
+    return {
+      success: true,
+      project: response.data,
+    };
+  } catch (error) {
     return {
       success: false,
-      message: "Usuario no autenticado",
+      message: error.response?.data?.detail || "Error al crear el proyecto",
     };
   }
-
-  const projects = getProjects();
-
-  const newProject = {
-    id: Date.now(),
-
-    title: projectData.title,
-
-    category: projectData.category,
-
-    description: projectData.description,
-
-    fullDescription:
-      projectData.fullDescription ||
-      projectData.description,
-
-    skills: projectData.skills || [],
-
-    vacancies: projectData.vacancies || 1,
-
-    finishDate: projectData.finishDate,
-
-    image:
-      projectData.image ||
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-
-    ownerId: currentUser.id,
-
-    ownerName:
-      currentUser.name +
-      " " +
-      currentUser.lastName,
-
-    members: [
-      currentUser.name +
-        " " +
-        currentUser.lastName,
-    ],
-
-    applicants: [],
-
-    createdAt: new Date(),
-
-    status: "Activo",
-  };
-
-  projects.push(newProject);
-
-  saveProjects(projects);
-
-  return {
-    success: true,
-    message: "Proyecto creado correctamente",
-    project: newProject,
-  };
 };
 
-export const getAllProjects = () => {
-  return getProjects();
+export const getAllProjects = async () => {
+  try {
+    const response = await api.get("/proyectos/");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    return [];
+  }
 };
 
-export const getProjectById = (projectId) => {
-  const projects = getProjects();
-
-  return projects.find(
-    (project) => project.id === Number(projectId)
-  );
+export const getProjectById = async (projectId) => {
+  try {
+    const response = await api.get(`/proyectos/${projectId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    return null;
+  }
 };
 
-export const searchProjects = (
-  searchText,
-  category
-) => {
-  const projects = getProjects();
+export const searchProjects = async (searchText, category) => {
+  try {
+    const response = await api.get("/proyectos/");
+    let projects = response.data;
 
-  return projects.filter((project) => {
-    const matchesSearch =
-      project.title
-        .toLowerCase()
-        .includes(searchText.toLowerCase()) ||
-      project.skills.some((skill) =>
-        skill
-          .toLowerCase()
-          .includes(searchText.toLowerCase())
+    if (searchText) {
+      projects = projects.filter((project) =>
+        project.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        project.skill.toLowerCase().includes(searchText.toLowerCase())
       );
+    }
 
-    const matchesCategory =
-      category === "Todas" ||
-      project.category === category;
-
-    return matchesSearch && matchesCategory;
-  });
+    // Category filtering can be added here if the backend supports it or filter locally
+    return projects;
+  } catch (error) {
+    console.error("Error searching projects:", error);
+    return [];
+  }
 };
 
-export const applyToProject = (projectId) => {
-  const currentUser = JSON.parse(
-    localStorage.getItem("workpal_user")
-  );
-
-  if (!currentUser) {
+export const applyToProject = async (projectId) => {
+  try {
+    const response = await api.post(`/proyectos/${projectId}/aplicar`);
+    return {
+      success: true,
+      message: "Solicitud enviada correctamente",
+      data: response.data,
+    };
+  } catch (error) {
     return {
       success: false,
-      message: "Debes iniciar sesión",
+      message: error.response?.data?.detail || "Error al aplicar al proyecto",
     };
   }
-
-  const projects = getProjects();
-
-  const projectIndex = projects.findIndex(
-    (project) => project.id === Number(projectId)
-  );
-
-  if (projectIndex === -1) {
-    return {
-      success: false,
-      message: "Proyecto no encontrado",
-    };
-  }
-
-  const project = projects[projectIndex];
-
-  if (project.vacancies <= 0) {
-    return {
-      success: false,
-      message: "No hay vacantes disponibles",
-    };
-  }
-
-  const alreadyApplied =
-    project.applicants.includes(currentUser.id);
-
-  if (alreadyApplied) {
-    return {
-      success: false,
-      message:
-        "Ya has aplicado a este proyecto",
-    };
-  }
-
-  project.applicants.push(currentUser.id);
-
-  saveProjects(projects);
-
-  return {
-    success: true,
-    message: "Solicitud enviada correctamente",
-  };
 };
 
-export const getUserProjects = () => {
-  const currentUser = JSON.parse(
-    localStorage.getItem("workpal_user")
-  );
-
-  if (!currentUser) return [];
-
-  const projects = getProjects();
-
-  return projects.filter(
-    (project) =>
-      project.ownerId === currentUser.id
-  );
+export const getUserProjects = async () => {
+  try {
+    const response = await api.get("/proyectos/mis-proyectos");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user projects:", error);
+    return [];
+  }
 };
 
-export const deleteProject = (projectId) => {
-  const projects = getProjects();
+export const getProjectApplications = async (projectId) => {
+  try {
+    const response = await api.get(`/proyectos/${projectId}/aplicaciones`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching applications:", error);
+    return [];
+  }
+};
 
-  const filteredProjects = projects.filter(
-    (project) => project.id !== Number(projectId)
-  );
+export const acceptApplication = async (applicationId) => {
+  try {
+    const response = await api.post(`/proyectos/aplicaciones/${applicationId}/aceptar`);
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data?.detail || "Error al aceptar la aplicación",
+    };
+  }
+};
 
-  saveProjects(filteredProjects);
+export const rejectApplication = async (applicationId) => {
+  try {
+    const response = await api.post(`/proyectos/aplicaciones/${applicationId}/rechazar`);
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data?.detail || "Error al rechazar la aplicación",
+    };
+  }
+};
 
-  return {
-    success: true,
-    message: "Proyecto eliminado",
-  };
+export const deleteProject = async (projectId) => {
+  try {
+    await api.delete(`/proyectos/${projectId}`);
+    return {
+      success: true,
+      message: "Proyecto eliminado",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Error al eliminar el proyecto",
+    };
+  }
 };

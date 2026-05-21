@@ -63,6 +63,19 @@ export default function Navbar() {
         >
           Crear Proyecto
         </button>
+
+        <button
+          className={`navbar-link ${
+            isActive("/manage-projects")
+              ? "active"
+              : ""
+          }`}
+          onClick={() =>
+            navigate("/manage-projects")
+          }
+        >
+          Gestionar Proyectos
+        </button>
       </nav>
 
       {/* USER */}

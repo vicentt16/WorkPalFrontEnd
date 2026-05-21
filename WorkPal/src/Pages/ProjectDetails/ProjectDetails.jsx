@@ -1,14 +1,27 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import { getProjectById, applyToProject } from "../../Services/projectService";
 import "./ProjectDetails.css";
 
 export default function ProjectDetails() {
   const { id } = useParams();
-
   const navigate = useNavigate();
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const project = getProjectById(id);
+  useEffect(() => {
+    const fetchProject = async () => {
+      const data = await getProjectById(id);
+      setProject(data);
+      setLoading(false);
+    };
+    fetchProject();
+  }, [id]);
+
+  if (loading) {
+    return <div className="loading">Cargando proyecto...</div>;
+  }
 
   if (!project) {
     return (
@@ -24,9 +37,8 @@ export default function ProjectDetails() {
     );
   }
 
-  const handleApply = () => {
-    const response = applyToProject(id);
-
+  const handleApply = async () => {
+    const response = await applyToProject(id);
     alert(response.message);
   };
 
@@ -38,17 +50,17 @@ export default function ProjectDetails() {
         {/* BANNER */}
         <div className="project-banner">
           <img
-            src={project.image}
-            alt={project.title}
+            src={project.image || "https://images.unsplash.com/photo-1498050108023-c5249f4df085"}
+            alt={project.name}
             className="project-banner-image"
           />
 
           <div className="project-banner-overlay">
             <span className="project-category">
-              {project.category}
+              Proyecto
             </span>
 
-            <h1>{project.title}</h1>
+            <h1>{project.name}</h1>
 
             <p>{project.description}</p>
           </div>
@@ -60,17 +72,17 @@ export default function ProjectDetails() {
             <h2>Descripción Completa</h2>
 
             <p>
-              {project.fullDescription}
+              {project.description}
             </p>
           </div>
 
           <div className="project-side-panel">
             <div className="side-card">
               <h3>
-                Vacantes Disponibles
+                Estado
               </h3>
 
-              <p>{project.vacancies}</p>
+              <p>Activo</p>
             </div>
 
             <div className="side-card">
@@ -78,7 +90,7 @@ export default function ProjectDetails() {
                 Fecha de Finalización
               </h3>
 
-              <p>{project.finishDate}</p>
+              <p>{new Date(project.end).toLocaleDateString()}</p>
             </div>
           </div>
         </div>
@@ -90,40 +102,14 @@ export default function ProjectDetails() {
           </h2>
 
           <div className="skills-container">
-            {project.skills.map((skill) => (
+            {project.skill.split(",").map((skill) => (
               <span
                 className="skill-tag"
                 key={skill}
               >
-                {skill}
+                {skill.trim()}
               </span>
             ))}
-          </div>
-        </div>
-
-        {/* MEMBERS */}
-        <div className="members-section">
-          <h2>
-            Colaboradores Actuales
-          </h2>
-
-          <div className="members-list">
-            {project.members.map(
-              (member) => (
-                <div
-                  className="member-card"
-                  key={member}
-                >
-                  <div className="member-avatar">
-                    {member
-                      .charAt(0)
-                      .toUpperCase()}
-                  </div>
-
-                  <p>{member}</p>
-                </div>
-              )
-            )}
           </div>
         </div>
 

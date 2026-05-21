@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import { loginUser } from "../../Services/authService";
 import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
-
   const { login } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -13,43 +13,31 @@ export default function Login() {
     password: "",
   });
 
-  const [errorMessage, setErrorMessage] =
-    useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-
     setErrorMessage("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setErrorMessage("");
 
-    const users =
-      JSON.parse(
-        localStorage.getItem("workpal_users")
-      ) || [];
+    const response = await loginUser(formData.email, formData.password);
 
-    const foundUser = users.find(
-      (user) =>
-        user.email === formData.email &&
-        user.password === formData.password
-    );
-
-    if (!foundUser) {
-      setErrorMessage(
-        "Correo o contraseña incorrectos"
-      );
-
-      return;
+    if (response.success) {
+      login(response.user);
+      navigate("/home");
+    } else {
+      setErrorMessage(response.message);
     }
-
-    login(foundUser);
-
-    navigate("/home");
+    setLoading(false);
   };
 
   return (

@@ -2,64 +2,34 @@ import { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import ProjectCard from "../../Components/ProjectCard/ProjectCard";
-import fakeProjects from "../../Data/fakeProjects";
 import { getAllProjects } from "../../Services/projectService";
 import "./SearchProjects.css";
 
 export default function SearchProjects() {
-  const [search, setSearch] =
-    useState("");
-
-  const [category, setCategory] =
-    useState("Todas");
-
-  const [projects, setProjects] =
-    useState([]);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("Todas");
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const existingProjects =
-      localStorage.getItem(
-        "workpal_projects"
-      );
-
-    if (!existingProjects) {
-      localStorage.setItem(
-        "workpal_projects",
-        JSON.stringify(fakeProjects)
-      );
-    }
-
-    const loadedProjects =
-      getAllProjects();
-
-    setProjects(loadedProjects);
+    const fetchProjects = async () => {
+      const data = await getAllProjects();
+      setProjects(data);
+      setLoading(false);
+    };
+    fetchProjects();
   }, []);
 
-  const filteredProjects =
-    projects.filter((project) => {
-      const matchesSearch =
-        project.title
-          .toLowerCase()
-          .includes(
-            search.toLowerCase()
-          ) ||
-        project.skills.some((skill) =>
-          skill
-            .toLowerCase()
-            .includes(
-              search.toLowerCase()
-            )
-        );
+  const filteredProjects = projects.filter((project) => {
+    const matchesSearch =
+      project.name.toLowerCase().includes(search.toLowerCase()) ||
+      project.skill.toLowerCase().includes(search.toLowerCase());
 
-      const matchesCategory =
-        category === "Todas" ||
-        project.category === category;
+    // backend currently doesn't have explicit category field, but we can add it or ignore for now
+    const matchesCategory = category === "Todas"; 
 
-      return (
-        matchesSearch &&
-        matchesCategory
-      );
-    });
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="search-projects-page">
@@ -71,10 +41,8 @@ export default function SearchProjects() {
           <h1>Buscar Proyectos</h1>
 
           <p>
-            Explora proyectos y encuentra
-            uno en el que quieras colaborar.
+            Explora proyectos y encuentra uno en el que quieras colaborar.
           </p>
-
         </div>
 
         {/* SEARCHBAR */}
@@ -87,27 +55,23 @@ export default function SearchProjects() {
 
         {/* PROJECTS */}
         <div className="projects-grid">
-          {filteredProjects.length >
-          0 ? (
-            filteredProjects.map(
-              (project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                />
-              )
-            )
+          {loading ? (
+            <p>Cargando proyectos...</p>
+          ) : filteredProjects.length > 0 ? (
+            filteredProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={{
+                  ...project,
+                  title: project.name, // Adapting backend fields to component expectations
+                  skills: project.skill.split(",").map(s => s.trim())
+                }}
+              />
+            ))
           ) : (
             <div className="no-projects">
-              <h2>
-                No se encontraron
-                proyectos.
-              </h2>
-
-              <p>
-                Intenta cambiar los
-                filtros de búsqueda.
-              </p>
+              <h2>No se encontraron proyectos.</h2>
+              <p>Intenta cambiar los filtros de búsqueda.</p>
             </div>
           )}
         </div>

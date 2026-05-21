@@ -34,7 +34,7 @@ export default function RegisterUser() {
     setErrorMessage("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
@@ -77,7 +77,7 @@ export default function RegisterUser() {
         .map((skill) => skill.trim())
         .filter((skill) => skill !== "");
 
-    const response = registerUser({
+    const response = await registerUser({
       name: formData.name,
       lastName: formData.lastName,
       email: formData.email,
@@ -92,14 +92,13 @@ export default function RegisterUser() {
       return;
     }
 
-    login(response.user);
-
+    // After registration in this specific flow, we might need to login or just redirect
     setSuccessMessage(
-      "Cuenta creada correctamente"
+      "Cuenta creada correctamente. Por favor inicia sesión."
     );
 
     setTimeout(() => {
-      navigate("/home");
+      navigate("/");
     }, 1500);
   };
 
