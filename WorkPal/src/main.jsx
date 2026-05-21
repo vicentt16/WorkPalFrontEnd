@@ -18,9 +18,10 @@ import ReactDOM from "react-dom/client";
 import RegisterUser from "./Pages/RegisterUser";
 import "./index.css";
 import { RegisterModule } from "./Modules/RegisterModule";
+import { BuscarProyectos } from "./Modules/buscarProyectos";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RegisterModule/>
+    <BuscarProyectos/>
   </React.StrictMode>
 );
