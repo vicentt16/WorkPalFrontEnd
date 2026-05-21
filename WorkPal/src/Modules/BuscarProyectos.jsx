@@ -1,4 +1,5 @@
 import { ProjectUpperBar } from "./ProjectUpperBar";
+import "./BuscarProyectos.css";
 
 import returnIcon from "/src/Images/returnIcon.png";
 
@@ -8,7 +9,7 @@ export function BuscarProyectos() {
       <ProjectUpperBar />
       <textarea />
 
-      <div className="upper-panel">
+      <section className="upper-panel">
         <button className="upper-panel-button">
           <img src={returnIcon} alt="returnIcon" />
           <h2>Volver</h2>
@@ -21,7 +22,11 @@ export function BuscarProyectos() {
             talento!!
           </h2>
         </div>
-      </div>
+      </section>
+
+        <section className="ProjectBarSection">
+            <input type="text" className="ProjectSeachBar"/>
+        </section>
     </div>
   );
 }
