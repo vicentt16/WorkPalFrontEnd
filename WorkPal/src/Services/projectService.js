@@ -98,6 +98,16 @@ export const getProjectApplications = async (projectId) => {
   }
 };
 
+export const getProjectCollaborators = async (projectId) => {
+  try {
+    const response = await api.get(`/proyectos/${projectId}/colaboradores`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching collaborators:", error);
+    return [];
+  }
+};
+
 export const acceptApplication = async (applicationId) => {
   try {
     const response = await api.post(`/proyectos/aplicaciones/${applicationId}/aceptar`);

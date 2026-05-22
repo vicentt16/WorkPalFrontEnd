@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
-import { getUserProjects, getProjectApplications, acceptApplication, rejectApplication } from "../../Services/projectService";
+import { getUserProjects, getProjectApplications, getProjectCollaborators, acceptApplication, rejectApplication } from "../../Services/projectService";
 import "./ManageProjects.css";
 
 export default function ManageProjects() {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [applications, setApplications] = useState([]);
+  const [collaborators, setCollaborators] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,17 +21,19 @@ export default function ManageProjects() {
 
   const handleSelectProject = async (project) => {
     setSelectedProject(project);
-    const apps = await getProjectApplications(project.id);
+    const [apps, colabs] = await Promise.all([
+      getProjectApplications(project.id),
+      getProjectCollaborators(project.id)
+    ]);
     setApplications(apps);
+    setCollaborators(colabs);
   };
 
   const handleAccept = async (appId) => {
     const res = await acceptApplication(appId);
     if (res.success) {
       alert("Aplicación aceptada");
-      // Refresh applications
-      const apps = await getProjectApplications(selectedProject.id);
-      setApplications(apps);
+      handleSelectProject(selectedProject); // Refresh both lists
     } else {
       alert(res.message);
     }
@@ -40,9 +43,7 @@ export default function ManageProjects() {
     const res = await rejectApplication(appId);
     if (res.success) {
       alert("Aplicación rechazada");
-      // Refresh applications
-      const apps = await getProjectApplications(selectedProject.id);
-      setApplications(apps);
+      handleSelectProject(selectedProject); // Refresh both lists
     } else {
       alert(res.message);
     }
@@ -71,26 +72,42 @@ export default function ManageProjects() {
           <div className="applications-panel">
             {selectedProject ? (
               <>
-                <h2>Aplicaciones para {selectedProject.name}</h2>
-                {applications.length === 0 ? <p>No hay aplicaciones pendientes.</p> : (
-                  <div className="applications-list">
-                    {applications.map(app => (
-                      <div key={app.id} className="application-card">
-                        <p>Alumno ID: {app.alumno_id}</p>
-                        <p>Estado: {app.status}</p>
-                        {app.status === 'pending' && (
+                <div className="section">
+                  <h2>Aplicaciones Pendientes</h2>
+                  {applications.length === 0 ? <p>No hay aplicaciones pendientes.</p> : (
+                    <div className="applications-list">
+                      {applications.map(app => (
+                        <div key={app.id} className="application-card">
+                          <div className="app-info">
+                            <h3>{app.alumno_name}</h3>
+                            <p>{app.alumno_carrera}</p>
+                          </div>
                           <div className="app-actions">
                             <button className="accept-btn" onClick={() => handleAccept(app.id)}>Aceptar</button>
                             <button className="reject-btn" onClick={() => handleReject(app.id)}>Rechazar</button>
                           </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="section collaborators-section">
+                  <h2>Colaboradores del Proyecto</h2>
+                  {collaborators.length === 0 ? <p>Aún no hay colaboradores aceptados.</p> : (
+                    <div className="collaborators-list">
+                      {collaborators.map(col => (
+                        <div key={col.id} className="collaborator-card">
+                          <h3>{col.alumno_name}</h3>
+                          <p>{col.alumno_carrera}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
-              <p>Selecciona un proyecto para ver sus aplicaciones.</p>
+              <p>Selecciona un proyecto para ver sus aplicaciones y colaboradores.</p>
             )}
           </div>
         </div>

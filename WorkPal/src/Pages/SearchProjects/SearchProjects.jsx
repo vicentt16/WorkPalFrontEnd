@@ -63,8 +63,12 @@ export default function SearchProjects() {
                 key={project.id}
                 project={{
                   ...project,
-                  title: project.name, // Adapting backend fields to component expectations
-                  skills: project.skill.split(",").map(s => s.trim())
+                  title: project.name || "Sin título",
+                  skills: project.skill ? project.skill.split(",").map(s => s.trim()) : [],
+                  members: project.members || [], // Default to empty array
+                  vacancies: project.vacancies || 0, // Default to 0
+                  category: project.category || "General", // Default category
+                  image: project.image || "https://images.unsplash.com/photo-1498050108023-c5249f4df085"
                 }}
               />
             ))

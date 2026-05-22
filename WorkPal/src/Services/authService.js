@@ -18,6 +18,34 @@ export const registerUser = async (userData) => {
   }
 };
 
+export const createAlumnoProfile = async (profileData) => {
+  try {
+    const formData = new FormData();
+    formData.append("name", profileData.name);
+    formData.append("last_name", profileData.lastName);
+    formData.append("carrera", profileData.career);
+    formData.append("skills", Array.isArray(profileData.skills) ? profileData.skills.join(", ") : profileData.skills);
+    
+    const response = await api.post("/alumnos/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return {
+      success: true,
+      profile: {
+        ...response.data,
+        skills: response.data.skills ? response.data.skills.split(",").map(s => s.trim()) : []
+      },
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data?.detail || "Error al crear el perfil de alumno",
+    };
+  }
+};
+
 export const loginUser = async (email, password) => {
   try {
     const formData = new FormData();
@@ -33,7 +61,22 @@ export const loginUser = async (email, password) => {
 
     // Get user info
     const meResponse = await api.get("/auth/me");
-    const user = meResponse.data;
+    let user = meResponse.data;
+
+    // Try to get alumno info
+    try {
+      const alumnoResponse = await api.get("/alumnos/me");
+      const alumnoData = alumnoResponse.data;
+      // Parse skills string to array
+      if (alumnoData.skills && typeof alumnoData.skills === "string") {
+        alumnoData.skills = alumnoData.skills.split(",").map(s => s.trim());
+      } else if (!alumnoData.skills) {
+        alumnoData.skills = [];
+      }
+      user = { ...user, ...alumnoData };
+    } catch (e) {
+      console.log("No alumno profile found yet");
+    }
 
     localStorage.setItem("workpal_user", JSON.stringify(user));
 

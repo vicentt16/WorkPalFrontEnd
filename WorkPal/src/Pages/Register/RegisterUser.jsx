@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
-import { registerUser } from "../../Services/authService";
+import { registerUser, loginUser, createAlumnoProfile } from "../../Services/authService";
 import "./RegisterUser.css";
 
 export default function RegisterUser() {
@@ -77,29 +77,54 @@ export default function RegisterUser() {
         .map((skill) => skill.trim())
         .filter((skill) => skill !== "");
 
-    const response = await registerUser({
-      name: formData.name,
-      lastName: formData.lastName,
-      email: formData.email,
-      password: formData.password,
-      career: formData.career,
-      skills: formattedSkills,
-    });
+    try {
+      // 1. Register basic user
+      const regResponse = await registerUser({
+        email: formData.email,
+        password: formData.password,
+      });
 
-    if (!response.success) {
-      setErrorMessage(response.message);
+      if (!regResponse.success) {
+        setErrorMessage(regResponse.message);
+        return;
+      }
 
-      return;
+      // 2. Login to get token for profile creation
+      const loginResponse = await loginUser(formData.email, formData.password);
+      if (!loginResponse.success) {
+        setErrorMessage("Usuario creado, pero hubo un error al iniciar sesión automáticamente.");
+        return;
+      }
+
+      // 3. Create alumno profile
+      const profileResponse = await createAlumnoProfile({
+        name: formData.name,
+        lastName: formData.lastName,
+        career: formData.career,
+        skills: formattedSkills,
+      });
+
+      if (!profileResponse.success) {
+        setErrorMessage("Usuario creado, pero hubo un error al crear el perfil: " + profileResponse.message);
+        return;
+      }
+
+      // Update context with the full user + profile info
+      const fullUser = { ...loginResponse.user, ...profileResponse.profile, skills: formattedSkills };
+      login(fullUser);
+
+      setSuccessMessage(
+        "¡Cuenta y perfil creados correctamente! Redirigiendo..."
+      );
+
+      setTimeout(() => {
+        navigate("/home");
+      }, 1500);
+
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Ocurrió un error inesperado durante el registro.");
     }
-
-    // After registration in this specific flow, we might need to login or just redirect
-    setSuccessMessage(
-      "Cuenta creada correctamente. Por favor inicia sesión."
-    );
-
-    setTimeout(() => {
-      navigate("/");
-    }, 1500);
   };
 
   return (
