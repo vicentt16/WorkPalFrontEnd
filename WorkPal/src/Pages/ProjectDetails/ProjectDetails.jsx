@@ -1,5 +1,5 @@
-import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import { getProjectById, applyToProject } from "../../Services/projectService";
 import "./ProjectDetails.css";

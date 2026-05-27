@@ -1,11 +1,9 @@
-import "./ProjectUpperBar.css";
-
 import { useNavigate } from "react-router-dom";
-
 import logoWorkPal from "/src/Images/logoWorkPal.png";
 import searchIcon from "/src/Images/searchIcon.png";
 import createIcon from "/src/Images/createIcon.png";
 import registerIcon from "/src/Images/registerIcon.png";
+import "./ProjectUpperBar.css";
 
 export function ProjectUpperBar() {
   const navigate = useNavigate();
