@@ -26,6 +26,10 @@ export const createAlumnoProfile = async (profileData) => {
     formData.append("carrera", profileData.career);
     formData.append("skills", Array.isArray(profileData.skills) ? profileData.skills.join(", ") : profileData.skills);
     
+    if (profileData.image) {
+      formData.append("imagen", profileData.image);
+    }
+    
     const response = await api.post("/alumnos/", formData, {
       headers: {
         "Content-Type": "multipart/form-data",

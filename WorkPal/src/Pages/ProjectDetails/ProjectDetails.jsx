@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import { 
   getProjectById, 
@@ -16,7 +15,12 @@ import "./ProjectDetails.css";
 export default function ProjectDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
+  
+  // Only show tasks if we came from manage projects
+  const isFromManage = location.state?.fromManage || false;
+
   const [project, setProject] = useState(null);
   const [collaborators, setCollaborators] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -42,17 +46,22 @@ export default function ProjectDetails() {
     const projData = await getProjectById(id);
     if (projData) {
       setProject(projData);
-      const [colabs, projectTasks] = await Promise.all([
-        getProjectCollaborators(id),
-        getTasks(id)
-      ]);
-      setCollaborators(colabs);
-      setTasks(projectTasks);
       
       const admin = user && projData.owner_id === user.id;
       setIsAdmin(admin);
-      const colab = user && colabs.some(c => c.alumno_id === user.id);
-      setIsColab(colab);
+
+      // Only fetch tasks and collaborators if needed for management
+      if (isFromManage) {
+        const [colabs, projectTasks] = await Promise.all([
+          getProjectCollaborators(id),
+          getTasks(id)
+        ]);
+        setCollaborators(colabs);
+        setTasks(projectTasks);
+        
+        const colab = user && colabs.some(c => c.alumno_id === user.id);
+        setIsColab(colab);
+      }
     }
     setLoading(false);
   };
@@ -172,7 +181,7 @@ export default function ProjectDetails() {
               <p>{new Date(project.end).toLocaleDateString()}</p>
             </div>
 
-            {isColab && (
+            {isFromManage && isColab && (
               <button className="leave-project-btn" onClick={handleLeaveProject}>
                 Abandonar Proyecto
               </button>
@@ -190,8 +199,8 @@ export default function ProjectDetails() {
           </div>
         </div>
 
-        {/* TASKS SECTION */}
-        {(isAdmin || isColab) && (
+        {/* TASKS SECTION - Only if coming from Manage Projects */}
+        {isFromManage && (isAdmin || isColab) && (
           <div className="tasks-section">
             <div className="tasks-header">
               <h2>Tareas del Proyecto</h2>
@@ -273,8 +282,8 @@ export default function ProjectDetails() {
           </div>
         )}
 
-        {/* APPLY */}
-        {!isAdmin && !isColab && (
+        {/* APPLY - Only if NOT from Manage Projects and not member/admin */}
+        {!isFromManage && !isAdmin && !isColab && (
           <div className="apply-section">
             <button className="apply-button" onClick={handleApply}>
               Aplicar al Proyecto

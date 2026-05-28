@@ -17,7 +17,10 @@ export default function RegisterUser() {
     confirmPassword: "",
     career: "",
     skills: "",
+    image: null,
   });
+
+  const [imagePreview, setImagePreview] = useState(null);
 
   const [errorMessage, setErrorMessage] =
     useState("");
@@ -26,10 +29,19 @@ export default function RegisterUser() {
     useState("");
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === "image") {
+      const file = e.target.files[0];
+      setFormData({
+        ...formData,
+        image: file,
+      });
+      setImagePreview(URL.createObjectURL(file));
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    }
 
     setErrorMessage("");
   };
@@ -43,10 +55,11 @@ export default function RegisterUser() {
       !formData.email ||
       !formData.password ||
       !formData.confirmPassword ||
-      !formData.career
+      !formData.career ||
+      !formData.image
     ) {
       setErrorMessage(
-        "Todos los campos son obligatorios"
+        "Todos los campos son obligatorios, incluyendo la foto de perfil"
       );
 
       return;
@@ -102,6 +115,7 @@ export default function RegisterUser() {
         lastName: formData.lastName,
         career: formData.career,
         skills: formattedSkills,
+        image: formData.image,
       });
 
       if (!profileResponse.success) {
@@ -146,6 +160,32 @@ export default function RegisterUser() {
             className="register-form"
             onSubmit={handleSubmit}
           >
+            {/* PHOTO UPLOAD */}
+            <div className="photo-upload-section">
+              <div className="photo-preview">
+                {imagePreview ? (
+                  <img src={imagePreview} alt="Preview" />
+                ) : (
+                  <div className="photo-placeholder">
+                    <span>Foto</span>
+                  </div>
+                )}
+              </div>
+              <div className="photo-input">
+                <label htmlFor="image-input" className="photo-label">
+                  Seleccionar Foto de Perfil*
+                </label>
+                <input
+                  id="image-input"
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                  style={{ display: "none" }}
+                />
+              </div>
+            </div>
+
             {/* ROW */}
             <div className="form-row">
               <div className="input-group">

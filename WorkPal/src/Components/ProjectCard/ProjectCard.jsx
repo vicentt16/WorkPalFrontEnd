@@ -46,16 +46,6 @@ export default function ProjectCard({ project }) {
 
         {/* Info */}
         <div className="project-card-footer">
-          <div className="project-info">
-            <span>
-              👥 {project.members.length} miembros
-            </span>
-
-            <span>
-              📌 {project.vacancies} vacantes
-            </span>
-          </div>
-
           <button className="project-view-button">
             Ver Proyecto
           </button>

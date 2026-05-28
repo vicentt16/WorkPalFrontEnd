@@ -13,6 +13,31 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./ManageProjects.css";
 
+// Simple Profile Modal Component
+function UserProfileModal({ user, onClose }) {
+  if (!user) return null;
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="profile-modal" onClick={e => e.stopPropagation()}>
+        <button className="close-modal" onClick={onClose}>×</button>
+        <div className="modal-header">
+          <img src={user.imagen_url || "https://via.placeholder.com/150"} alt={user.alumno_name} className="modal-avatar" />
+          <h2>{user.alumno_name}</h2>
+          <p className="modal-career">{user.alumno_carrera}</p>
+        </div>
+        <div className="modal-body">
+          <h3>Habilidades</h3>
+          <div className="modal-skills">
+            {user.skills ? user.skills.split(",").map(s => (
+              <span key={s} className="modal-skill-tag">{s.trim()}</span>
+            )) : <p>No hay habilidades listadas.</p>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ManageProjects() {
   const [activeTab, setActiveTab] = useState("mis-proyectos"); // "mis-proyectos" or "proyectos-unidos"
   const [myProjects, setMyProjects] = useState([]);
@@ -22,6 +47,7 @@ export default function ManageProjects() {
   const [collaborators, setCollaborators] = useState([]);
   const [exitRequests, setExitRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedUser, setSelectedUser] = useState(null); // For profile modal
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,6 +111,10 @@ export default function ManageProjects() {
     }
   };
 
+  const handleShowProfile = (user) => {
+    setSelectedUser(user);
+  };
+
   return (
     <div className="manage-projects-page">
       <Navbar />
@@ -116,7 +146,7 @@ export default function ManageProjects() {
                   <div 
                     key={p.id} 
                     className={`project-item ${selectedProject?.id === p.id ? 'active' : ''}`} 
-                    onClick={() => activeTab === "mis-proyectos" ? handleSelectProject(p) : navigate(`/project/${p.id}`)}
+                    onClick={() => activeTab === "mis-proyectos" ? handleSelectProject(p) : navigate(`/project/${p.id}`, { state: { fromManage: true } })}
                   >
                     <h3>{p.name}</h3>
                     {activeTab === "proyectos-unidos" && <span className="view-link">Ver Perfil</span>}
@@ -130,6 +160,11 @@ export default function ManageProjects() {
             {activeTab === "mis-proyectos" ? (
               selectedProject ? (
                 <>
+                  <div className="project-actions-bar">
+                     <button className="view-profile-btn" onClick={() => navigate(`/project/${selectedProject.id}`, { state: { fromManage: true } })}>
+                        Ver Perfil del Proyecto (Crear Tareas)
+                     </button>
+                  </div>
                   <div className="section">
                     <h2>Aplicaciones Pendientes</h2>
                     {applications.length === 0 ? <p>No hay aplicaciones pendientes.</p> : (
@@ -137,7 +172,7 @@ export default function ManageProjects() {
                         {applications.map(app => (
                           <div key={app.id} className="application-card">
                             <div className="app-info">
-                              <h3>{app.alumno_name}</h3>
+                              <h3 className="clickable-name" onClick={() => handleShowProfile(app)}>{app.alumno_name}</h3>
                               <p>{app.alumno_carrera}</p>
                             </div>
                             <div className="app-actions">
@@ -157,7 +192,7 @@ export default function ManageProjects() {
                         {exitRequests.map(req => (
                           <div key={req.id} className="application-card exit-card">
                             <div className="app-info">
-                              <h3>{req.alumno_name}</h3>
+                              <h3 className="clickable-name" onClick={() => handleShowProfile(req)}>{req.alumno_name}</h3>
                               <p>Solicita abandonar el proyecto</p>
                             </div>
                             <div className="app-actions">
@@ -176,7 +211,7 @@ export default function ManageProjects() {
                       <div className="collaborators-list">
                         {collaborators.map(col => (
                           <div key={col.id} className="collaborator-card">
-                            <h3>{col.alumno_name}</h3>
+                            <h3 className="clickable-name" onClick={() => handleShowProfile(col)}>{col.alumno_name}</h3>
                             <p>{col.alumno_carrera}</p>
                           </div>
                         ))}
@@ -196,6 +231,8 @@ export default function ManageProjects() {
           </div>
         </div>
       </div>
+      
+      {selectedUser && <UserProfileModal user={selectedUser} onClose={() => setSelectedUser(null)} />}
     </div>
   );
 }
