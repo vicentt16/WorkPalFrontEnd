@@ -88,6 +88,85 @@ export const getUserProjects = async () => {
   }
 };
 
+export const getJoinedProjects = async () => {
+  try {
+    const response = await api.get("/proyectos/unidos");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching joined projects:", error);
+    return [];
+  }
+};
+
+export const leaveProject = async (projectId) => {
+  try {
+    const response = await api.post(`/proyectos/${projectId}/abandonar`);
+    return { success: true, message: response.data.message };
+  } catch (error) {
+    return { success: false, message: error.response?.data?.detail || "Error al solicitar salida" };
+  }
+};
+
+export const getExitRequests = async (projectId) => {
+  try {
+    const response = await api.get(`/proyectos/${projectId}/solicitudes-salida`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching exit requests:", error);
+    return [];
+  }
+};
+
+export const processExitRequest = async (applicationId, accept) => {
+  try {
+    const response = await api.post(`/proyectos/solicitudes-salida/${applicationId}/procesar?accept=${accept}`);
+    return { success: true, message: response.data.message };
+  } catch (error) {
+    return { success: false, message: error.response?.data?.detail || "Error al procesar salida" };
+  }
+};
+
+// TASKS
+export const createProjectTask = async (projectId, taskData) => {
+  try {
+    const response = await api.post(`/proyectos/${projectId}/tareas`, taskData);
+    return { success: true, data: response.data };
+  } catch (error) {
+    return { success: false, message: error.response?.data?.detail || "Error al crear tarea" };
+  }
+};
+
+export const getProjectTasks = async (projectId) => {
+  try {
+    const response = await api.get(`/proyectos/${proyectoId}/tareas`);
+    return response.data;
+  } catch (error) {
+    // If projetoId is undefined, check if it's because of a typo in my code or if I should use projectId
+    console.error("Error fetching tasks:", error);
+    return [];
+  }
+};
+
+// Re-writing getProjectTasks with correct variable name
+export const getTasks = async (projectId) => {
+  try {
+    const response = await api.get(`/proyectos/${projectId}/tareas`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    return [];
+  }
+};
+
+export const updateTaskStatus = async (taskId, status) => {
+  try {
+    const response = await api.put(`/proyectos/tareas/${taskId}/status`, { status });
+    return { success: true, data: response.data };
+  } catch (error) {
+    return { success: false, message: error.response?.data?.detail || "Error al actualizar estado" };
+  }
+};
+
 export const getProjectApplications = async (projectId) => {
   try {
     const response = await api.get(`/proyectos/${projectId}/aplicaciones`);

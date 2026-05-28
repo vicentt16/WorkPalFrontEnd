@@ -74,7 +74,7 @@ export default function Navbar() {
             navigate("/manage-projects")
           }
         >
-          Gestionar Proyectos
+          Proyectos
         </button>
       </nav>
 

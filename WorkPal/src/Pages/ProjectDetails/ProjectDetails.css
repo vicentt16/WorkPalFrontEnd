@@ -119,6 +119,23 @@
   gap: 20px;
 }
 
+.leave-project-btn {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #ef4444;
+  border-radius: 12px;
+  background-color: transparent;
+  color: #ef4444;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.leave-project-btn:hover {
+  background-color: #ef4444;
+  color: white;
+}
+
 .side-card {
   background-color: white;
 
@@ -142,6 +159,124 @@
 
   font-size: 24px;
   font-weight: bold;
+}
+
+.tasks-section {
+  padding: 0 80px 40px;
+}
+
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.tasks-header h2 {
+  font-size: 30px;
+  color: #111827;
+}
+
+.add-task-btn {
+  padding: 10px 20px;
+  background-color: #d4ae15;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.task-form {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.task-form input, .task-form textarea, .task-form select {
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.task-form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.submit-task-btn {
+  padding: 14px;
+  background-color: #111827;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.task-card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 8px solid #cbd5e1;
+}
+
+.task-card.status-en-proceso { border-left-color: #3b82f6; }
+.task-card.status-completada { border-left-color: #f59e0b; }
+.task-card.status-confirmada { border-left-color: #10b981; }
+
+.task-info h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.task-info p {
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.task-meta {
+  display: block;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.task-status-control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.task-status-control select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  font-weight: 500;
 }
 
 .skills-section {
