@@ -16,19 +16,31 @@ import "./ManageProjects.css";
 // Simple Profile Modal Component
 function UserProfileModal({ user, onClose }) {
   if (!user) return null;
+  const getImageUrl = (path) => {
+    if (!path) return null;
+    if (path.startsWith("http")) return path;
+    return `http://localhost:8000${path}`;
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="profile-modal" onClick={e => e.stopPropagation()}>
         <button className="close-modal" onClick={onClose}>×</button>
         <div className="modal-header">
-          <img src={user.imagen_url || "https://via.placeholder.com/150"} alt={user.alumno_name} className="modal-avatar" />
+          <div className="modal-avatar-container">
+            {user.imagen_url ? (
+              <img src={getImageUrl(user.imagen_url)} alt={user.alumno_name} className="modal-avatar" />
+            ) : (
+              <div className="modal-avatar-placeholder">{user.alumno_name?.charAt(0).toUpperCase()}</div>
+            )}
+          </div>
           <h2>{user.alumno_name}</h2>
           <p className="modal-career">{user.alumno_carrera}</p>
         </div>
         <div className="modal-body">
           <h3>Habilidades</h3>
           <div className="modal-skills">
-            {user.skills ? user.skills.split(",").map(s => (
+            {user.skills ? (typeof user.skills === 'string' ? user.skills : user.skills.join(",")).split(",").map(s => (
               <span key={s} className="modal-skill-tag">{s.trim()}</span>
             )) : <p>No hay habilidades listadas.</p>}
           </div>
@@ -162,7 +174,7 @@ export default function ManageProjects() {
                 <>
                   <div className="project-actions-bar">
                      <button className="view-profile-btn" onClick={() => navigate(`/project/${selectedProject.id}`, { state: { fromManage: true } })}>
-                        Ver Perfil del Proyecto (Crear Tareas)
+                        Ver Proyecto
                      </button>
                   </div>
                   <div className="section">
@@ -212,7 +224,6 @@ export default function ManageProjects() {
                         {collaborators.map(col => (
                           <div key={col.id} className="collaborator-card">
                             <h3 className="clickable-name" onClick={() => handleShowProfile(col)}>{col.alumno_name}</h3>
-                            <p>{col.alumno_carrera}</p>
                           </div>
                         ))}
                       </div>

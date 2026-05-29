@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import { 
@@ -47,20 +48,23 @@ export default function ProjectDetails() {
     if (projData) {
       setProject(projData);
       
-      const admin = user && projData.owner_id === user.id;
-      setIsAdmin(admin);
+      const admin = user && projData.owner_id && Number(projData.owner_id) === Number(user.id);
+      setIsAdmin(!!admin);
 
-      // Only fetch tasks and collaborators if needed for management
-      if (isFromManage) {
+      // Always fetch collaborators to show the team
+      try {
         const [colabs, projectTasks] = await Promise.all([
           getProjectCollaborators(id),
-          getTasks(id)
+          isFromManage ? getTasks(id) : Promise.resolve([])
         ]);
-        setCollaborators(colabs);
-        setTasks(projectTasks);
         
-        const colab = user && colabs.some(c => c.alumno_id === user.id);
-        setIsColab(colab);
+        setCollaborators(colabs || []);
+        setTasks(projectTasks || []);
+        
+        const colab = user && colabs && colabs.some(c => c.alumno_id && Number(c.alumno_id) === Number(user.id));
+        setIsColab(!!colab);
+      } catch (err) {
+        console.error("Error fetching project sub-data:", err);
       }
     }
     setLoading(false);
@@ -130,7 +134,7 @@ export default function ProjectDetails() {
     const currentIdx = options.indexOf(task.status);
     
     if (isAdmin) {
-      if (task.assigned_to === user.id) {
+      if (Number(task.assigned_to) === Number(user.id)) {
         return options.filter((_, idx) => idx >= currentIdx);
       } else {
         return task.status === "Completada" ? ["Completada", "Confirmada"] : [task.status];
@@ -143,6 +147,12 @@ export default function ProjectDetails() {
     }
   };
 
+  const getImageUrl = (path) => {
+    if (!path) return "https://images.unsplash.com/photo-1498050108023-c5249f4df085";
+    if (path.startsWith("http")) return path;
+    return `http://localhost:8000${path}`;
+  };
+
   return (
     <div className="project-details-container">
       <Navbar />
@@ -151,7 +161,7 @@ export default function ProjectDetails() {
         {/* BANNER */}
         <div className="project-banner">
           <img
-            src={project.image || "https://images.unsplash.com/photo-1498050108023-c5249f4df085"}
+            src={getImageUrl(project.image)}
             alt={project.name}
             className="project-banner-image"
           />
@@ -159,14 +169,13 @@ export default function ProjectDetails() {
           <div className="project-banner-overlay">
             <span className="project-category">Proyecto</span>
             <h1>{project.name}</h1>
-            <p>{project.description}</p>
           </div>
         </div>
 
         {/* MAIN INFO */}
         <div className="project-main-info">
           <div className="project-description-card">
-            <h2>Descripción Completa</h2>
+            <h2>Descripción</h2>
             <p>{project.description}</p>
           </div>
 
@@ -178,7 +187,7 @@ export default function ProjectDetails() {
 
             <div className="side-card">
               <h3>Fecha de Finalización</h3>
-              <p>{new Date(project.end).toLocaleDateString()}</p>
+              <p>{project.end ? new Date(project.end).toLocaleDateString() : "No definida"}</p>
             </div>
 
             {isFromManage && isColab && (
@@ -193,8 +202,29 @@ export default function ProjectDetails() {
         <div className="skills-section">
           <h2>Habilidades Requeridas</h2>
           <div className="skills-container">
-            {project.skill.split(",").map((skill) => (
+            {project.skill ? project.skill.split(",").map((skill) => (
               <span className="skill-tag" key={skill}>{skill.trim()}</span>
+            )) : <span>No especificadas</span>}
+          </div>
+        </div>
+
+        {/* COLLABORATORS */}
+        <div className="members-section">
+          <h2>Equipo del Proyecto</h2>
+          <div className="members-list">
+            {collaborators.map((member) => (
+              <div className="member-card" key={member.alumno_id}>
+                <div className="member-avatar">
+                  {member.imagen_url ? (
+                    <img src={getImageUrl(member.imagen_url)} alt={member.alumno_name} className="member-photo" />
+                  ) : (
+                    member.alumno_name?.charAt(0).toUpperCase()
+                  )}
+                </div>
+                <div className="member-info">
+                  <p className="member-name">{member.alumno_name}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>

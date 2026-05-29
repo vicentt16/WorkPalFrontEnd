@@ -36,7 +36,7 @@ export function RegisterModule() {
         title: projectTitle,
         description: projectDescription,
         skills: projectHabilities,
-        image: projectImage[0] || "", // Using first image if available
+        image: projectImage[0]?.file || null, // Using first image file if available
         finishDate: finishDate,
       });
 
@@ -104,7 +104,7 @@ export function RegisterModule() {
           <h2>Imagenes del Proyecto</h2>
 
           <div className="add-image-scroll">
-            <AddImage projectImage={projectImage} />
+            <AddImage projectImage={projectImage.map(img => img.preview)} />
           </div>
 
           <button type="button" onClick={() => document.getElementById("file-input").click()}>
@@ -119,8 +119,7 @@ export function RegisterModule() {
             onChange={(e) => {
               const file = e.target.files[0];
               if (file) {
-                // In a real app, you'd upload this to a server
-                setProjectImage((prev) => [...prev, URL.createObjectURL(file)]);
+                setProjectImage((prev) => [...prev, { file, preview: URL.createObjectURL(file) }]);
               }
             }}
           />

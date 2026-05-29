@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
+import { useAuth } from "../../Context/AuthContext";
 import "./Home.css";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { user: currentUser } = useAuth();
 
-  const currentUser = JSON.parse(
-    localStorage.getItem("workpal_user")
-  );
+  const getImageUrl = (path) => {
+    if (!path) return null;
+    if (path.startsWith("http")) return path;
+    return `http://localhost:8000${path}`;
+  };
 
   return (
     <div className="home-page">
@@ -63,19 +67,21 @@ export default function Home() {
       <section className="user-section">
         <div className="user-card">
           <div className="user-avatar">
-            {currentUser?.name
-              ?.charAt(0)
-              .toUpperCase()}
+            {currentUser?.imagen_url ? (
+              <img src={getImageUrl(currentUser.imagen_url)} alt={currentUser.name} className="user-photo" />
+            ) : (
+              currentUser?.name?.charAt(0).toUpperCase()
+            )}
           </div>
 
           <div className="user-info">
             <h2>
               {currentUser?.name}{" "}
-              {currentUser?.lastName}
+              {currentUser?.last_name || currentUser?.lastName}
             </h2>
 
             <p>
-              {currentUser?.career}
+              {currentUser?.carrera || currentUser?.career}
             </p>
 
             <div className="skills-container">

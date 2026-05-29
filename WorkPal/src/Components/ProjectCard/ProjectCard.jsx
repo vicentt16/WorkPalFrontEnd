@@ -8,6 +8,12 @@ export default function ProjectCard({ project }) {
     navigate(`/project/${project.id}`);
   };
 
+  const getImageUrl = (path) => {
+    if (!path) return "https://images.unsplash.com/photo-1498050108023-c5249f4df085";
+    if (path.startsWith("http")) return path;
+    return `http://localhost:8000${path}`;
+  };
+
   return (
     <div
       className="project-card"
@@ -16,7 +22,7 @@ export default function ProjectCard({ project }) {
       {/* Imagen */}
       <div className="project-card-image-container">
         <img
-          src={project.image}
+          src={getImageUrl(project.image)}
           alt={project.title}
           className="project-card-image"
         />

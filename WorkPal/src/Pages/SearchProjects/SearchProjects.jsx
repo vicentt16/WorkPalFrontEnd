@@ -25,7 +25,6 @@ export default function SearchProjects() {
       project.name.toLowerCase().includes(search.toLowerCase()) ||
       project.skill.toLowerCase().includes(search.toLowerCase());
 
-    // backend currently doesn't have explicit category field, but we can add it or ignore for now
     const matchesCategory = category === "Todas"; 
 
     return matchesSearch && matchesCategory;

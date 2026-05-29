@@ -2,13 +2,21 @@ import api from "./api";
 
 export const createProject = async (projectData) => {
   try {
-    const response = await api.post("/proyectos/", {
-      name: projectData.title,
-      skill: projectData.skills.join(", "),
-      description: projectData.description,
-      start: new Date().toISOString(),
-      end: projectData.finishDate ? new Date(projectData.finishDate).toISOString() : new Date().toISOString(),
-      image: projectData.image || "",
+    const formData = new FormData();
+    formData.append("name", projectData.title);
+    formData.append("skill", Array.isArray(projectData.skills) ? projectData.skills.join(", ") : projectData.skills);
+    formData.append("description", projectData.description);
+    formData.append("start", new Date().toISOString());
+    formData.append("end", projectData.finishDate ? new Date(projectData.finishDate).toISOString() : new Date().toISOString());
+    
+    if (projectData.image) {
+      formData.append("imagen", projectData.image);
+    }
+
+    const response = await api.post("/proyectos/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
     return {
       success: true,

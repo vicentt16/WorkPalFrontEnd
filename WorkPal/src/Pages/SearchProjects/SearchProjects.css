@@ -49,6 +49,18 @@
   border-color: #d4ae15;
 }
 
+.search-projects-container {
+  padding: 40px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.search-projects-header p {
+  padding: 14px 0px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .category-select {
   padding: 14px 18px;
 
