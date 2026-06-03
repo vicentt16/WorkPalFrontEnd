@@ -3,6 +3,12 @@ import Navbar from "../../Components/Navbar/Navbar";
 import { useAuth } from "../../Context/AuthContext";
 import "./Home.css";
 
+// Import images
+import Logo1 from "../../Images/Logo1.png";
+import searchIcon from "../../Images/searchIcon.png";
+import registerIcon from "../../Images/registerIcon.png";
+import okIcon from "../../Images/okIcon.png";
+
 export default function Home() {
   const navigate = useNavigate();
   const { user: currentUser } = useAuth();
@@ -20,11 +26,13 @@ export default function Home() {
       {/* HERO */}
       <section className="hero-section">
         <div className="hero-content">
-
-          <h1>
-            Bienvenido a{" "}
-            <span>WorkPal</span>
-          </h1>
+          <div className="hero-welcome-container">
+            <img src={Logo1} alt="WorkPal Logo" className="hero-welcome-logo" />
+            <h1>
+              Bienvenido a{" "}
+              <span>WorkPal</span>
+            </h1>
+          </div>
 
           <p>
             Conecta con personas, crea
@@ -110,7 +118,7 @@ export default function Home() {
           {/* FEATURE 1 */}
           <div className="feature-card">
             <div className="feature-icon">
-              🔍
+              <img src={searchIcon} alt="Buscar" className="feature-img" />
             </div>
 
             <h3>Buscar Proyectos</h3>
@@ -124,7 +132,7 @@ export default function Home() {
           {/* FEATURE 2 */}
           <div className="feature-card">
             <div className="feature-icon">
-              🤝
+              <img src={registerIcon} alt="Colaborar" className="feature-img" />
             </div>
 
             <h3>Colaborar</h3>
@@ -138,7 +146,7 @@ export default function Home() {
           {/* FEATURE 3 */}
           <div className="feature-card">
             <div className="feature-icon">
-              💡
+              <img src={okIcon} alt="Crear Ideas" className="feature-img" />
             </div>
 
             <h3>Crear Ideas</h3>

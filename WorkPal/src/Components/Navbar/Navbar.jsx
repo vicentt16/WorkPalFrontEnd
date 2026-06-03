@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import "./Navbar.css";
+import Logo1 from "../../Images/Logo1.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -26,9 +27,7 @@ export default function Navbar() {
         className="navbar-logo-container"
         onClick={() => navigate("/home")}
       >
-        <h1 className="navbar-title">
-          WorkPal
-        </h1>
+        <img src={Logo1} alt="WorkPal Logo" className="navbar-logo-img" />
       </div>
 
       {/* NAV LINKS */}

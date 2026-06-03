@@ -28,19 +28,10 @@
   cursor: pointer;
 }
 
-.navbar-logo {
-  width: 48px;
-  height: 48px;
-
+.navbar-logo-img {
+  height: 60px;
+  width: auto;
   object-fit: contain;
-}
-
-.navbar-title {
-  font-size: 30px;
-
-  color: #d4ae15;
-
-  font-weight: bold;
 }
 
 .navbar-links {

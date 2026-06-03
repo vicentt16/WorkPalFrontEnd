@@ -46,7 +46,20 @@
 
   line-height: 1.1;
 
+  margin: 0;
+}
+
+.hero-welcome-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
   margin-bottom: 24px;
+}
+
+.hero-welcome-logo {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
 }
 
 .hero-content h1 span {
@@ -246,9 +259,15 @@
 }
 
 .feature-icon {
-  font-size: 50px;
-
   margin-bottom: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.feature-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
 }
 
 .feature-card h3 {
