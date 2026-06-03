@@ -60,7 +60,7 @@ export const loginUser = async (email, password) => {
     
     // The backend sets a cookie, but let's also store the token if returned
     if (response.data.access_token) {
-      localStorage.setItem("workpal_token", response.data.access_token);
+      sessionStorage.setItem("workpal_token", response.data.access_token);
     }
 
     // Get user info
@@ -82,7 +82,7 @@ export const loginUser = async (email, password) => {
       console.log("No alumno profile found yet");
     }
 
-    localStorage.setItem("workpal_user", JSON.stringify(user));
+    sessionStorage.setItem("workpal_user", JSON.stringify(user));
 
     return {
       success: true,
@@ -97,14 +97,14 @@ export const loginUser = async (email, password) => {
 };
 
 export const logoutUser = () => {
-  localStorage.removeItem("workpal_user");
-  localStorage.removeItem("workpal_token");
+  sessionStorage.removeItem("workpal_user");
+  sessionStorage.removeItem("workpal_token");
 };
 
 export const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("workpal_user"));
+  return JSON.parse(sessionStorage.getItem("workpal_user"));
 };
 
 export const isAuthenticated = () => {
-  return !!localStorage.getItem("workpal_token");
+  return !!sessionStorage.getItem("workpal_token");
 };

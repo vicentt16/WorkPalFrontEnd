@@ -7,10 +7,10 @@ const api = axios.create({
   withCredentials: true, // For cookie-based auth
 });
 
-// Add a request interceptor to include the token in the header if it exists in localStorage
+// Add a request interceptor to include the token in the header if it exists in sessionStorage
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("workpal_token");
+    const token = sessionStorage.getItem("workpal_token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
