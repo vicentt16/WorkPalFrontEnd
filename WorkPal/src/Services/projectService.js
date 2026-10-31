@@ -146,7 +146,7 @@ export const createProjectTask = async (projectId, taskData) => {
 
 export const getProjectTasks = async (projectId) => {
   try {
-    const response = await api.get(`/proyectos/${proyectoId}/tareas`);
+    const response = await api.get(`/proyectos/${projectId}/tareas`);
     return response.data;
   } catch (error) {
     // If projetoId is undefined, check if it's because of a typo in my code or if I should use projectId
