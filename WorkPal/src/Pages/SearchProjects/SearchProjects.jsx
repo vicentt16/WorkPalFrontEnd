@@ -25,7 +25,7 @@ export default function SearchProjects() {
       project.name.toLowerCase().includes(search.toLowerCase()) ||
       project.skill.toLowerCase().includes(search.toLowerCase());
 
-    const matchesCategory = category === "Todas"; 
+    const matchesCategory = category === "Todas" || project.category === category;
 
     return matchesSearch && matchesCategory;
   });
