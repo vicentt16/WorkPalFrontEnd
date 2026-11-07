@@ -1,17 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const savedUser = sessionStorage.getItem("workpal_user");
-
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, []);
+  const [user, setUser] = useState(() => JSON.parse(sessionStorage.getItem("workpal_user")));
 
   const login = (userData) => {
     setUser(userData);
@@ -21,6 +13,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     sessionStorage.removeItem("workpal_user");
+    sessionStorage.removeItem("workpal_token");
   };
 
   return (
