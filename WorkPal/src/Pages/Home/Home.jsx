@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
-import { useAuth } from "../../Context/AuthContext";
+import { useAuth } from "../../Context/useAuth";
 import "./Home.css";
 
 // Import images

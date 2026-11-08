@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../../Context/AuthContext";
+import { useAuth } from "../../Context/useAuth";
 import "./Navbar.css";
 import Logo1 from "../../Images/Logo1.png";
 

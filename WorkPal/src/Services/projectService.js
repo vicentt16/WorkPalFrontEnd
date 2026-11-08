@@ -50,7 +50,7 @@ export const getProjectById = async (projectId) => {
   }
 };
 
-export const searchProjects = async (searchText, category) => {
+export const searchProjects = async (searchText) => {
   try {
     const response = await api.get("/proyectos/");
     let projects = response.data;
@@ -232,7 +232,7 @@ export const deleteProject = async (projectId) => {
       success: true,
       message: "Proyecto eliminado",
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "Error al eliminar el proyecto",

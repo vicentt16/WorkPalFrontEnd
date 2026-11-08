@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import { 
   getProjectById, 
@@ -10,17 +10,13 @@ import {
   updateTaskStatus,
   leaveProject 
 } from "../../Services/projectService";
-import { useAuth } from "../../Context/AuthContext";
+import { useAuth } from "../../Context/useAuth";
 import "./ProjectDetails.css";
 
 export default function ProjectDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const { user } = useAuth();
-  
-  // Only show tasks if we came from manage projects
-  const isFromManage = location.state?.fromManage || false;
 
   const [project, setProject] = useState(null);
   const [collaborators, setCollaborators] = useState([]);
@@ -55,7 +51,7 @@ export default function ProjectDetails() {
       try {
         const [colabs, projectTasks] = await Promise.all([
           getProjectCollaborators(id),
-          isFromManage ? getTasks(id) : Promise.resolve([])
+          getTasks(id)
         ]);
         
         setCollaborators(colabs || []);
@@ -190,7 +186,7 @@ export default function ProjectDetails() {
               <p>{project.end ? new Date(project.end).toLocaleDateString() : "No definida"}</p>
             </div>
 
-            {isFromManage && isColab && (
+            {isColab && (
               <button className="leave-project-btn" onClick={handleLeaveProject}>
                 Abandonar Proyecto
               </button>
@@ -230,7 +226,7 @@ export default function ProjectDetails() {
         </div>
 
         {/* TASKS SECTION - Only if coming from Manage Projects */}
-        {isFromManage && (isAdmin || isColab) && (
+        {(isAdmin || isColab) && (
           <div className="tasks-section">
             <div className="tasks-header">
               <h2>Tareas del Proyecto</h2>
@@ -313,7 +309,7 @@ export default function ProjectDetails() {
         )}
 
         {/* APPLY - Only if NOT from Manage Projects and not member/admin */}
-        {!isFromManage && !isAdmin && !isColab && (
+        {!isAdmin && !isColab && (
           <div className="apply-section">
             <button className="apply-button" onClick={handleApply}>
               Aplicar al Proyecto

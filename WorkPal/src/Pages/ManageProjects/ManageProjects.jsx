@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
-import { 
-  getUserProjects, 
+import {
+  getUserProjects,
   getJoinedProjects,
-  getProjectApplications, 
-  getProjectCollaborators, 
-  acceptApplication, 
+  getProjectApplications,
+  getProjectCollaborators,
+  acceptApplication,
   rejectApplication,
   getExitRequests,
-  processExitRequest
+  processExitRequest,
 } from "../../Services/projectService";
 import { useNavigate } from "react-router-dom";
 import "./ManageProjects.css";
@@ -24,14 +24,22 @@ function UserProfileModal({ user, onClose }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="profile-modal" onClick={e => e.stopPropagation()}>
-        <button className="close-modal" onClick={onClose}>×</button>
+      <div className="profile-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="close-modal" onClick={onClose}>
+          ×
+        </button>
         <div className="modal-header">
           <div className="modal-avatar-container">
             {user.imagen_url ? (
-              <img src={getImageUrl(user.imagen_url)} alt={user.alumno_name} className="modal-avatar" />
+              <img
+                src={getImageUrl(user.imagen_url)}
+                alt={user.alumno_name}
+                className="modal-avatar"
+              />
             ) : (
-              <div className="modal-avatar-placeholder">{user.alumno_name?.charAt(0).toUpperCase()}</div>
+              <div className="modal-avatar-placeholder">
+                {user.alumno_name?.charAt(0).toUpperCase()}
+              </div>
             )}
           </div>
           <h2>{user.alumno_name}</h2>
@@ -40,9 +48,20 @@ function UserProfileModal({ user, onClose }) {
         <div className="modal-body">
           <h3>Habilidades</h3>
           <div className="modal-skills">
-            {user.skills ? (typeof user.skills === 'string' ? user.skills : user.skills.join(",")).split(",").map(s => (
-              <span key={s} className="modal-skill-tag">{s.trim()}</span>
-            )) : <p>No hay habilidades listadas.</p>}
+            {user.skills ? (
+              (typeof user.skills === "string"
+                ? user.skills
+                : user.skills.join(",")
+              )
+                .split(",")
+                .map((s) => (
+                  <span key={s} className="modal-skill-tag">
+                    {s.trim()}
+                  </span>
+                ))
+            ) : (
+              <p>No hay habilidades listadas.</p>
+            )}
           </div>
         </div>
       </div>
@@ -85,7 +104,7 @@ export default function ManageProjects() {
       const [apps, colabs, exits] = await Promise.all([
         getProjectApplications(project.id),
         getProjectCollaborators(project.id),
-        getExitRequests(project.id)
+        getExitRequests(project.id),
       ]);
       setApplications(apps);
       setCollaborators(colabs);
@@ -132,15 +151,15 @@ export default function ManageProjects() {
       <Navbar />
       <div className="manage-projects-container">
         <h1>Proyectos</h1>
-        
+
         <div className="tabs-container">
-          <button 
+          <button
             className={`tab-btn ${activeTab === "mis-proyectos" ? "active" : ""}`}
             onClick={() => setActiveTab("mis-proyectos")}
           >
             Mis Proyectos
           </button>
-          <button 
+          <button
             className={`tab-btn ${activeTab === "proyectos-unidos" ? "active" : ""}`}
             onClick={() => setActiveTab("proyectos-unidos")}
           >
@@ -150,20 +169,36 @@ export default function ManageProjects() {
 
         <div className="manage-content">
           <div className="projects-list">
-            <h2>{activeTab === "mis-proyectos" ? "Proyectos Creados" : "Proyectos que sigo"}</h2>
-            {loading ? <p>Cargando...</p> : (
-              (activeTab === "mis-proyectos" ? myProjects : joinedProjects).length === 0 ? 
-                <p>No hay proyectos en esta sección.</p> : (
-                (activeTab === "mis-proyectos" ? myProjects : joinedProjects).map(p => (
-                  <div 
-                    key={p.id} 
-                    className={`project-item ${selectedProject?.id === p.id ? 'active' : ''}`} 
-                    onClick={() => activeTab === "mis-proyectos" ? handleSelectProject(p) : navigate(`/project/${p.id}`, { state: { fromManage: true } })}
+            <h2>
+              {activeTab === "mis-proyectos"
+                ? "Proyectos Creados"
+                : "Proyectos que sigo"}
+            </h2>
+            {loading ? (
+              <p>Cargando...</p>
+            ) : (activeTab === "mis-proyectos" ? myProjects : joinedProjects)
+                .length === 0 ? (
+              <p>No hay proyectos en esta sección.</p>
+            ) : (
+              (activeTab === "mis-proyectos" ? myProjects : joinedProjects).map(
+                (p) => (
+                  <div
+                    key={p.id}
+                    className={`project-item ${selectedProject?.id === p.id ? "active" : ""}`}
+                    onClick={() =>
+                      activeTab === "mis-proyectos"
+                        ? handleSelectProject(p)
+                        : navigate(`/project/${p.id}`, {
+                            state: { fromManage: true },
+                          })
+                    }
                   >
                     <h3>{p.name}</h3>
-                    {activeTab === "proyectos-unidos" && <span className="view-link">Ver Perfil</span>}
+                    {activeTab === "proyectos-unidos" && (
+                      <span className="view-link">Ver Perfil</span>
+                    )}
                   </div>
-                ))
+                ),
               )
             )}
           </div>
@@ -173,23 +208,47 @@ export default function ManageProjects() {
               selectedProject ? (
                 <>
                   <div className="project-actions-bar">
-                     <button className="view-profile-btn" onClick={() => navigate(`/project/${selectedProject.id}`, { state: { fromManage: true } })}>
-                        Ver Proyecto
-                     </button>
+                    <button
+                      className="view-profile-btn"
+                      onClick={() =>
+                        navigate(`/project/${selectedProject.id}`, {
+                          state: { fromManage: true },
+                        })
+                      }
+                    >
+                      Ver Proyecto
+                    </button>
                   </div>
                   <div className="section">
                     <h2>Aplicaciones Pendientes</h2>
-                    {applications.length === 0 ? <p>No hay aplicaciones pendientes.</p> : (
+                    {applications.length === 0 ? (
+                      <p>No hay aplicaciones pendientes.</p>
+                    ) : (
                       <div className="applications-list">
-                        {applications.map(app => (
+                        {applications.map((app) => (
                           <div key={app.id} className="application-card">
                             <div className="app-info">
-                              <h3 className="clickable-name" onClick={() => handleShowProfile(app)}>{app.alumno_name}</h3>
+                              <h3
+                                className="clickable-name"
+                                onClick={() => handleShowProfile(app)}
+                              >
+                                {app.alumno_name}
+                              </h3>
                               <p>{app.alumno_carrera}</p>
                             </div>
                             <div className="app-actions">
-                              <button className="accept-btn" onClick={() => handleAccept(app.id)}>Aceptar</button>
-                              <button className="reject-btn" onClick={() => handleReject(app.id)}>Rechazar</button>
+                              <button
+                                className="accept-btn"
+                                onClick={() => handleAccept(app.id)}
+                              >
+                                Aceptar
+                              </button>
+                              <button
+                                className="reject-btn"
+                                onClick={() => handleReject(app.id)}
+                              >
+                                Rechazar
+                              </button>
                             </div>
                           </div>
                         ))}
@@ -199,17 +258,37 @@ export default function ManageProjects() {
 
                   <div className="section">
                     <h2>Solicitudes de Salida</h2>
-                    {exitRequests.length === 0 ? <p>No hay solicitudes de salida.</p> : (
+                    {exitRequests.length === 0 ? (
+                      <p>No hay solicitudes de salida.</p>
+                    ) : (
                       <div className="applications-list">
-                        {exitRequests.map(req => (
-                          <div key={req.id} className="application-card exit-card">
+                        {exitRequests.map((req) => (
+                          <div
+                            key={req.id}
+                            className="application-card exit-card"
+                          >
                             <div className="app-info">
-                              <h3 className="clickable-name" onClick={() => handleShowProfile(req)}>{req.alumno_name}</h3>
+                              <h3
+                                className="clickable-name"
+                                onClick={() => handleShowProfile(req)}
+                              >
+                                {req.alumno_name}
+                              </h3>
                               <p>Solicita abandonar el proyecto</p>
                             </div>
                             <div className="app-actions">
-                              <button className="accept-btn" onClick={() => handleProcessExit(req.id, true)}>Aceptar</button>
-                              <button className="reject-btn" onClick={() => handleProcessExit(req.id, false)}>Rechazar</button>
+                              <button
+                                className="accept-btn"
+                                onClick={() => handleProcessExit(req.id, true)}
+                              >
+                                Aceptar
+                              </button>
+                              <button
+                                className="reject-btn"
+                                onClick={() => handleProcessExit(req.id, false)}
+                              >
+                                Rechazar
+                              </button>
                             </div>
                           </div>
                         ))}
@@ -219,11 +298,18 @@ export default function ManageProjects() {
 
                   <div className="section collaborators-section">
                     <h2>Colaboradores</h2>
-                    {collaborators.length === 0 ? <p>Aún no hay colaboradores.</p> : (
+                    {collaborators.length === 0 ? (
+                      <p>Aún no hay colaboradores.</p>
+                    ) : (
                       <div className="collaborators-list">
-                        {collaborators.map(col => (
+                        {collaborators.map((col) => (
                           <div key={col.id} className="collaborator-card">
-                            <h3 className="clickable-name" onClick={() => handleShowProfile(col)}>{col.alumno_name}</h3>
+                            <h3
+                              className="clickable-name"
+                              onClick={() => handleShowProfile(col)}
+                            >
+                              {col.alumno_name}
+                            </h3>
                           </div>
                         ))}
                       </div>
@@ -235,15 +321,26 @@ export default function ManageProjects() {
               )
             ) : (
               <div className="joined-info">
-                <p>En esta sección puedes ver los proyectos en los que participas o has solicitado unirte.</p>
-                <p>Haz clic en un proyecto a la izquierda para ir a su perfil y ver tus tareas.</p>
+                <p>
+                  En esta sección puedes ver los proyectos en los que participas
+                  o has solicitado unirte.
+                </p>
+                <p>
+                  Haz clic en un proyecto a la izquierda para ir a su perfil y
+                  ver tus tareas.
+                </p>
               </div>
             )}
           </div>
         </div>
       </div>
-      
-      {selectedUser && <UserProfileModal user={selectedUser} onClose={() => setSelectedUser(null)} />}
+
+      {selectedUser && (
+        <UserProfileModal
+          user={selectedUser}
+          onClose={() => setSelectedUser(null)}
+        />
+      )}
     </div>
   );
 }
