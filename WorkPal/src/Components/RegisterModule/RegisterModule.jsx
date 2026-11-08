@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AddImage } from "./addImage";
-import { HabilitiesModule } from "./HabilitiesModule";
-import { ProjectUpperBar } from "./ProjectUpperBar";
-import { HabilitiesPopUp } from "./HabilitiesPopUp";
-import { createProject } from "../Services/projectService";
+import { AddImage } from "../addImage/addImage";
+import { HabilitiesModule } from "../HabilitiesModule/HabilitiesModule";
+import { ProjectUpperBar } from "../ProjectUpperBar/ProjectUpperBar";
+import { HabilitiesPopUp } from "../HabilitiesPopUp/HabilitiesPopUp";
+import { createProject } from "../../Services/projectService";
 import "./RegisterModule.css";
 
 import returnIcon from "/src/Images/returnIcon.png";

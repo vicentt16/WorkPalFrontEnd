@@ -5,7 +5,7 @@ import Home from "../Pages/Home/Home";
 import SearchProjects from "../Pages/SearchProjects/SearchProjects";
 import ProjectDetails from "../Pages/ProjectDetails/ProjectDetails";
 import ManageProjects from "../Pages/ManageProjects/ManageProjects";
-import { RegisterModule } from "../Modules/RegisterModule";
+import { RegisterModule } from "../Components/RegisterModule/RegisterModule";
 import NotFound from "../Pages/NotFound/NotFound";
 import ProtectedRoute from "../Components/ProtectedRoute";
 
