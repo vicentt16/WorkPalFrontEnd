@@ -5,9 +5,13 @@ export default function PersonalizePage() {
 
     const [color, setColor] = useState("#ffffff");
 
+    const ColorPrincipalDinamico = {
+        backgroundColor: color,
+    };
+
     return(
         <>
-        <div>
+        <div style={ColorPrincipalDinamico}>
             <p1>Personaliza tu experiencia en WorkPal</p1>
             <div className="color-picker">
                 <label htmlFor="color">Selecciona un color de fondo:</label>
@@ -18,6 +22,19 @@ export default function PersonalizePage() {
                     onChange={(e) => setColor(e.target.value)}
                 />
             </div>
+            <div className="logo-picker">
+                <label htmlFor="logo">Selecciona un logo:</label>
+                <input
+                    type="file"
+                    id="logo"
+                    accept="image/*"
+                />
+            </div>
+            <button className="save-button"
+            onClick={() => {
+                document.documentElement.style.setProperty('--color-dinamico', color);
+            }}
+            >Guardar cambios</button>    
         </div>
         </>
     );

@@ -1,0 +1,7 @@
+:root{
+    --color-dinamico: #ffffff;
+}
+
+.logo-picker{
+ background-color: var(--color-dinamico);
+}
