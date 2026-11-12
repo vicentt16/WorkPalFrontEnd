@@ -1,7 +1,9 @@
 :root{
-    --color-dinamico: #ffffff;
+    --color-principal-dinamico: #ffdf29;
+    --color-secundario-dinamicp: #d4ae15;
+    --color-fondo-dinamico: #fffdc2;
 }
 
 .logo-picker{
- background-color: var(--color-dinamico);
+ background-color: var(--color-fondo-dinamico);
 }
