@@ -1,6 +1,6 @@
 .login-page {
   min-height: 100vh;
-  background-color: #fff4ca;
+  background-color: var(--color-fondo-dinamico);
 }
 
 .login-container {
@@ -71,7 +71,7 @@
 .input-group input {
   padding: 15px 18px;
 
-  border: 1px solid #fff4ca;
+  border: 1px solid var(--color-fondo-dinamico);
   border-radius: 14px;
 
   font-size: 16px;
@@ -82,7 +82,7 @@
 }
 
 .input-group input:focus {
-  border-color: #d4ae15;
+  border-color: var(--color-principal-dinamico);
 }
 
 .error-message {
@@ -108,7 +108,7 @@
   border: none;
   border-radius: 14px;
 
-  background-color: #d4ae15;
+  background-color: var(--color-principal-dinamico);
   color: white;
 
   font-size: 17px;
@@ -120,7 +120,7 @@
 }
 
 .login-button:hover {
-  background-color: #d4ae15;
+  background-color: var(--color-principal-dinamico);
 }
 
 .register-link {
@@ -132,7 +132,7 @@
 }
 
 .register-link a {
-  color: #d4ae15;
+  color: var(--color-principal-dinamico);
 
   text-decoration: none;
 
