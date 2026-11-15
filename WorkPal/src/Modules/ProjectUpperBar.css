@@ -25,7 +25,7 @@
 }
 
 .upper-bar-button:hover {
-    background-color: rgb(255, 224, 70);
+    background-color: var(--color-principal-dinamico);
 
     transition: all 0.3s;
 }
@@ -50,7 +50,7 @@
     max-width: 80px;
     max-height: 80px;
 
-    background-color: rgb(255, 224, 70);
+    background-color: var(--color-principal-dinamico);
 
     border-radius: 30px;
 }
@@ -80,13 +80,13 @@
 }
 
 .register-button {
-    background-color: rgb(255, 224, 70);
+    background-color: var(--color-principal-dinamico);
 }
 
 .register-button:hover {
     transform: translateY(-5px);
 
-    background-color: rgba(255, 224, 70, 0.552);
+    background-color: var(--color-secundario-dinamico);
 
     transition: all 0.5s;
 }

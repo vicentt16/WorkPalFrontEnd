@@ -37,7 +37,7 @@
 }
 
 .popup-buttons button:first-child {
-    background-color: rgb(255, 224, 70);
+    background-color: var(--color-principal-dinamico);
 
 }
 
