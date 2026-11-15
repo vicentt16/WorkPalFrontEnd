@@ -5,11 +5,11 @@ import "./PersonalizePage.css";
 export default function PersonalizePage() {
 
     const [institucionalColors, setInstitutionalColors] = useState({
-    image: null,
-    colorPrincipal: "",
-    colorSecundario: "",
-    colorFondo: "",
- });
+        image: null,
+        colorPrincipal: "",
+        colorSecundario: "",
+        colorFondo: "",
+    });
 
     const fetchInstitutionalColors = async () => {
         const colors = await getInstitutionalColors();
@@ -32,8 +32,10 @@ export default function PersonalizePage() {
 
     return(
         <>
-        <div>
-            <p1>Personaliza tu experiencia en WorkPal</p1>
+        <div className="personalize-container">
+            <header className="personalize-header">
+                <p1>Personaliza tu experiencia en WorkPal</p1>
+            </header>
             <div className="color-principal-picker">
                 <label htmlFor="color">Selecciona un color Principal:</label>
                 <input

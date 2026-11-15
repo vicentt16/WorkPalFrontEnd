@@ -3,12 +3,14 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { AuthProvider } from "./Context/AuthContext";
 
+import PersonalizePage from "./Pages/PersonalizePage/PersonalizePage";
+
 ReactDOM.createRoot(
   document.getElementById("root")
 ).render(
   <React.StrictMode>
     <AuthProvider>
-      <App />
+      <PersonalizePage />
     </AuthProvider>
   </React.StrictMode>
 );
