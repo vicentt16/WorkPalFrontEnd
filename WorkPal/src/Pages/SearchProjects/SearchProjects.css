@@ -1,6 +1,6 @@
 .search-container {
   min-height: 100vh;
-  background-color: #fff4ca;
+  background-color: var(--color-fondo-dinamico);
 }
 
 .search-content {
@@ -35,7 +35,7 @@
 
   padding: 14px 18px;
 
-  border: 1px solid #fff4ca;
+  border: 1px solid var(--color-fondo-dinamico);
   border-radius: 12px;
 
   font-size: 16px;
@@ -46,7 +46,7 @@
 }
 
 .search-input:focus {
-  border-color: #d4ae15;
+  border-color: var(--color-secundario-dinamico);
 }
 
 .search-projects-container {
@@ -64,7 +64,7 @@
 .category-select {
   padding: 14px 18px;
 
-  border: 1px solid #fff4ca;
+  border: 1px solid var(--color-fondo-dinamico);
   border-radius: 12px;
 
   font-size: 16px;
@@ -115,8 +115,8 @@
 .project-category {
   display: inline-block;
 
-  background-color: #fff4ca;
-  color: #d4ae15;
+  background-color: var(--color-fondo-dinamico);
+  color: var(--color-secundario-dinamico);
 
   padding: 6px 12px;
 
@@ -152,9 +152,9 @@
 }
 
 .skill-tag {
-  background-color: #fff4ca;
+  background-color: var(--color-fondo-dinamico);
 
-  color: #d4ae15;
+  color: var(--color-secundario-dinamico);
 
   padding: 8px 12px;
 
@@ -172,7 +172,7 @@
   border: none;
   border-radius: 12px;
 
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
   color: white;
 
   font-size: 16px;
@@ -184,7 +184,7 @@
 }
 
 .view-project-button:hover {
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
 }
 
 .no-results {

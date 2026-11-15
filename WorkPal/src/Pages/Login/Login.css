@@ -86,7 +86,7 @@
 }
 
 .error-message {
-  background-color: #fee2e2;
+  background-color: var(--color-fondo-dinamico);
 
   color: #dc2626;
 
