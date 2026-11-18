@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/useAuth";
-import { registerUser, loginUser, createAlumnoProfile } from "../../Services/authService";
+import { registerUser, loginUser, createAlumnoProfile, createProfesorProfile, } from "../../Services/authService";
 import "./RegisterUser.css";
 
 export default function RegisterUser() {
   const navigate = useNavigate();
 
   const { login } = useAuth();
+
+  const [selectedRole, setSelectedRole] = useState("alumno");
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -17,6 +20,7 @@ export default function RegisterUser() {
     confirmPassword: "",
     career: "",
     skills: "",
+    department: "",
     image: null,
   });
 
@@ -45,99 +49,136 @@ export default function RegisterUser() {
 
     setErrorMessage("");
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (submitting) return;
+
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    const {
+      name,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      career,
+      department,
+      image,
+    } = formData;
+
     if (
-      !formData.name ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.password ||
-      !formData.confirmPassword ||
-      !formData.career ||
-      !formData.image
+      !name.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !password ||
+      !confirmPassword ||
+      !image
     ) {
-      setErrorMessage(
-        "Todos los campos son obligatorios, incluyendo la foto de perfil"
-      );
-
+      setErrorMessage("Completa todos los campos obligatorios.");
       return;
     }
 
-    if (
-      formData.password !==
-      formData.confirmPassword
-    ) {
-      setErrorMessage(
-        "Las contraseñas no coinciden"
-      );
-
+    if (selectedRole === "alumno" && !career.trim()) {
+      setErrorMessage("Ingresa tu carrera.");
       return;
     }
 
-    if (formData.password.length < 6) {
-      setErrorMessage(
-        "La contraseña debe tener mínimo 6 caracteres"
-      );
-
+    if (selectedRole === "profesor" && !department.trim()) {
+      setErrorMessage("Ingresa tu departamento académico.");
       return;
     }
 
-    const formattedSkills =
-      formData.skills
-        .split(",")
-        .map((skill) => skill.trim())
-        .filter((skill) => skill !== "");
+    if (password !== confirmPassword) {
+      setErrorMessage("Las contraseñas no coinciden.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setErrorMessage("La contraseña debe tener mínimo 6 caracteres.");
+      return;
+    }
+
+    setSubmitting(true);
 
     try {
-      // 1. Register basic user
-      const regResponse = await registerUser({
-        email: formData.email,
-        password: formData.password,
+      const registerResponse = await registerUser({
+        email,
+        password,
+        role: selectedRole,
       });
 
-      if (!regResponse.success) {
-        setErrorMessage(regResponse.message);
+      if (!registerResponse.success) {
+        setErrorMessage(registerResponse.message);
         return;
       }
 
-      // 2. Login to get token for profile creation
-      const loginResponse = await loginUser(formData.email, formData.password);
+      const loginResponse = await loginUser(email, password);
+
       if (!loginResponse.success) {
-        setErrorMessage("Usuario creado, pero hubo un error al iniciar sesión automáticamente.");
+        setErrorMessage(
+          "Cuenta creada, pero no se pudo iniciar sesión: " +
+          loginResponse.message
+        );
         return;
       }
 
-      // 3. Create alumno profile
-      const profileResponse = await createAlumnoProfile({
-        name: formData.name,
-        lastName: formData.lastName,
-        career: formData.career,
-        skills: formattedSkills,
-        image: formData.image,
-      });
+      const commonProfile = {
+        name,
+        lastName,
+        image,
+      };
+
+      let profileResponse;
+
+      if (selectedRole === "alumno") {
+        profileResponse = await createAlumnoProfile({
+          ...commonProfile,
+          career,
+          skills: formData.skills
+            .split(",")
+            .map((skill) => skill.trim())
+            .filter(Boolean),
+        });
+      } else {
+        profileResponse = await createProfesorProfile({
+          ...commonProfile,
+          department,
+        });
+      }
 
       if (!profileResponse.success) {
-        setErrorMessage("Usuario creado, pero hubo un error al crear el perfil: " + profileResponse.message);
+        setErrorMessage(
+          "Cuenta creada, pero hubo un error al crear el perfil: " +
+          profileResponse.message
+        );
         return;
       }
 
-      // Update context with the full user + profile info
-      const fullUser = { ...loginResponse.user, ...profileResponse.profile, skills: formattedSkills };
+      const fullUser = {
+        ...loginResponse.user,
+        ...profileResponse.profile,
+        role: selectedRole,
+        id: loginResponse.user.id,
+      };
+
       login(fullUser);
 
-      setSuccessMessage(
-        "¡Cuenta y perfil creados correctamente! Redirigiendo..."
+      setSuccessMessage("¡Cuenta creada correctamente!");
+
+      navigate(
+        selectedRole === "profesor"
+          ? "/profesor/dashboard"
+          : "/home",
+        { replace: true }
       );
-
-      setTimeout(() => {
-        navigate("/home");
-      }, 1500);
-
     } catch (error) {
       console.error(error);
-      setErrorMessage("Ocurrió un error inesperado durante el registro.");
+      setErrorMessage("Ocurrió un error durante el registro.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -160,6 +201,39 @@ export default function RegisterUser() {
             className="register-form"
             onSubmit={handleSubmit}
           >
+
+          <div className="role-selection">
+            <h3>¿Cómo deseas registrarte?</h3>
+
+            <div className="role-options">
+              <button
+                type="button"
+                className={`role-option ${
+                  selectedRole === "alumno" ? "selected" : ""
+                }`}
+                onClick={() => setSelectedRole("alumno")}
+                aria-pressed={selectedRole === "alumno"}
+              >
+                <span className="role-icon">🎓</span>
+                <strong>Alumno</strong>
+                <small>Crear y colaborar en proyectos</small>
+              </button>
+
+              <button
+                type="button"
+                className={`role-option ${
+                  selectedRole === "profesor" ? "selected" : ""
+                }`}
+                onClick={() => setSelectedRole("profesor")}
+                aria-pressed={selectedRole === "profesor"}
+              >
+                <span className="role-icon">📚</span>
+                <strong>Profesor</strong>
+                <small>Supervisar proyectos y avances</small>
+              </button>
+            </div>
+          </div>
+
             {/* PHOTO UPLOAD */}
             <div className="photo-upload-section">
               <div className="photo-preview">
@@ -227,39 +301,46 @@ export default function RegisterUser() {
                 onChange={handleChange}
               />
             </div>
+            
+            {selectedRole === "alumno" ? (
+              <>
+                <div className="input-group">
+                  <label>Carrera</label>
+                  <input
+                    type="text"
+                    name="career"
+                    placeholder="DTS"
+                    value={formData.career}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            {/* CAREER */}
-            <div className="input-group">
-              <label>Carrera</label>
-
-              <input
-                type="text"
-                name="career"
-                placeholder="DTS"
-                value={formData.career}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* SKILLS */}
-            <div className="input-group">
-              <label>
-                Habilidades
-              </label>
-
-              <input
-                type="text"
-                name="skills"
-                placeholder="React, UI/UX, Python..."
-                value={formData.skills}
-                onChange={handleChange}
-              />
-
-              <small>
-                Separa las habilidades por
-                comas.
-              </small>
-            </div>
+                <div className="input-group">
+                  <label>Habilidades</label>
+                  <input
+                    type="text"
+                    name="skills"
+                    placeholder="React, Python, UI/UX..."
+                    value={formData.skills}
+                    onChange={handleChange}
+                  />
+                  <small>Separa las habilidades por comas.</small>
+                </div>
+              </>
+            ) : (
+              <div className="input-group">
+                <label>Departamento o área académica</label>
+                <input
+                  type="text"
+                  name="department"
+                  placeholder="Ingeniería y Tecnología"
+                  value={formData.department}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
 
             {/* PASSWORDS */}
             <div className="form-row">
@@ -306,12 +387,12 @@ export default function RegisterUser() {
               </div>
             )}
 
-            {/* BUTTON */}
             <button
               type="submit"
               className="register-button"
+              disabled={submitting}
             >
-              Crear Cuenta
+              {submitting ? "Creando cuenta..." : "Crear Cuenta"}
             </button>
 
             {/* LOGIN */}

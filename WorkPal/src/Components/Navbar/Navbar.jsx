@@ -10,6 +10,8 @@ export default function Navbar() {
 
   const { user, logout } = useAuth();
 
+  const isProfesor = user?.role === "profesor";
+
   const handleLogout = () => {
     logout();
 
@@ -34,9 +36,15 @@ export default function Navbar() {
       <nav className="navbar-links">
         <button
           className={`navbar-link ${
-            isActive("/home") ? "active" : ""
+            isActive(isProfesor ? "/profesor/dashboard" : "/home")
+              ? "active"
+              : ""
           }`}
-          onClick={() => navigate("/home")}
+          onClick={() =>
+            navigate(
+              isProfesor ? "/profesor/dashboard" : "/home"
+            )
+          }
         >
           Inicio
         </button>
@@ -50,31 +58,36 @@ export default function Navbar() {
           Buscar Proyectos
         </button>
 
-        <button
-          className={`navbar-link ${
-            isActive("/create-project")
-              ? "active"
-              : ""
-          }`}
-          onClick={() =>
-            navigate("/create-project")
-          }
-        >
-          Crear Proyecto
-        </button>
+        {isProfesor ? (
+          <button
+            className={`navbar-link ${
+              isActive("/profesor/dashboard") ? "active" : ""
+            }`}
+            onClick={() => navigate("/profesor/dashboard")}
+          >
+            Mis Proyectos Supervisados
+          </button>
+        ) : (
+          <>
+            <button
+              className={`navbar-link ${
+                isActive("/create-project") ? "active" : ""
+              }`}
+              onClick={() => navigate("/create-project")}
+            >
+              Crear Proyecto
+            </button>
 
-        <button
-          className={`navbar-link ${
-            isActive("/manage-projects")
-              ? "active"
-              : ""
-          }`}
-          onClick={() =>
-            navigate("/manage-projects")
-          }
-        >
-          Proyectos
-        </button>
+            <button
+              className={`navbar-link ${
+                isActive("/manage-projects") ? "active" : ""
+              }`}
+              onClick={() => navigate("/manage-projects")}
+            >
+              Proyectos
+            </button>
+          </>
+        )}
       </nav>
 
       {/* USER */}

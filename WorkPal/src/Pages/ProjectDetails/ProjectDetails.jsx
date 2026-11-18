@@ -11,6 +11,10 @@ import {
   leaveProject 
 } from "../../Services/projectService";
 import { useAuth } from "../../Context/useAuth";
+import {
+  getSupervisedProjectDetails,
+  subscribeToProject,
+} from "../../Services/profesorService";
 import "./ProjectDetails.css";
 
 export default function ProjectDetails() {
@@ -24,6 +28,10 @@ export default function ProjectDetails() {
   const [loading, setLoading] = useState(true);
   const [isColab, setIsColab] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const isProfesor = user?.role === "profesor";
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [accessError, setAccessError] = useState("");
 
   // Task creation state
   const [showTaskForm, setShowTaskForm] = useState(false);
@@ -40,30 +48,71 @@ export default function ProjectDetails() {
 
   const fetchProjectData = async () => {
     setLoading(true);
-    const projData = await getProjectById(id);
-    if (projData) {
-      setProject(projData);
-      
-      const admin = user && projData.owner_id && Number(projData.owner_id) === Number(user.id);
-      setIsAdmin(!!admin);
+    setAccessError("");
+    setIsSubscribed(false);
+    setCollaborators([]);
+    setTasks([]);
+    setIsAdmin(false);
+    setIsColab(false);
+    setProject(null);
 
-      // Always fetch collaborators to show the team
-      try {
-        const [colabs, projectTasks] = await Promise.all([
-          getProjectCollaborators(id),
-          getTasks(id)
-        ]);
-        
-        setCollaborators(colabs || []);
-        setTasks(projectTasks || []);
-        
-        const colab = user && colabs && colabs.some(c => c.alumno_id && Number(c.alumno_id) === Number(user.id));
-        setIsColab(!!colab);
-      } catch (err) {
-        console.error("Error fetching project sub-data:", err);
+    try {
+      const projData = await getProjectById(id);
+
+      if (!projData) {
+        setAccessError("No se encontró el proyecto.");
+        return;
       }
+
+      setProject(projData);
+
+      if (isProfesor) {
+        try {
+          const supervised = await getSupervisedProjectDetails(id);
+
+          setIsSubscribed(true);
+          setCollaborators(supervised.collaborators || []);
+          setTasks(supervised.tasks || []);
+        } catch (error) {
+          if (error.response?.status !== 403 &&
+              error.response?.status !== 404) {
+            throw error;
+          }
+
+          // No está suscrito: solo ve información pública.
+          setIsSubscribed(false);
+        }
+
+        return;
+      }
+
+      const admin =
+        projData.owner_id != null &&
+        Number(projData.owner_id) === Number(user?.id);
+
+      setIsAdmin(admin);
+
+      const [colabs, projectTasks] = await Promise.all([
+        getProjectCollaborators(id),
+        getTasks(id),
+      ]);
+
+      setCollaborators(colabs || []);
+      setTasks(projectTasks || []);
+
+      const colab = (colabs || []).some(
+        (c) =>
+          c.alumno_id != null &&
+          Number(c.alumno_id) === Number(user?.id)
+      );
+
+      setIsColab(colab);
+    } catch (error) {
+      console.error(error);
+      setAccessError("No se pudo cargar la información.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   if (loading) {
@@ -80,11 +129,13 @@ export default function ProjectDetails() {
   }
 
   const handleApply = async () => {
+    if (isProfesor) return;
     const response = await applyToProject(id);
     alert(response.message);
   };
 
   const handleCreateTask = async (e) => {
+    if (isProfesor) return;
     e.preventDefault();
     if (!taskData.assigned_to) {
       alert("Selecciona un colaborador");
@@ -105,6 +156,7 @@ export default function ProjectDetails() {
   };
 
   const handleStatusChange = async (taskId, newStatus) => {
+    if (isProfesor) return;
     if (newStatus === "") return;
     
     const confirmMsg = "Solo una vez se podrá seleccionar esta opción y una vez confirmada se mantendrá en ese estado hasta que lo hayas puesto como Completada. ¿Deseas continuar?";
@@ -121,6 +173,7 @@ export default function ProjectDetails() {
   };
 
   const handleLeaveProject = async () => {
+    if (isProfesor) return;
     const res = await leaveProject(id);
     alert(res.message);
   };
@@ -149,6 +202,16 @@ export default function ProjectDetails() {
     return `http://localhost:8000${path}`;
   };
 
+  const handleSubscribe = async () => {
+    const response = await subscribeToProject(id);
+
+    if (response.success) {
+      await fetchProjectData();
+    } else {
+      alert(response.message);
+    }
+  };
+
   return (
     <div className="project-details-container">
       <Navbar />
@@ -175,6 +238,38 @@ export default function ProjectDetails() {
             <p>{project.description}</p>
           </div>
 
+        {isProfesor && !isSubscribed && (
+          <div className="apply-section">
+            <h3>Supervisión académica</h3>
+            <p>
+              Suscríbete para consultar el avance de este
+              proyecto y las tareas de sus integrantes.
+            </p>
+
+            <button
+              className="apply-button"
+              onClick={handleSubscribe}
+            >
+              Supervisar Proyecto
+            </button>
+          </div>
+        )}
+
+        {isProfesor && isSubscribed && (
+          <div className="apply-section">
+            <p>
+              Estás supervisando este proyecto.
+              Tienes acceso de solo lectura.
+            </p>
+          </div>
+        )}
+
+        {accessError && (
+          <p role="alert" className="error-message">
+            {accessError}
+          </p>
+        )}
+
           <div className="project-side-panel">
             <div className="side-card">
               <h3>Estado</h3>
@@ -186,7 +281,7 @@ export default function ProjectDetails() {
               <p>{project.end ? new Date(project.end).toLocaleDateString() : "No definida"}</p>
             </div>
 
-            {isColab && (
+            {isColab && !isProfesor && (
               <button className="leave-project-btn" onClick={handleLeaveProject}>
                 Abandonar Proyecto
               </button>
@@ -205,39 +300,41 @@ export default function ProjectDetails() {
         </div>
 
         {/* COLLABORATORS */}
-        <div className="members-section">
-          <h2>Equipo del Proyecto</h2>
-          <div className="members-list">
-            {collaborators.map((member) => (
-              <div className="member-card" key={member.alumno_id}>
-                <div className="member-avatar">
-                  {member.imagen_url ? (
-                    <img src={getImageUrl(member.imagen_url)} alt={member.alumno_name} className="member-photo" />
-                  ) : (
-                    member.alumno_name?.charAt(0).toUpperCase()
-                  )}
+        {(!isProfesor || isSubscribed) && (
+          <div className="members-section">
+            <h2>Equipo del Proyecto</h2>
+            <div className="members-list">
+              {collaborators.map((member) => (
+                <div className="member-card" key={member.alumno_id}>
+                  <div className="member-avatar">
+                    {member.imagen_url ? (
+                      <img src={getImageUrl(member.imagen_url)} alt={member.alumno_name} className="member-photo" />
+                    ) : (
+                      member.alumno_name?.charAt(0).toUpperCase()
+                    )}
+                  </div>
+                  <div className="member-info">
+                    <p className="member-name">{member.alumno_name}</p>
+                  </div>
                 </div>
-                <div className="member-info">
-                  <p className="member-name">{member.alumno_name}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* TASKS SECTION - Only if coming from Manage Projects */}
-        {(isAdmin || isColab) && (
+        {(isAdmin || isColab || (isProfesor && isSubscribed)) && (
           <div className="tasks-section">
             <div className="tasks-header">
               <h2>Tareas del Proyecto</h2>
-              {isAdmin && (
+              {isAdmin && !isProfesor && (
                 <button className="add-task-btn" onClick={() => setShowTaskForm(!showTaskForm)}>
                   {showTaskForm ? "Cancelar" : "Crear Tarea"}
                 </button>
               )}
             </div>
 
-            {showTaskForm && (
+            {showTaskForm && isAdmin && !isProfesor && (
               <form className="task-form" onSubmit={handleCreateTask}>
                 <input 
                   type="text" 
@@ -291,15 +388,28 @@ export default function ProjectDetails() {
                     </div>
                     <div className="task-status-control">
                       <label>Estado:</label>
-                      <select 
-                        value={task.status} 
-                        onChange={(e) => handleStatusChange(task.id, e.target.value)}
-                        disabled={task.status === "Confirmada" && !isAdmin}
-                      >
-                        {getStatusOptions(task).map(opt => (
-                          <option key={opt} value={opt}>{opt}</option>
-                        ))}
-                      </select>
+
+                      {isProfesor ? (
+                        <span className="task-status-readonly">
+                          {task.status}
+                        </span>
+                      ) : (
+                        <select
+                          value={task.status}
+                          onChange={(e) =>
+                            handleStatusChange(task.id, e.target.value)
+                          }
+                          disabled={
+                            task.status === "Confirmada" && !isAdmin
+                          }
+                        >
+                          {getStatusOptions(task).map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                     </div>
                   </div>
                 ))
@@ -309,7 +419,7 @@ export default function ProjectDetails() {
         )}
 
         {/* APPLY - Only if NOT from Manage Projects and not member/admin */}
-        {!isAdmin && !isColab && (
+        {!isAdmin && !isColab && !isProfesor && (
           <div className="apply-section">
             <button className="apply-button" onClick={handleApply}>
               Aplicar al Proyecto

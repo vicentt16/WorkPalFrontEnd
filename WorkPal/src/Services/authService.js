@@ -3,9 +3,11 @@ import api from "./api";
 export const registerUser = async (userData) => {
   try {
     const response = await api.post("/auth/register", {
-      username: userData.email, // Using email as username for now
+      username: userData.email,
       password: userData.password,
+      role: userData.role,
     });
+
     return {
       success: true,
       user: response.data,
@@ -13,7 +15,9 @@ export const registerUser = async (userData) => {
   } catch (error) {
     return {
       success: false,
-      message: error.response?.data?.detail || "Error en el registro",
+      message:
+        error.response?.data?.detail ||
+        "Error al registrar usuario",
     };
   }
 };
@@ -50,48 +54,108 @@ export const createAlumnoProfile = async (profileData) => {
   }
 };
 
-export const loginUser = async (email, password) => {
+export const createProfesorProfile = async (profileData) => {
   try {
     const formData = new FormData();
-    formData.append("username", email);
-    formData.append("password", password);
 
-    const response = await api.post("/auth/token", formData);
-    
-    // The backend sets a cookie, but let's also store the token if returned
-    if (response.data.access_token) {
-      sessionStorage.setItem("workpal_token", response.data.access_token);
+    formData.append("name", profileData.name);
+    formData.append("last_name", profileData.lastName);
+    formData.append("departamento", profileData.department || "");
+
+    if (profileData.image) {
+      formData.append("imagen", profileData.image);
     }
 
-    // Get user info
-    const meResponse = await api.get("/auth/me");
-    let user = meResponse.data;
-
-    // Try to get alumno info
-    try {
-      const alumnoResponse = await api.get("/alumnos/me");
-      const alumnoData = alumnoResponse.data;
-      // Parse skills string to array
-      if (alumnoData.skills && typeof alumnoData.skills === "string") {
-        alumnoData.skills = alumnoData.skills.split(",").map(s => s.trim());
-      } else if (!alumnoData.skills) {
-        alumnoData.skills = [];
-      }
-      user = { ...user, ...alumnoData };
-    } catch (e) {
-      console.log("No alumno profile found yet");
-    }
-
-    sessionStorage.setItem("workpal_user", JSON.stringify(user));
+    const response = await api.post("/profesores/", formData);
 
     return {
       success: true,
-      user: user,
+      profile: response.data,
     };
   } catch (error) {
     return {
       success: false,
-      message: error.response?.data?.detail || "Credenciales incorrectas",
+      message:
+        error.response?.data?.detail ||
+        "Error al crear el perfil de profesor",
+    };
+  }
+};
+
+export const loginUser = async (email, password) => {
+  try {
+    const formData = new URLSearchParams();
+    formData.append("username", email);
+    formData.append("password", password);
+
+    const response = await api.post("/auth/token", formData);
+
+    if (response.data.access_token) {
+      sessionStorage.setItem(
+        "workpal_token",
+        response.data.access_token
+      );
+    }
+
+    const meResponse = await api.get("/auth/me");
+    const account = meResponse.data;
+
+    // El rol debe venir del backend.
+    const role = account.role;
+
+    if (!["alumno", "profesor"].includes(role)) {
+      throw new Error("La cuenta no tiene un rol válido");
+    }
+
+    let profile = {};
+
+    try {
+      if (role === "profesor") {
+        const result = await api.get("/profesores/me");
+        profile = result.data;
+      } else {
+        const result = await api.get("/alumnos/me");
+        profile = result.data;
+
+        if (typeof profile.skills === "string") {
+          profile.skills = profile.skills
+            .split(",")
+            .map((skill) => skill.trim());
+        }
+      }
+    } catch (error) {
+      if (error.response?.status !== 404) {
+        throw error;
+      }
+    }
+
+    const user = {
+      ...account,
+      ...profile,
+      role,
+      // Preservamos el ID de autenticación.
+      id: account.id,
+    };
+
+    sessionStorage.setItem(
+      "workpal_user",
+      JSON.stringify(user)
+    );
+
+    return {
+      success: true,
+      user,
+    };
+  } catch (error) {
+    sessionStorage.removeItem("workpal_token");
+    sessionStorage.removeItem("workpal_user");
+
+    return {
+      success: false,
+      message:
+        error.response?.data?.detail ||
+        error.message ||
+        "Credenciales incorrectas",
     };
   }
 };

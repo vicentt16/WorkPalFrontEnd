@@ -1,0 +1,164 @@
+
+.profesor-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.profesor-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.profesor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.profesor-header h1 {
+  color: #23324a;
+  margin-bottom: 10px;
+}
+
+.profesor-header p {
+  color: #65748b;
+}
+
+.profesor-header button,
+.profesor-empty button,
+.profesor-card-actions button {
+  padding: 12px 18px;
+  background: #3478db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.profesor-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.stat-card h3 {
+  font-size: 14px;
+  color: #65748b;
+  margin-bottom: 15px;
+}
+
+.stat-card strong {
+  font-size: 32px;
+  color: #3478db;
+}
+
+.profesor-projects h2 {
+  margin-bottom: 22px;
+  color: #23324a;
+}
+
+.profesor-project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.profesor-project-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.profesor-project-card h3 {
+  color: #23324a;
+  margin-bottom: 12px;
+}
+
+.profesor-project-card > p {
+  color: #65748b;
+  line-height: 1.5;
+}
+
+.progress-heading {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 0 10px;
+  font-size: 14px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+  background: #e5ebf3;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #3478db;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.task-summary {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.profesor-card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.profesor-card-actions .unsubscribe-button {
+  background: #edf1f6;
+  color: #34445a;
+}
+
+.profesor-empty {
+  text-align: center;
+  background: white;
+  border-radius: 14px;
+  padding: 45px 20px;
+  margin-bottom: 20px;
+}
+
+.profesor-empty p {
+  margin: 12px 0 22px;
+}
+
+.profesor-error {
+  color: #b42318;
+  margin: 12px 0;
+}
+
+@media (max-width: 768px) {
+  .profesor-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profesor-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .profesor-project-grid {
+    grid-template-columns: 1fr;
+  }
+}

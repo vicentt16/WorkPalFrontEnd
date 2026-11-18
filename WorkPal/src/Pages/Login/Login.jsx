@@ -33,7 +33,12 @@ export default function Login() {
 
     if (response.success) {
       login(response.user);
-      navigate("/home");
+      navigate(
+        response.user.role === "profesor"
+          ? "/profesor/dashboard"
+          : "/home",
+        { replace: true }
+      );
     } else {
       setErrorMessage(response.message);
     }

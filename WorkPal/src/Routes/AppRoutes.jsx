@@ -8,6 +8,7 @@ import ManageProjects from "../Pages/ManageProjects/ManageProjects";
 import { RegisterModule } from "../Modules/RegisterModule";
 import NotFound from "../Pages/NotFound/NotFound";
 import ProtectedRoute from "../Components/ProtectedRoute";
+import ProfesorDashboard from "../Pages/Profesor/ProfesorDashboard";
 
 export default function AppRoutes() {
   return (
@@ -55,7 +56,7 @@ export default function AppRoutes() {
         <Route
           path="/create-project"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["alumno"]}>
               <RegisterModule />
             </ProtectedRoute>
           }
@@ -64,8 +65,17 @@ export default function AppRoutes() {
         <Route
           path="/manage-projects"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["alumno"]}>
               <ManageProjects />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profesor/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={["profesor"]}>
+              <ProfesorDashboard />
             </ProtectedRoute>
           }
         />

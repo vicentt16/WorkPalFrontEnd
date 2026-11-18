@@ -234,3 +234,68 @@
     flex-direction: column;
   }
 }
+
+/* Selección del tipo de usuario */
+
+.role-selection {
+  margin-bottom: 28px;
+}
+
+.role-selection h3 {
+  font-size: 17px;
+  margin-bottom: 14px;
+  text-align: center;
+  color: #25344b;
+}
+
+.role-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.role-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 22px 14px;
+  border: 2px solid #dce3ec;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #25344b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-option:hover {
+  border-color: #3478db;
+  background: #f4f8ff;
+}
+
+.role-option.selected {
+  border-color: #3478db;
+  background: #eaf2ff;
+  box-shadow: 0 3px 12px rgba(52, 120, 219, 0.12);
+}
+
+.role-option .role-icon {
+  font-size: 30px;
+}
+
+.role-option strong {
+  font-size: 17px;
+}
+
+.role-option small {
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  .role-options {
+    grid-template-columns: 1fr;
+  }
+}
