@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../Components/Navbar/Navbar";
 import { useAuth } from "../../Context/useAuth";
 import {
   getSupervisedProjects,
@@ -83,7 +82,6 @@ export default function ProfesorDashboard() {
 
   return (
     <div className="profesor-page">
-      <Navbar />
 
       <main className="profesor-container">
         <header className="profesor-header">
