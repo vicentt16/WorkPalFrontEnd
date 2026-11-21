@@ -245,7 +245,7 @@
   font-size: 17px;
   margin-bottom: 14px;
   text-align: center;
-  color: #25344b;
+  color: #111827;
 }
 
 .role-options {
@@ -261,23 +261,22 @@
   justify-content: center;
   gap: 8px;
   padding: 22px 14px;
-  border: 2px solid #dce3ec;
+  border: 2px solid #d4ae15;
   border-radius: 14px;
   background: #ffffff;
-  color: #25344b;
+  color: #d4ae15;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .role-option:hover {
-  border-color: #3478db;
-  background: #f4f8ff;
+  border-color: #d4ae15;
+  background: #d4ae15;
 }
 
 .role-option.selected {
-  border-color: #3478db;
-  background: #eaf2ff;
-  box-shadow: 0 3px 12px rgba(52, 120, 219, 0.12);
+  border-color: #d4ae15;
+  background: #d4ae15;
 }
 
 .role-option .role-icon {

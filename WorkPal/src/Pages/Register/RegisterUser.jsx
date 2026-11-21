@@ -214,7 +214,6 @@ export default function RegisterUser() {
                 onClick={() => setSelectedRole("alumno")}
                 aria-pressed={selectedRole === "alumno"}
               >
-                <span className="role-icon">🎓</span>
                 <strong>Alumno</strong>
                 <small>Crear y colaborar en proyectos</small>
               </button>
@@ -227,7 +226,6 @@ export default function RegisterUser() {
                 onClick={() => setSelectedRole("profesor")}
                 aria-pressed={selectedRole === "profesor"}
               >
-                <span className="role-icon">📚</span>
                 <strong>Profesor</strong>
                 <small>Supervisar proyectos y avances</small>
               </button>
