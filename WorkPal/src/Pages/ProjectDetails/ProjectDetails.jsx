@@ -32,6 +32,7 @@ export default function ProjectDetails() {
     description: "",
     end_date: "",
     assigned_to: ""
+    comments: ""
   });
 
   useEffect(() => {
