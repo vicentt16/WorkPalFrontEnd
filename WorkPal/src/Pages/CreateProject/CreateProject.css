@@ -1,7 +1,7 @@
 .create-project-page {
   min-height: 100vh;
 
-  background-color: #fff4ca;
+  background-color: var(--color-fondo-dinamico);
 }
 
 .create-project-container {
@@ -75,7 +75,7 @@
 
   padding: 15px 18px;
 
-  border: 1px solid #fff4ca;
+  border: 1px solid var(--color-fondo-dinamico);
   border-radius: 16px;
 
   background-color: white;
@@ -90,7 +90,7 @@
 .input-group input:focus,
 .input-group select:focus,
 .input-group textarea:focus {
-  border-color: #d4ae15;
+  border-color: var(--color-secundario-dinamico);
 
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
@@ -119,7 +119,7 @@
   border: none;
   border-radius: 18px;
 
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
   color: white;
 
   font-size: 17px;
@@ -131,7 +131,7 @@
 }
 
 .create-project-button:hover {
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
 }
 
 .error-message {

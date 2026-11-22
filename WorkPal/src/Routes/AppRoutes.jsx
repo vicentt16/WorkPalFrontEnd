@@ -8,6 +8,7 @@ import ManageProjects from "../Pages/ManageProjects/ManageProjects";
 import { RegisterModule } from "../Modules/RegisterModule";
 import NotFound from "../Pages/NotFound/NotFound";
 import ProtectedRoute from "../Components/ProtectedRoute";
+import PersonalizePage from "../Pages/PersonalizePage/PersonalizePage";
 
 export default function AppRoutes() {
   return (
@@ -66,6 +67,14 @@ export default function AppRoutes() {
           element={
             <ProtectedRoute>
               <ManageProjects />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/personalize"
+          element={
+            <ProtectedRoute>
+              <PersonalizePage />
             </ProtectedRoute>
           }
         />

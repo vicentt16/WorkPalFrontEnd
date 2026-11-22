@@ -33,7 +33,7 @@
 }
 
 .photo-label {
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
   color: white;
   padding: 8px 16px;
   border-radius: 20px;
@@ -44,14 +44,14 @@
 }
 
 .photo-label:hover {
-  background-color: #b89612;
+  background-color: var(--color-secundario-dinamico);
 }
 
 /* Rest of the existing CSS... */
 .register-page {
   min-height: 100vh;
 
-  background-color: #fff4ca;
+  background-color: var(--color-fondo-dinamico);
 
   display: flex;
   justify-content: center;
@@ -122,7 +122,7 @@
 
   padding: 15px 18px;
 
-  border: 1px solid #fff4ca;
+  border: 1px solid var(--color-fondo-dinamico);
   border-radius: 16px;
 
   font-size: 16px;
@@ -131,7 +131,7 @@
 }
 
 .input-group input:focus {
-  border-color: #d4ae15;
+  border-color: var(--color-secundario-dinamico);
 
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
@@ -160,7 +160,7 @@
   border: none;
   border-radius: 18px;
 
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
   color: white;
 
   font-size: 17px;
@@ -172,7 +172,7 @@
 }
 
 .register-button:hover {
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
 }
 
 .login-link {
@@ -184,7 +184,7 @@
 }
 
 .login-link a {
-  color: #d4ae15;
+  color: var(--color-secundario-dinamico);
 
   font-weight: 600;
 }
@@ -194,7 +194,7 @@
 }
 
 .error-message {
-  background-color: #fee2e2;
+  background-color: var(--color-fondo-dinamico);
 
   color: #dc2626;
 

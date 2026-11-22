@@ -239,3 +239,27 @@ export const deleteProject = async (projectId) => {
     };
   }
 };
+
+export const getInstitutionalColors = async () => {
+  try {
+    const response = await api.get("/colores-institucionales");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching institutional colors:", error);
+    return [];
+  }
+};
+
+export const updateInstitutionalColors = async (InstitucionalColor) => {
+  try {
+    const response = await api.put("/colores-institucionales", { InstitucionalColor });
+    return { success: true, data: response.data };
+  }
+  catch (error) {
+    console.error("Error updating institutional colors:", error);
+    return {
+      success: false,
+      message: error.response?.data?.detail || "Error al actualizar los colores institucionales",
+    };
+  }
+}

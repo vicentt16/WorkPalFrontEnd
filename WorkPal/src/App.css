@@ -12,7 +12,7 @@ body,
 
   font-family: Arial, Helvetica, sans-serif;
 
-  background-color: #fff4ca;
+  background-color: var(--color-fondo-dinamico);
 }
 
 body {
@@ -40,17 +40,17 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: #fff4ca;
+  background: var(--color-fondo-dinamico);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4ae15;
+  background: var(--color-secundario-dinamico);
 
   border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4ae15;
+  background: var(--color-secundario-dinamico);
 }
 
 a {

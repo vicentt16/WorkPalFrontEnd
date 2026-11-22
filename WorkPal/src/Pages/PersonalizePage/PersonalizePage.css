@@ -1,0 +1,84 @@
+:root {
+  --color-principal-dinamico: #ffdf29;
+  --color-secundario-dinamico: #d4ae15;
+  --color-fondo-dinamico: #fffdc2;
+}
+
+.personalize-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 20px;
+  padding: 20px;
+  background-color: white;
+    border-radius: 28px;
+}
+
+.personalize-header {
+  background-color: var(--color-principal-dinamico);
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 20px;
+}
+
+.color-principal-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.color-secundario-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.color-fondo-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logo-picker {
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--color-principal-dinamico);
+  padding: 20px;
+    border-radius: 20px;
+}
+
+.logo-input {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: var(--color-principal-dinamico);
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+  border-radius: 18px;
+  padding: 14px 24px;
+}
+
+.save-button:hover {
+  background-color: var(--color-secundario-dinamico);
+  color: white;
+}

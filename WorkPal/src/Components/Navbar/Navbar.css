@@ -63,11 +63,11 @@
 .navbar-link:hover {
   background-color: #fffdf5;
 
-  color: #d4ae15;
+  color: var(--color-secundario-dinamico);
 }
 
 .navbar-link.active {
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
 
   color: white;
 }
@@ -98,7 +98,7 @@
 
   border-radius: 50%;
 
-  background-color: #d4ae15;
+  background-color: var(--coleor-secundario-dinamico);
 
   color: white;
 
@@ -123,7 +123,7 @@
 
   border-radius: 12px;
 
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
 
   color: white;
 
@@ -137,7 +137,7 @@
 
 .logout-button:hover,
 .login-button-navbar:hover {
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
 }
 
 @media (max-width: 1000px) {

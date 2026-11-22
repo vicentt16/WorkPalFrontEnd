@@ -1,6 +1,6 @@
 .total {
   min-height: 100vh;
-  background-color: #fff4ca;
+  background-color: var(--color-fondo-dinamico);
   padding-bottom: 80px;
 }
 
@@ -66,7 +66,7 @@
 .create-icon-info {
   width: 70px;
   height: 70px;
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
   object-fit: contain;
 }
 
@@ -100,7 +100,7 @@
 
 .info-section input:focus {
   outline: none;
-  border-color: #d4ae15;
+  border-color: var(--color-secundario-dinamico);
 }
 
 .description-input {
@@ -148,7 +148,7 @@ button[type="button"]:hover {
 .ok-button {
   width: 100%;
   padding: 20px;
-  background-color: #d4ae15;
+  background-color: var(--color-secundario-dinamico);
   color: white;
   border: none;
   border-radius: 15px;
@@ -164,9 +164,9 @@ button[type="button"]:hover {
 }
 
 .ok-button:hover {
-  background-color: #b89612;
+  background-color: var(--color-secundario-dinamico);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(212, 174, 21, 0.2);
+  box-shadow: 0 4px 12px rgba(33, 33, 33, 0.2);
 }
 
 .ok-button img {
