@@ -18,7 +18,7 @@ export default function PersonalizePage() {
 
     const handleSaveChanges = async () => {
 
-        const updatedColors = fetchInstitutionalColors();
+        const updatedColors = { ...institucionalColors };
         updatedColors.colorPrincipal = institucionalColors.colorPrincipal;
         updatedColors.colorSecundario = institucionalColors.colorSecundario;
         updatedColors.colorFondo = institucionalColors.colorFondo;
@@ -34,7 +34,7 @@ export default function PersonalizePage() {
         <>
         <div className="personalize-container">
             <header className="personalize-header">
-                <p1>Personaliza tu experiencia en WorkPal</p1>
+                <h3>Personaliza tu experiencia en WorkPal</h3>
             </header>
             <div className="color-principal-picker">
                 <label htmlFor="color">Selecciona un color Principal:</label>
@@ -66,6 +66,7 @@ export default function PersonalizePage() {
             <div className="logo-picker">
                 <label htmlFor="logo">Selecciona un logo:</label>
                 <input
+                    className="logo-input"
                     type="file"
                     id="logo"
                     accept="image/*"
