@@ -7,7 +7,7 @@ on:
       - sitio-workpal
 
 jobs:
-  Build and publish image:
+  Build_and_publish_image:
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}
     permissions:
