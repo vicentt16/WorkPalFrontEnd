@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
+import Comment from "../../Components/Comment/Comment";
 import { 
   getProjectById, 
   applyToProject, 
@@ -106,9 +107,7 @@ export default function ProjectDetails() {
     if(project.comments != null || project.comments != ""){
       return(
         <>
-        <div className="project-comments-container">
-          <h4>{project.comments}</h4>
-        </div>
+        <Comment comments={project.comments} />
         </>
       );
     }
@@ -209,6 +208,15 @@ export default function ProjectDetails() {
           <div className="project-description-card">
             <h2>Descripción</h2>
             <p>{project.description}</p>
+          </div>
+
+          <div className = "project-comments-section">
+            {project.comments !== null && project.comments.trim() !== "" && (
+              <div className="project-comments-container">
+                <h3>Comentarios del Proyecto</h3>
+                <Comment comments={project.comments} />
+              </div>
+            )}
           </div>
 
           <div className="project-side-panel">
