@@ -103,7 +103,6 @@ export default function ProjectDetails() {
 
   //no es seguro que se vaya a usar esta implementacion 
   const showComments = async () => {
-    
     if(project.comments != null || project.comments != ""){
       return(
         <>
