@@ -24,6 +24,7 @@ export default function ProjectDetails() {
   const [loading, setLoading] = useState(true);
   const [isColab, setIsColab] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // Task creation state
   const [showTaskForm, setShowTaskForm] = useState(false);
@@ -31,40 +32,59 @@ export default function ProjectDetails() {
     title: "",
     description: "",
     end_date: "",
-    assigned_to: ""
+    assigned_to: "",
     comments: ""
   });
 
   useEffect(() => {
-    fetchProjectData();
-  }, [id, user]);
+    let active = true;
 
-  const fetchProjectData = async () => {
+    getProjectById(id)
+      .then(async (projData) => {
+        if (!active) return;
+
+        setProject(projData);
+        if (projData) {
+          const admin = user && projData.owner_id && Number(projData.owner_id) === Number(user.id);
+          setIsAdmin(!!admin);
+
+          try {
+            const [colabs, projectTasks] = await Promise.all([
+              getProjectCollaborators(id),
+              getTasks(id)
+            ]);
+
+            if (!active) return;
+            setCollaborators(colabs || []);
+            setTasks(projectTasks || []);
+
+            const colab = user && colabs && colabs.some(c => c.alumno_id && Number(c.alumno_id) === Number(user.id));
+            setIsColab(!!colab);
+          } catch (err) {
+            console.error("Error fetching project sub-data:", err);
+          }
+        } else {
+          setIsAdmin(false);
+          setIsColab(false);
+          setCollaborators([]);
+          setTasks([]);
+        }
+
+        if (active) setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching project details:", err);
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [id, user, refreshKey]);
+
+  const refreshProjectData = () => {
     setLoading(true);
-    const projData = await getProjectById(id);
-    if (projData) {
-      setProject(projData);
-      
-      const admin = user && projData.owner_id && Number(projData.owner_id) === Number(user.id);
-      setIsAdmin(!!admin);
-
-      // Always fetch collaborators to show the team
-      try {
-        const [colabs, projectTasks] = await Promise.all([
-          getProjectCollaborators(id),
-          getTasks(id)
-        ]);
-        
-        setCollaborators(colabs || []);
-        setTasks(projectTasks || []);
-        
-        const colab = user && colabs && colabs.some(c => c.alumno_id && Number(c.alumno_id) === Number(user.id));
-        setIsColab(!!colab);
-      } catch (err) {
-        console.error("Error fetching project sub-data:", err);
-      }
-    }
-    setLoading(false);
+    setRefreshKey((key) => key + 1);
   };
 
   if (loading) {
@@ -79,6 +99,21 @@ export default function ProjectDetails() {
       </div>
     );
   }
+
+  //no es seguro que se vaya a usar esta implementacion 
+  const showComments = async () => {
+    
+    if(project.comments != null || project.comments != ""){
+      return(
+        <>
+        <div className="project-comments-container">
+          <h4>{project.comments}</h4>
+        </div>
+        </>
+      );
+    }
+  }
+
 
   const handleApply = async () => {
     const response = await applyToProject(id);
@@ -99,7 +134,7 @@ export default function ProjectDetails() {
       alert("Tarea creada");
       setShowTaskForm(false);
       setTaskData({ title: "", description: "", end_date: "", assigned_to: "" });
-      fetchProjectData();
+      refreshProjectData();
     } else {
       alert(res.message);
     }
@@ -115,7 +150,7 @@ export default function ProjectDetails() {
 
     const res = await updateTaskStatus(taskId, newStatus);
     if (res.success) {
-      fetchProjectData();
+      refreshProjectData();
     } else {
       alert(res.message);
     }
